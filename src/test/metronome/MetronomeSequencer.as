@@ -1,23 +1,29 @@
-package test
+package test.metronome
 {
-	import tonfall.BlockInfo;
-	import tonfall.Processor;
-	import tonfall.SignalBuffer;
+	import tonfall.core.BlockInfo;
+	import tonfall.core.Processor;
 
 	/**
+	 * Metronome Sequencer sends event every beat.
+	 * 
 	 * @author Andre Michelle
 	 */
 	public final class MetronomeSequencer extends Processor
 	{
-		public const output: SignalBuffer = new SignalBuffer();
-		
 		private var _upper: int = 4;
 		private var _lower: int = 4;
+		
+		private var _target: Processor;
 
 		public function MetronomeSequencer() {}
 
 		override public function process( info: BlockInfo ) : void
 		{
+			if( null == _target )
+			{
+				throw new Error( 'No event target defined.' );
+			}
+			
 			var position:Number = int( info.from * _lower ) / _lower;
 
 			var beat:int;
@@ -38,7 +44,7 @@ package test
 					event.bar = bar;
 					event.beat = beat;
 
-					trace( event );
+					_target.addTimeEvent( event );
 				}
 
 				position += 1.0 / _lower;
@@ -64,6 +70,16 @@ package test
 		public function set lower( value: int ) : void
 		{
 			_lower = value;
+		}
+
+		public function get timeEventTarget() : Processor
+		{
+			return _target;
+		}
+
+		public function set timeEventTarget( target: Processor ) : void
+		{
+			_target = target;
 		}
 	}
 }

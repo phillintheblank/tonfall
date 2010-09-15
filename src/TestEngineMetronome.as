@@ -1,9 +1,10 @@
 package
 {
-	import test.MetronomeProcessor;
+	import test.metronome.MetronomeSequencer;
+	import test.metronome.MetronomeGenerator;
 
-	import tonfall.Driver;
-	import tonfall.Engine;
+	import tonfall.core.Driver;
+	import tonfall.core.Engine;
 
 	import flash.display.Sprite;
 
@@ -19,10 +20,15 @@ package
 		{
 			driver.engine = engine;
 			
-			const processor: MetronomeProcessor = new MetronomeProcessor();
+			const sequencer: MetronomeSequencer = new MetronomeSequencer();
+			const generator: MetronomeGenerator = new MetronomeGenerator();
 
-			engine.processors.push( processor );
-			engine.input = processor.output;
+			sequencer.timeEventTarget = generator;
+
+			engine.processors.push( sequencer );
+			engine.processors.push( generator );
+
+			engine.input = generator.output;
 		}
 	}
 }
