@@ -1,4 +1,4 @@
-package tonfall
+package tonfall.core
 {
 	/**
 	 * Standard note <> frequency mapping

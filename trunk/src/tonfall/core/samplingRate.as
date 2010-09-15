@@ -1,4 +1,4 @@
-package tonfall
+package tonfall.core
 {
 	/**
 	 * The only provided samplingRate by the Flashplayer

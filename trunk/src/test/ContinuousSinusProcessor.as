@@ -1,9 +1,9 @@
 package test
 {
-	import tonfall.BlockInfo;
-	import tonfall.Processor;
-	import tonfall.Signal;
-	import tonfall.SignalBuffer;
+	import tonfall.core.Processor;
+	import tonfall.core.SignalBuffer;
+	import tonfall.core.Signal;
+	import tonfall.core.BlockInfo;
 	/**
 	 * @author Andre Michelle
 	 */

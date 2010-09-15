@@ -1,4 +1,4 @@
-package tonfall
+package tonfall.core
 {
 	import flash.utils.setTimeout;
 	import flash.media.SoundChannel;

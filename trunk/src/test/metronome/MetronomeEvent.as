@@ -1,12 +1,11 @@
-package test
+package test.metronome
 {
+	import tonfall.core.TimeEvent;
 	/**
 	 * @author Andre Michelle
 	 */
-	public final class MetronomeEvent
+	public final class MetronomeEvent extends TimeEvent
 	{
-		public var position: Number;
-		
 		public var bar: int;
 	
 		public var beat: int;
