@@ -20,6 +20,19 @@ package tonfall.core
 		{
 			return _current;
 		}
+		
+		public function zero( num: int ): void
+		{
+			var signal: Signal = _current;
+			
+			for( var i: int = 0 ; i < num ; ++i )
+			{
+				signal.l =
+				signal.r = 0.0;
+				
+				signal = signal.next;
+			}
+		}
 
 		public function advancePointer( count: int ): void
 		{

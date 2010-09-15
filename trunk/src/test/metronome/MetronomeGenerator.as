@@ -1,5 +1,6 @@
 package test.metronome
 {
+	import tonfall.core.samplingRate;
 	import tonfall.core.noteToFrequency;
 	import tonfall.core.TimeEvent;
 	import tonfall.core.Signal;
@@ -7,7 +8,7 @@ package test.metronome
 	import tonfall.core.SignalProcessor;
 
 	/**
-	 * Sound Generator for Metronome
+	 * Sound Generator for Metronome (monophone)
 	 * 
 	 * @author Andre Michelle
 	 */
@@ -15,9 +16,9 @@ package test.metronome
 	{
 		public const output: SignalBuffer = new SignalBuffer();
 		
-		private const duration: int = 44.1 * 45.0; // 45ms
+		private const duration: int = samplingRate * 0.050; // 50ms
 		
-		private var _phase: Number = 0.0;
+		private var _phase: Number;
 		private var _phaseIncr: Number;
 		private var _remaining: int;
 
@@ -27,18 +28,16 @@ package test.metronome
 		{
 			if( event is MetronomeEvent )
 			{
-				var metronomeEvent: MetronomeEvent = MetronomeEvent( event );
-				
 				_phase = 0.0;
 				_remaining = duration;
 
-				if( 0 == metronomeEvent.beat )
+				if( 0 == MetronomeEvent( event ).beat )
 				{
-					_phaseIncr = noteToFrequency( 84 ) / 44100.0;
+					_phaseIncr = noteToFrequency( 84 ) / samplingRate;
 				}
 				else
 				{
-					_phaseIncr = noteToFrequency( 72 ) / 44100.0;
+					_phaseIncr = noteToFrequency( 72 ) / samplingRate;
 				}
 			}
 		}
@@ -62,6 +61,9 @@ package test.metronome
 					signal.r = amplitude;
 
 					_phase += _phaseIncr;
+
+					if( _phase >= 1.0 )
+						_phase -= 1.0;
 				}
 				else
 				{
