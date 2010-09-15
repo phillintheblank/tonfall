@@ -13,13 +13,13 @@ package test.metronome
 		private var _upper: int = 4;
 		private var _lower: int = 4;
 		
-		private var _target: Processor;
+		private var _timeEventTarget: Processor;
 
 		public function MetronomeSequencer() {}
 
 		override public function process( info: BlockInfo ) : void
 		{
-			if( null == _target )
+			if( null == _timeEventTarget )
 			{
 				throw new Error( 'No event target defined.' );
 			}
@@ -44,7 +44,7 @@ package test.metronome
 					event.bar = bar;
 					event.beat = beat;
 
-					_target.addTimeEvent( event );
+					_timeEventTarget.addTimeEvent( event );
 				}
 
 				position += 1.0 / _lower;
@@ -74,12 +74,12 @@ package test.metronome
 
 		public function get timeEventTarget() : Processor
 		{
-			return _target;
+			return _timeEventTarget;
 		}
 
 		public function set timeEventTarget( target: Processor ) : void
 		{
-			_target = target;
+			_timeEventTarget = target;
 		}
 	}
 }

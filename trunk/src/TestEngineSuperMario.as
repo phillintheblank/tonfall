@@ -1,11 +1,11 @@
 package
 {
 	import test.mario.SuperMario;
-	import test.metronome.MetronomeSequencer;
-	import test.metronome.MetronomeGenerator;
+	import test.poly.SimplePolySynthVoiceFactory;
 
 	import tonfall.core.Driver;
 	import tonfall.core.Engine;
+	import tonfall.poly.PolySynth;
 
 	import flash.display.Sprite;
 
@@ -21,10 +21,8 @@ package
 		{
 			driver.engine = engine;
 			
-			//new SuperMario();
-			
-			const sequencer: MetronomeSequencer = new MetronomeSequencer();
-			const generator: MetronomeGenerator = new MetronomeGenerator();
+			const sequencer: SuperMario = new SuperMario();
+			const generator: PolySynth = new PolySynth( new SimplePolySynthVoiceFactory() );
 
 			sequencer.timeEventTarget = generator;
 
