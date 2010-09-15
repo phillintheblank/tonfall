@@ -37,7 +37,8 @@ package test.poly
 			{
 				if( _remaining )
 				{
-					envelope = ( --_remaining ) / _duration; // LINEAR \
+					envelope = ( --_remaining ) / _duration - 1.0;
+					envelope = 1.0 - envelope * envelope;
 
 					amplitude = Math.sin( _phase * 2.0 * Math.PI ) * envelope * volume;
 
