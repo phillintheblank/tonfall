@@ -10,8 +10,6 @@ package tonfall.core
 
 		final override public function process( info: BlockInfo ) : void
 		{
-			trace( info );
-			
 			var event: TimeEvent;
 			
 			var localOffset:int = 0;
@@ -20,7 +18,7 @@ package tonfall.core
 
 			var eventOffset: int;
 
-			while( events.length )
+			while( events.length ) // IF INPUT EVENTS
 			{
 				event = events.shift();
 
@@ -28,17 +26,20 @@ package tonfall.core
 				
 				if( 0 < eventOffset )
 				{
+					// ADVANCE IN BUFFER
 					processSignals( eventOffset );
-					
+
 					numSignals -= eventOffset;
 					localOffset += eventOffset;
 				}
 				
+				// SEND EVENT ON THE EXACT POSITION
 				processTimeEvent( event );
 			}
 
 			if( numSignals )
 			{
+				// PROCESS REST
 				processSignals( numSignals );
 			}
 		}
