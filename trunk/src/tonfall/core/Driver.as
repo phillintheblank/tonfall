@@ -64,6 +64,20 @@ package tonfall.core
 			return _latency;
 		}
 		
+		public function get leftPeak(): Number
+		{
+			if( null == _soundChannel ) return 0.0;
+			
+			return _soundChannel.leftPeak;
+		}
+		
+		public function get rightPeak(): Number
+		{
+			if( null == _soundChannel ) return 0.0;
+			
+			return _soundChannel.rightPeak;
+		}
+		
 		private function start() : void
 		{
 			_soundChannel = sound.play();
