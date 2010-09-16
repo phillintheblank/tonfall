@@ -43,7 +43,7 @@ package test.poly
 					amplitude = Math.sin( _phase * 2.0 * Math.PI ) * envelope * volume;
 
 					current.l += amplitude;
-					current.r += amplitude;
+					current.r += amplitude * 0.5;
 					current = current.next;
 
 					_phase += _phaseIncr;

@@ -3,24 +3,16 @@ package
 	import test.mario.SuperMario;
 	import test.poly.SimplePolySynthVoiceFactory;
 
-	import tonfall.core.Driver;
-	import tonfall.core.Engine;
 	import tonfall.poly.PolySynth;
-
-	import flash.display.Sprite;
 
 	/**
 	 * @author Andre Michelle
 	 */
-	public final class TestEngineSuperMario extends Sprite
+	[SWF(width='640',height='480',backgroundColor='0x1b1b1b',frameRate='32',scriptTimeLimit='255')]
+	public final class TestEngineSuperMario extends AbstractEngineSandbox
 	{
-		private const driver: Driver = Driver.getInstance();
-		private const engine: Engine = Engine.getInstance();
-
 		public function TestEngineSuperMario()
 		{
-			driver.engine = engine;
-			
 			const sequencer: SuperMario = new SuperMario();
 			const generator: PolySynth = new PolySynth( new SimplePolySynthVoiceFactory() );
 

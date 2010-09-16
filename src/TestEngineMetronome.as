@@ -1,25 +1,16 @@
 package
 {
-	import test.metronome.MetronomeSequencer;
 	import test.metronome.MetronomeGenerator;
-
-	import tonfall.core.Driver;
-	import tonfall.core.Engine;
-
-	import flash.display.Sprite;
+	import test.metronome.MetronomeSequencer;
 
 	/**
 	 * @author Andre Michelle
 	 */
-	public final class TestEngineMetronome extends Sprite
+	[SWF(width='640',height='480',backgroundColor='0x1b1b1b',frameRate='32',scriptTimeLimit='255')]
+	public final class TestEngineMetronome extends AbstractEngineSandbox
 	{
-		private const driver: Driver = Driver.getInstance();
-		private const engine: Engine = Engine.getInstance();
-
 		public function TestEngineMetronome()
 		{
-			driver.engine = engine;
-			
 			const sequencer: MetronomeSequencer = new MetronomeSequencer();
 			const generator: MetronomeGenerator = new MetronomeGenerator();
 
