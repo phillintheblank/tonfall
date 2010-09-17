@@ -3,7 +3,7 @@ package
 	import test.mario.SuperMario;
 	import test.poly.SimplePolySynthVoiceFactory;
 
-	import tonfall.display.Application;
+	import tonfall.display.AbstractApplication;
 	import tonfall.poly.PolySynth;
 
 	/**
@@ -12,7 +12,7 @@ package
 	 * @author Andre Michelle
 	 */
 	[SWF(width='640',height='480',backgroundColor='0x1b1b1b',frameRate='32',scriptTimeLimit='255')]
-	public final class TestEngineSuperMario extends Application
+	public final class TestEngineSuperMario extends AbstractApplication
 	{
 		public function TestEngineSuperMario()
 		{

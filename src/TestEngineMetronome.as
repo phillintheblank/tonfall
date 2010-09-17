@@ -1,6 +1,6 @@
 package
 {
-	import tonfall.display.Application;
+	import tonfall.display.AbstractApplication;
 	import test.metronome.MetronomeGenerator;
 	import test.metronome.MetronomeSequencer;
 
@@ -10,7 +10,7 @@ package
 	 * @author Andre Michelle
 	 */
 	[SWF(width='640',height='480',backgroundColor='0x1b1b1b',frameRate='32',scriptTimeLimit='255')]
-	public final class TestEngineMetronome extends Application
+	public final class TestEngineMetronome extends AbstractApplication
 	{
 		public function TestEngineMetronome()
 		{
