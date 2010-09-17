@@ -25,6 +25,11 @@ package tonfall.core
 			
 			init();
 		}
+
+		public function get numSignals() : uint
+		{
+			return _numSignals;
+		}
 		
 		public function extract( target: ByteArray, length: Number, position: Number ) : Number
 		{
@@ -45,6 +50,10 @@ package tonfall.core
 					if( 1 == _numChannels )
 					{
 						read16Bit44KhzMono( target, _bytes, length );
+					}
+					else if( 2 == _numChannels )
+					{
+						read16Bit44KhzStereo( target, _bytes, length );
 					}
 					else
 					{
@@ -74,6 +83,15 @@ package tonfall.core
 				
 				target.writeFloat( value );
 				target.writeFloat( value );
+			}
+		}
+		
+		private function read16Bit44KhzStereo( target: ByteArray, bytes: ByteArray, length: Number ) : void
+		{
+			for( var i: int = 0 ; i < length ; ++i )
+			{
+				target.writeFloat( bytes.readShort() * 3.051850947600e-05 );
+				target.writeFloat( bytes.readShort() * 3.051850947600e-05 );
 			}
 		}
 		
@@ -137,8 +155,7 @@ package tonfall.core
 								', bytesPerSecond: ' + _bytesPerSecond +
 								', blockAlign: ' + _blockAlign +
 								', bits: ' + _bits +
-								', numSignals: ' + _numSignals +
-								']';
+								', numSignals: ' + _numSignals + ']';
 		}
 	}
 }
