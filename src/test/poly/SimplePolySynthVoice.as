@@ -61,5 +61,7 @@ package test.poly
 			
 			return false;
 		}
+
+		public function dispose() : void {}
 	}
 }

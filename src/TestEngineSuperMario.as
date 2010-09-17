@@ -1,9 +1,9 @@
 package
 {
-	import tonfall.display.Application;
 	import test.mario.SuperMario;
 	import test.poly.SimplePolySynthVoiceFactory;
 
+	import tonfall.display.Application;
 	import tonfall.poly.PolySynth;
 
 	/**
