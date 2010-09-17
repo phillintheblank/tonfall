@@ -1,7 +1,13 @@
 package tonfall.core
 {
 	import flash.utils.ByteArray;
+
 	/**
+	 * Engine runs the digital audio processing chain
+	 * and writes the last SignalBuffer into a ByteArray.
+	 * 
+	 * It also stores the current time position in bars and beats per minutes.
+	 * 
 	 * @author Andre Michelle
 	 */
 	public final class Engine
@@ -104,7 +110,7 @@ package tonfall.core
 			_input = value;
 		}
 
-		public function deltaBlockIndexOf( position: Number ) : int
+		public function deltaBlockIndexAt( position: Number ) : int
 		{
 			const value: int = TimeConversion.barsToNumSamples( position - _bar, _bpm );
 

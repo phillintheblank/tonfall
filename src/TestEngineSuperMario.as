@@ -6,6 +6,8 @@ package
 	import tonfall.poly.PolySynth;
 
 	/**
+	 * Demoes PolySynth
+	 * 
 	 * @author Andre Michelle
 	 */
 	[SWF(width='640',height='480',backgroundColor='0x1b1b1b',frameRate='32',scriptTimeLimit='255')]
@@ -14,7 +16,7 @@ package
 		public function TestEngineSuperMario()
 		{
 			const sequencer: SuperMario = new SuperMario();
-			const generator: PolySynth = new PolySynth( new SimplePolySynthVoiceFactory() );
+			const generator: PolySynth = new PolySynth( SimplePolySynthVoiceFactory.INSTANCE );
 
 			sequencer.timeEventTarget = generator;
 

@@ -1,10 +1,11 @@
 package tonfall.core
 {
-
 	/**
+	 * SignalProcessor provides sample-exact event processing.
+	 * 
 	 * @author Andre Michelle
 	 */
-	public class SignalProcessor extends Processor
+	public /*abstract*/ class SignalProcessor extends Processor
 	{
 		public function SignalProcessor() {}
 
@@ -18,11 +19,11 @@ package tonfall.core
 
 			var eventOffset: int;
 
-			while( events.length ) // IF INPUT EVENTS
+			while( events.length ) // IF INPUT EVENTS EXISTS
 			{
 				event = events.shift();
 
-				eventOffset = engine.deltaBlockIndexOf( event.position ) - localOffset;
+				eventOffset = engine.deltaBlockIndexAt( event.position ) - localOffset;
 				
 				if( 0 < eventOffset )
 				{
@@ -35,6 +36,8 @@ package tonfall.core
 				
 				// SEND EVENT ON THE EXACT POSITION
 				processTimeEvent( event );
+				
+				event.dispose();
 			}
 
 			if( numSignals )
@@ -44,8 +47,14 @@ package tonfall.core
 			}
 		}
 		
-		protected function processTimeEvent( event: TimeEvent ): void {}
+		protected function processTimeEvent( event: TimeEvent ): void
+		{
+			throw new Error( 'Method "processTimeEvent" is marked abstract.' );
+		}
 		
-		protected function processSignals( numSignals: int ): void {}
+		protected function processSignals( numSignals: int ): void
+		{
+			throw new Error( 'Method "processSignals" is marked abstract.' );
+		}
 	}
 }

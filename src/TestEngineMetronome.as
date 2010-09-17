@@ -4,6 +4,8 @@ package
 	import test.metronome.MetronomeSequencer;
 
 	/**
+	 * Demoes simple musical event processing
+	 * 
 	 * @author Andre Michelle
 	 */
 	[SWF(width='640',height='480',backgroundColor='0x1b1b1b',frameRate='32',scriptTimeLimit='255')]

@@ -8,7 +8,7 @@ package test.metronome
 	import tonfall.core.SignalProcessor;
 
 	/**
-	 * Sound Generator for Metronome (monophone)
+	 * Sound Generator for Metronome (sinus, monophone)
 	 * 
 	 * @author Andre Michelle
 	 */

@@ -8,6 +8,8 @@ package tonfall.poly
 	import tonfall.core.SignalProcessor;
 
 	/**
+	 * PolySynth provides a simple way to create a polyphone synthesizer.
+	 * 
 	 * @author Andre Michelle
 	 */
 	public final class PolySynth extends SignalProcessor
