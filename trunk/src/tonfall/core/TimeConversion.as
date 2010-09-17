@@ -1,7 +1,7 @@
 package tonfall.core
 {
 	/**
-	 * Class TimeCode provides conversion between absolute and musical time.
+	 * TimeConversion provides conversion between absolute and musical time.
 	 * 
 	 * One bar is based on 4/4 time signature.
 	 * 

@@ -6,6 +6,8 @@ package test.poly
 	import tonfall.poly.IPolySynthVoice;
 
 	/**
+	 * Test implementation of a polyphonic synthesizer voice
+	 * 
 	 * @author Andre Michelle
 	 */
 	public final class SimplePolySynthVoice

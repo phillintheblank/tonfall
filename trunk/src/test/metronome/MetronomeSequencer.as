@@ -10,25 +10,23 @@ package test.metronome
 	 */
 	public final class MetronomeSequencer extends Processor
 	{
+		private var _timeEventTarget: Processor;
+		
 		private var _upper: int = 4;
 		private var _lower: int = 4;
 		
-		private var _timeEventTarget: Processor;
-
 		public function MetronomeSequencer() {}
 
 		override public function process( info: BlockInfo ) : void
 		{
 			if( null == _timeEventTarget )
-			{
 				throw new Error( 'No event target defined.' );
-			}
 			
 			var position:Number = int( info.from * _lower ) / _lower;
 
 			var beat:int;
 			var bar:int;
-			
+
 			var event: MetronomeEvent;
 
 			do

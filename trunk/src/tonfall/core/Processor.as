@@ -1,9 +1,13 @@
 package tonfall.core
 {
 	/**
+	 * Processor is a member in the digital audio processing chain.
+	 * 
+	 * A Processor can generate audio or sequence events.
+	 * 
 	 * @author Andre Michelle
 	 */
-	public class Processor
+	public /*abstract*/ class Processor
 	{
 		protected const events: Vector.<TimeEvent> = new Vector.<TimeEvent>();
 		

@@ -6,6 +6,10 @@ package test.mario
 	import tonfall.core.Processor;
 
 	/**
+	 * Transmits notes from the super-mario theme for testing purpose.
+	 * 
+	 * Happy birthday, Mario!
+	 * 
 	 * @author Andre Michelle
 	 */
 	public final class SuperMario extends Processor

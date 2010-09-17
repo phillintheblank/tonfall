@@ -7,6 +7,8 @@ package tonfall.core
 	import flash.media.Sound;
 
 	/**
+	 * Standard audio driver running on flash.media.Sound
+	 * 
 	 * @author Andre Michelle
 	 */
 	public final class Driver
@@ -46,6 +48,7 @@ package tonfall.core
 
 			sound.addEventListener( SampleDataEvent.SAMPLE_DATA, sampleData );
 			
+			// Delay start to avoid glitches (Flashplayer issue)
 			setTimeout( start, 100 );			
 		}
 
@@ -87,6 +90,7 @@ package tonfall.core
 		{
 			if( _soundChannel != null )
 			{
+				// Compute difference from writing and audible audio data
 				_latency = event.position / 44.1 - _soundChannel.position;
 			}
 

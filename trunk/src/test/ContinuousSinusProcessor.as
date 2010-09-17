@@ -4,7 +4,10 @@ package test
 	import tonfall.core.SignalBuffer;
 	import tonfall.core.Signal;
 	import tonfall.core.BlockInfo;
+
 	/**
+	 * Hello World in DSP
+	 * 
 	 * @author Andre Michelle
 	 */
 	public final class ContinuousSinusProcessor extends Processor

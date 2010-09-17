@@ -10,6 +10,8 @@ package
 	import flash.events.Event;
 
 	/**
+	 * Abstract application class to provide minimal audio processing setup
+	 * 
 	 * @author Andre Michelle
 	 */
 	public class AbstractEngineSandbox extends Sprite

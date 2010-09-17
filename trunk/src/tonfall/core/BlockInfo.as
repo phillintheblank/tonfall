@@ -1,12 +1,15 @@
 package tonfall.core
 {
 	/**
+	 * BlockInfo describes all time information to process an audio block
+	 * 
 	 * @author Andre Michelle
 	 */
 	public final class BlockInfo
 	{
 		private var _numSignals: int;
 
+		// Following values in musical time (bars)
 		private var _from: Number;
 		private var _to: Number;
 		

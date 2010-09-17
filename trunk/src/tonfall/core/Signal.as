@@ -1,6 +1,8 @@
 package tonfall.core
 {
 	/**
+	 * Stereo audio data linked list item
+	 * 
 	 * @author Andre Michelle
 	 */
 	public final class Signal

@@ -11,6 +11,8 @@ package tonfall.display
 	import flash.utils.ByteArray;
 
 	/**
+	 * Spectrum is a fast and imprecise debug view of the audio data.
+	 * 
 	 * @author Andre Michelle
 	 */
 	public final class Spectrum extends Sprite
@@ -105,7 +107,7 @@ package tonfall.display
 				bitmapData.setPixel( x, 0x40 + l * 0x40, 0xAAAAAA );
 				bitmapData.setPixel( x, 0x40 + r * 0x40, 0xCCCCCC );
 			}
-			
+ 
 			bitmapData.unlock();
 		}
 		
@@ -132,8 +134,8 @@ package tonfall.display
 				outputArray.position = ( x | 0x100 ) << 2;
 				r = outputArray.readFloat();
 				
-				h = l * 0x80;
-				
+				h = ( l > r ? l : r ) * 0x80;
+
 				rectLine.x = x;
 				rectLine.y = 0x80 - h;
 				rectLine.height = h;
