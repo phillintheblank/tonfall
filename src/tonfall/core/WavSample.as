@@ -1,11 +1,11 @@
-package assets
+package tonfall.core
 {
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
 	/**
 	 * @author Andre Michelle
 	 */
-	public class WavSample
+	public final class WavSample
 	{
 		private static const NOT_SUPPORTED: Error = new Error( 'Not supported.' );
 		
