@@ -1,7 +1,7 @@
 package tonfall.core
 {
 	/**
-	 * Stereo audio data linked list
+	 * Stereo audio data linked list (looped)
 	 * 
 	 * @author Andre Michelle
 	 */
@@ -13,9 +13,9 @@ package tonfall.core
 		
 		private var _vector: Vector.<Signal>;
 		
-		public function SignalBuffer()
+		public function SignalBuffer( length: int = 0 )
 		{
-			init( Driver.BLOCK_SIZE );
+			init( 0 >= length ? Driver.BLOCK_SIZE : length );
 		}
 
 		public function get current() : Signal
@@ -35,6 +35,19 @@ package tonfall.core
 				signal = signal.next;
 			}
 		}
+		
+		public function deltaPointer( delta: int ): Signal
+		{
+			var index: int = _index + delta;
+
+			if( index < 0 )
+				index += _length;
+			else
+			if( index >= _length )
+				index -= _length;
+
+			return _vector[ index ];
+		}
 
 		public function advancePointer( count: int ): void
 		{
@@ -43,15 +56,11 @@ package tonfall.core
 			
 			_index += count;
 
-			if( _index == _length )
-			{
-				_index = 0;
-			}
+			if( _index < 0 )
+				_index += _length;
 			else
-			if( _index < 0 || _index > _length )
-			{
-				throw new RangeError( 'Out of range exception. index = ' + _index + ', length = ' + _length );
-			}
+			if( _index >= _length )
+				_index -= _length;
 
 			_current = _vector[ _index ];
 		}
