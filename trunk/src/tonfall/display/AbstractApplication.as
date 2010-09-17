@@ -1,5 +1,6 @@
 package tonfall.display
 {
+	import tonfall.core.Memory;
 	import tonfall.core.Driver;
 	import tonfall.core.Engine;
 
@@ -14,7 +15,7 @@ package tonfall.display
 	 * 
 	 * @author Andre Michelle
 	 */
-	public class Application extends Sprite
+	public class AbstractApplication extends Sprite
 	{
 		protected const driver: Driver = Driver.getInstance();
 		protected const engine: Engine = Engine.getInstance();
@@ -23,12 +24,15 @@ package tonfall.display
 		
 		private var _showSpectrum: Boolean;
 		
-		public function Application()
+		public function AbstractApplication()
 		{
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 			stage.addEventListener( Event.RESIZE, resize );
 			stage.frameRate = 1000.0;
+			
+			// preallocate memory for processing
+			Memory.length = Driver.BLOCK_SIZE << 3;
 			
 			resize();
 
