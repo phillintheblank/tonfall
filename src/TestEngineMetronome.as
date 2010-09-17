@@ -1,5 +1,6 @@
 package
 {
+	import tonfall.display.Application;
 	import test.metronome.MetronomeGenerator;
 	import test.metronome.MetronomeSequencer;
 
@@ -9,7 +10,7 @@ package
 	 * @author Andre Michelle
 	 */
 	[SWF(width='640',height='480',backgroundColor='0x1b1b1b',frameRate='32',scriptTimeLimit='255')]
-	public final class TestEngineMetronome extends AbstractEngineSandbox
+	public final class TestEngineMetronome extends Application
 	{
 		public function TestEngineMetronome()
 		{
@@ -22,6 +23,8 @@ package
 			engine.processors.push( generator );
 
 			engine.input = generator.output;
+			
+			showSpectrum = true;
 		}
 	}
 }

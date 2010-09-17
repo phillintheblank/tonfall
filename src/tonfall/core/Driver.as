@@ -47,9 +47,6 @@ package tonfall.core
 			fillBytes.length = BLOCK_SIZE << 3;
 
 			sound.addEventListener( SampleDataEvent.SAMPLE_DATA, sampleData );
-			
-			// Delay start to avoid glitches (Flashplayer issue)
-			setTimeout( start, 100 );			
 		}
 
 		public function get engine() : Engine
@@ -81,7 +78,7 @@ package tonfall.core
 			return _soundChannel.rightPeak;
 		}
 		
-		private function start() : void
+		public function start() : void
 		{
 			_soundChannel = sound.play();
 		}
