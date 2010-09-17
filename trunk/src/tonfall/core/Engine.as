@@ -53,7 +53,10 @@ package tonfall.core
 			
 			_bar = to;
 			
-			writeInput( target, numSignals );
+			if( null != _input )
+			{
+				writeInput( target, numSignals );
+			}
 		}
 
 		private function renderProcessors() : void

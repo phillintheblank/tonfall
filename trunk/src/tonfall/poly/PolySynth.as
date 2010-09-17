@@ -38,7 +38,6 @@ package tonfall.poly
 		{
 			const voice: IPolySynthVoice =
 							_voicefactory.create( event );
-
 			voice.start( event.note, TimeConversion.barsToNumSamples( event.duration, engine.bpm ) );
 
 			activeVoices.push( voice );

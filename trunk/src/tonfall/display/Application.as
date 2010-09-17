@@ -1,38 +1,60 @@
-package
+package tonfall.display
 {
 	import tonfall.core.Driver;
 	import tonfall.core.Engine;
-	import tonfall.display.Spectrum;
 
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
+	import flash.utils.setTimeout;
 
 	/**
 	 * Abstract application class to provide minimal audio processing setup
 	 * 
 	 * @author Andre Michelle
 	 */
-	public class AbstractEngineSandbox extends Sprite
+	public class Application extends Sprite
 	{
 		protected const driver: Driver = Driver.getInstance();
 		protected const engine: Engine = Engine.getInstance();
 		
 		protected const spectrum: Spectrum = new Spectrum();
 		
-		public function AbstractEngineSandbox()
+		private var _showSpectrum: Boolean;
+		
+		public function Application()
 		{
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 			stage.addEventListener( Event.RESIZE, resize );
 			stage.frameRate = 1000.0;
 			
-			addChild( spectrum );
-			
 			resize();
 
 			driver.engine = engine;
+
+			// delay call to avoid glitches (Flashplayer issue)
+			setTimeout( driver.start, 100 );
+		}
+		
+		public function get showSpectrum() : Boolean
+		{
+			return _showSpectrum;
+		}
+
+		public function set showSpectrum( value: Boolean ) : void
+		{
+			if( _showSpectrum != value )
+			{
+				
+				if( value )
+					addChild( spectrum );
+				else
+					removeChild( spectrum );
+				
+				_showSpectrum = value;
+			}
 		}
 		
 		private function resize( event: Event = null ) : void

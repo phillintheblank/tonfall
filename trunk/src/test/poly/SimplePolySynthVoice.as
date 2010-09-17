@@ -13,7 +13,7 @@ package test.poly
 	public final class SimplePolySynthVoice
 		implements IPolySynthVoice
 	{
-		private const volume: Number = 0.3;
+		private const volume: Number = 0.2;
 		
 		private var _phase: Number;
 		private var _phaseIncr: Number;
