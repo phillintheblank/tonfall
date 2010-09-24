@@ -1,4 +1,4 @@
-package tonfall.dsp
+package tonfall.math
 {
 	public function sinh( x: Number ): Number
 	{

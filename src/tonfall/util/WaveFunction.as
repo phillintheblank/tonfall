@@ -1,4 +1,4 @@
-package tonfall.dsp
+package tonfall.util
 {
 	/**
 	 * Creates basic waveforms

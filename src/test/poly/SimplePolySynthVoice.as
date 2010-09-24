@@ -1,6 +1,6 @@
 package test.poly
 {
-	import tonfall.dsp.WaveFunction;
+	import tonfall.util.WaveFunction;
 	import tonfall.core.samplingRate;
 	import tonfall.core.noteToFrequency;
 	import tonfall.core.Signal;
