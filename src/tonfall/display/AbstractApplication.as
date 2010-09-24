@@ -1,8 +1,9 @@
 package tonfall.display
 {
-	import tonfall.core.Memory;
 	import tonfall.core.Driver;
 	import tonfall.core.Engine;
+	import tonfall.core.Memory;
+	import tonfall.core.Parameter;
 
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
@@ -24,6 +25,8 @@ package tonfall.display
 		
 		private var _showSpectrum: Boolean;
 		
+		private var _sliderIndex: int = 0;
+		
 		public function AbstractApplication()
 		{
 			stage.scaleMode = StageScaleMode.NO_SCALE;
@@ -40,6 +43,18 @@ package tonfall.display
 
 			// delay call to avoid glitches (Flashplayer issue)
 			setTimeout( driver.start, 100 );
+		}
+		
+		public function addParameterSlider( parameter: Parameter ): ParameterSlider
+		{
+			const slider : ParameterSlider = new ParameterSlider( parameter );
+			
+			slider.x = 16.0;
+			slider.y = 36.0 * ( _sliderIndex++ ) + 16.0;
+			
+			addChild( slider );
+			
+			return slider;
 		}
 		
 		public function get showSpectrum() : Boolean
