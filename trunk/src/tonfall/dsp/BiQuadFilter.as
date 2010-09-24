@@ -1,5 +1,6 @@
 package tonfall.dsp
 {
+	import tonfall.math.sinh;
 	import tonfall.core.Signal;
 	/**
 	 * http://www.drdobbs.com/184401931?pgno=12
