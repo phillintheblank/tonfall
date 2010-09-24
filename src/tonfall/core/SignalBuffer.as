@@ -36,6 +36,19 @@ package tonfall.core
 			}
 		}
 		
+		public function multiply( num: int, gain: Number ): void
+		{
+			var signal: Signal = _current;
+			
+			for( var i: int = 0 ; i < num ; ++i )
+			{
+				signal.l *= gain;
+				signal.r *= gain;
+				
+				signal = signal.next;
+			}
+		}
+		
 		public function deltaPointer( delta: int ): Signal
 		{
 			var index: int = _index + delta;

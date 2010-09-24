@@ -1,5 +1,6 @@
 package tonfall.poly
 {
+	import tonfall.core.Parameter;
 	import tonfall.core.TimeConversion;
 	import tonfall.core.Signal;
 	import tonfall.core.TimeEventNote;
@@ -15,6 +16,8 @@ package tonfall.poly
 	public final class PolySynth extends SignalProcessor
 	{
 		public const output: SignalBuffer = new SignalBuffer();
+		
+		public const paramVolume: Parameter = new Parameter( 'volume', 1.0 );
 		
 		private const activeVoices: Vector.<IPolySynthVoice>
 										= new Vector.<IPolySynthVoice>();
@@ -58,6 +61,8 @@ package tonfall.poly
 					activeVoices.splice( i, 1 );
 				}
 			}
+
+			output.multiply( numSignals, paramVolume.value );
 
 			output.advancePointer( numSignals );
 		}
