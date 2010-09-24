@@ -9,7 +9,9 @@ package tonfall.display
 	import flash.text.TextFormat;
 
 	/**
-	 * @author aM
+	 * Very simple static slider to control Parameter
+	 * 
+	 * @author Andre Michelle
 	 */
 	public final class ParameterSlider extends Sprite
 	{
@@ -33,7 +35,7 @@ package tonfall.display
 		private function init() : void
 		{
 			graphics.beginFill( 0xFFFFFF );
-			graphics.drawRoundRect( 0.0, 0.0, 272.0, 24.0, 4.0, 4.0 );
+			graphics.drawRoundRect( 0.0, 0.0, 288.0, 24.0, 4.0, 4.0 );
 			graphics.endFill();
 			graphics.beginFill( 0x333333 );
 			graphics.drawRect( 4.0, 4.0, 192.0, 16.0 );
@@ -51,7 +53,6 @@ package tonfall.display
 			addChild( thumb );
 			
 			addEventListener( MouseEvent.MOUSE_DOWN, mouseDown );
-			addEventListener( MouseEvent.MOUSE_MOVE, mouseMove );
 			
 			updateView();
 		}
@@ -65,6 +66,7 @@ package tonfall.display
 			update( mouseX );
 			
 			stage.addEventListener( MouseEvent.MOUSE_UP, mouseUp );
+			stage.addEventListener( MouseEvent.MOUSE_MOVE, mouseMove );
 		}
 		
 		private function mouseMove( event : MouseEvent ) : void
@@ -80,6 +82,7 @@ package tonfall.display
 			if( _dragging )
 			{
 				stage.removeEventListener( MouseEvent.MOUSE_UP, mouseUp );
+				stage.removeEventListener( MouseEvent.MOUSE_MOVE, mouseMove );
 				
 				_dragging = false;
 			}
