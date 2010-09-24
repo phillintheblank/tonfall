@@ -1,5 +1,6 @@
 package test.poly
 {
+	import tonfall.dsp.WaveFunction;
 	import tonfall.core.samplingRate;
 	import tonfall.core.noteToFrequency;
 	import tonfall.core.Signal;
@@ -42,7 +43,7 @@ package test.poly
 					envelope = ( --_remaining ) / _duration - 1.0;
 					envelope = 1.0 - envelope * envelope;
 
-					amplitude = Math.sin( _phase * 2.0 * Math.PI ) * envelope * volume;
+					amplitude = WaveFunction.biSinus( _phase ) * envelope * volume;
 
 					current.l += amplitude;
 					current.r += amplitude;
