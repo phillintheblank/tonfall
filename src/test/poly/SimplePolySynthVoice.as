@@ -1,10 +1,10 @@
 package test.poly
 {
-	import tonfall.util.WaveFunction;
-	import tonfall.core.samplingRate;
-	import tonfall.core.noteToFrequency;
 	import tonfall.core.Signal;
+	import tonfall.core.noteToFrequency;
+	import tonfall.core.samplingRate;
 	import tonfall.poly.IPolySynthVoice;
+	import tonfall.util.WaveFunction;
 
 	/**
 	 * Test implementation of a polyphonic synthesizer voice
@@ -29,6 +29,11 @@ package test.poly
 			
 			_duration =
 			_remaining = numSignals;
+		}
+		
+		public function stop() : void
+		{
+			// not implemented
 		}
 
 		public function processAdd( current: Signal, numSignals: int ) : Boolean

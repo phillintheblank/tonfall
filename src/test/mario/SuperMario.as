@@ -1,9 +1,10 @@
 package test.mario
 {
 	import tonfall.core.BlockInfo;
-	import flash.utils.ByteArray;
-	import tonfall.core.TimeEventNote;
 	import tonfall.core.Processor;
+	import tonfall.core.TimeEventNote;
+
+	import flash.utils.ByteArray;
 
 	/**
 	 * Transmits notes from the super-mario theme for testing purpose.

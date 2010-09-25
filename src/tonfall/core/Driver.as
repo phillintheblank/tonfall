@@ -1,10 +1,9 @@
 package tonfall.core
 {
-	import flash.utils.setTimeout;
-	import flash.media.SoundChannel;
-	import flash.utils.ByteArray;
 	import flash.events.SampleDataEvent;
 	import flash.media.Sound;
+	import flash.media.SoundChannel;
+	import flash.utils.ByteArray;
 
 	/**
 	 * Standard audio driver running on flash.media.Sound

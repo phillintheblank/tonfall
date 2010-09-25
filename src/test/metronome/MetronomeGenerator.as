@@ -1,11 +1,11 @@
 package test.metronome
 {
-	import tonfall.core.samplingRate;
-	import tonfall.core.noteToFrequency;
-	import tonfall.core.TimeEvent;
 	import tonfall.core.Signal;
 	import tonfall.core.SignalBuffer;
 	import tonfall.core.SignalProcessor;
+	import tonfall.core.TimeEvent;
+	import tonfall.core.noteToFrequency;
+	import tonfall.core.samplingRate;
 
 	/**
 	 * Sound Generator for Metronome (sinus, monophone)

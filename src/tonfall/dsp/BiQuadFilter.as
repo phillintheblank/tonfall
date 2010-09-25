@@ -1,7 +1,7 @@
 package tonfall.dsp
 {
-	import tonfall.math.sinh;
 	import tonfall.core.Signal;
+	import tonfall.math.sinh;
 	/**
 	 * http://www.drdobbs.com/184401931?pgno=12
 	 *
