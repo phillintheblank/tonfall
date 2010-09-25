@@ -1,12 +1,13 @@
 package tonfall.display
 {
 	import tonfall.core.Driver;
-	import flash.display.Sprite;
-	import flash.geom.Rectangle;
-	import flash.display.PixelSnapping;
-	import flash.display.BitmapData;
+
 	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.display.PixelSnapping;
+	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.geom.Rectangle;
 	import flash.media.SoundMixer;
 	import flash.utils.ByteArray;
 

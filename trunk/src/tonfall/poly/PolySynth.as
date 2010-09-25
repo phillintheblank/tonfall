@@ -1,12 +1,12 @@
 package tonfall.poly
 {
 	import tonfall.core.Parameter;
-	import tonfall.core.TimeConversion;
 	import tonfall.core.Signal;
-	import tonfall.core.TimeEventNote;
-	import tonfall.core.TimeEvent;
 	import tonfall.core.SignalBuffer;
 	import tonfall.core.SignalProcessor;
+	import tonfall.core.TimeConversion;
+	import tonfall.core.TimeEvent;
+	import tonfall.core.TimeEventNote;
 
 	/**
 	 * PolySynth provides a simple way to create a polyphone synthesizer.

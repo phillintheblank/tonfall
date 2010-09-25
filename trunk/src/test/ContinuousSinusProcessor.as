@@ -1,9 +1,9 @@
 package test
 {
-	import tonfall.core.Processor;
-	import tonfall.core.SignalBuffer;
-	import tonfall.core.Signal;
 	import tonfall.core.BlockInfo;
+	import tonfall.core.Processor;
+	import tonfall.core.Signal;
+	import tonfall.core.SignalBuffer;
 
 	/**
 	 * Hello World in DSP

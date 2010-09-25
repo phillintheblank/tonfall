@@ -11,6 +11,8 @@ package tonfall.poly
 	{
 		function start( note: Number, numSignals: int ): void;
 		
+		function stop(): void;
+		
 		function processAdd( current: Signal, numSignals: int ):Boolean;
 		
 		function dispose(): void;
