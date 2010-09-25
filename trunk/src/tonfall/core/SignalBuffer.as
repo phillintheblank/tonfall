@@ -77,6 +77,11 @@ package tonfall.core
 
 			_current = _vector[ _index ];
 		}
+
+		public function get vector() : Vector.<Signal>
+		{
+			return _vector;
+		}
 		
 		private function init( length: int ): void
 		{
