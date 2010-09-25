@@ -4,3 +4,7 @@ Install Tonfall
 Sound SampleDataEvent
 Metronome Simple
 Metronome Engine
+Tonematrix
+Delay
+Drumcomputer (Sampleplayback)
+[...]
