@@ -76,7 +76,7 @@ package tonfall.display
 			}
 		}
 		
-		private function resize( event: Event = null ) : void
+		protected function resize( event: Event = null ) : void
 		{
 			spectrum.x = ( stage.stageWidth - spectrum.width ) >> 1;
 			spectrum.y = ( stage.stageHeight - spectrum.height ) >> 1;
