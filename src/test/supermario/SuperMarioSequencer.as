@@ -1,4 +1,4 @@
-package test.mario
+package test.supermario
 {
 	import tonfall.core.BlockInfo;
 	import tonfall.core.Processor;
@@ -13,7 +13,7 @@ package test.mario
 	 * 
 	 * @author Andre Michelle
 	 */
-	public final class SuperMario extends Processor
+	public final class SuperMarioSequencer extends Processor
 	{
 		private static const NUM_EVENTS: int = 1282;
 		
@@ -47,7 +47,7 @@ package test.mario
 		
 		private var _timeEventTarget: Processor;
 		
-		public function SuperMario() {}
+		public function SuperMarioSequencer() {}
 		
 		override public function process( info: BlockInfo ) : void
 		{

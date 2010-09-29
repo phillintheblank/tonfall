@@ -11,9 +11,9 @@ package
 	 * @author Andre Michelle
 	 */
 	[SWF(width='640',height='480',backgroundColor='0x1b1b1b',frameRate='32',scriptTimeLimit='255')]
-	public final class TestEngineMetronome extends AbstractApplication
+	public final class Metronome extends AbstractApplication
 	{
-		public function TestEngineMetronome()
+		public function Metronome()
 		{
 			const sequencer: MetronomeSequencer = new MetronomeSequencer();
 			const generator: MetronomeGenerator = new MetronomeGenerator();
