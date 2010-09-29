@@ -1,5 +1,6 @@
 package tonfall.poly
 {
+	import tonfall.core.TimeEvent;
 	import tonfall.core.Signal;
 
 	/**
@@ -9,7 +10,7 @@ package tonfall.poly
 	 */
 	public interface IPolySynthVoice
 	{
-		function start( note: Number, numSignals: int ): void;
+		function start( event: TimeEvent ): void;
 		
 		function stop(): void;
 		

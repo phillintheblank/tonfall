@@ -1,6 +1,10 @@
 package test.poly
 {
+	import tonfall.core.TimeConversion;
+	import tonfall.core.Engine;
 	import tonfall.core.Signal;
+	import tonfall.core.TimeEvent;
+	import tonfall.core.TimeEventNote;
 	import tonfall.core.noteToFrequency;
 	import tonfall.core.samplingRate;
 	import tonfall.poly.IPolySynthVoice;
@@ -16,19 +20,22 @@ package test.poly
 	{
 		private const volume: Number = 0.2;
 		
+		private const engine: Engine = Engine.getInstance();
+		
 		private var _phase: Number;
 		private var _phaseIncr: Number;
 		
 		private var _duration: int;
 		private var _remaining: int;
 
-		public function start( note: Number, numSignals: int ) : void
+		public function start( event: TimeEvent ) : void
 		{
-			_phase = 0.0;
-			_phaseIncr = noteToFrequency( note ) / samplingRate;
+			var noteEvent: TimeEventNote = TimeEventNote( event ); 
 			
-			_duration =
-			_remaining = numSignals;
+			_phase = 0.0;
+			_phaseIncr = noteToFrequency( noteEvent.note ) / samplingRate;
+			
+			_duration = _remaining = TimeConversion.barsToNumSamples( noteEvent.duration, engine.bpm );
 		}
 		
 		public function stop() : void

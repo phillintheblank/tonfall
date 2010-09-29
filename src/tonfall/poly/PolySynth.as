@@ -4,7 +4,6 @@ package tonfall.poly
 	import tonfall.core.Signal;
 	import tonfall.core.SignalBuffer;
 	import tonfall.core.SignalProcessor;
-	import tonfall.core.TimeConversion;
 	import tonfall.core.TimeEvent;
 	import tonfall.core.TimeEventNote;
 
@@ -39,9 +38,9 @@ package tonfall.poly
 
 		private function startVoice( event: TimeEventNote ) : void
 		{
-			const voice: IPolySynthVoice =
-							_voicefactory.create( event );
-			voice.start( event.note, TimeConversion.barsToNumSamples( event.duration, engine.bpm ) );
+			const voice: IPolySynthVoice = _voicefactory.create( event );
+
+			voice.start( event );
 
 			activeVoices.push( voice );
 		}
