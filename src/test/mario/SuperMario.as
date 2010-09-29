@@ -35,7 +35,7 @@ package test.mario
 			for( var i: int = 0 ; i < NUM_EVENTS ; ++i )
 			{
 				event = new TimeEventNote();
-				event.position = stream.readFloat();
+				event.position = int( stream.readFloat() * 16.0 + 0.5 ) / 16.0; // QUANITIZE
 				event.duration = stream.readFloat();
 				event.note = stream.readUnsignedByte() + 12.0;
 
