@@ -1,8 +1,7 @@
 package
 {
-	import test.mario.SuperMario;
 	import test.poly.SimplePolySynthVoiceFactory;
-
+	import test.supermario.SuperMarioSequencer;
 	import tonfall.display.AbstractApplication;
 	import tonfall.poly.PolySynth;
 
@@ -12,11 +11,11 @@ package
 	 * @author Andre Michelle
 	 */
 	[SWF(width='640',height='480',backgroundColor='0x1b1b1b',frameRate='32',scriptTimeLimit='255')]
-	public final class TestEngineSuperMario extends AbstractApplication
+	public final class SuperMario extends AbstractApplication
 	{
-		public function TestEngineSuperMario()
+		public function SuperMario()
 		{
-			const sequencer: SuperMario = new SuperMario();
+			const sequencer: SuperMarioSequencer = new SuperMarioSequencer();
 			const generator: PolySynth = new PolySynth( SimplePolySynthVoiceFactory.INSTANCE );
 
 			sequencer.timeEventTarget = generator;
