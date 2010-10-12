@@ -10,14 +10,14 @@ package tonfall.core
 		private var _numSignals: int;
 
 		// Following values in musical time (bars)
-		private var _from: Number;
-		private var _to: Number;
+		private var _barFrom: Number;
+		private var _barTo: Number;
 		
 		internal function reset( numSignals: int, from: Number, to: Number ): void
 		{
 			_numSignals = numSignals;
-			_from = from;
-			_to = to;
+			_barFrom = from;
+			_barTo = to;
 		}
 
 		public function get numSignals() : int
@@ -25,19 +25,19 @@ package tonfall.core
 			return _numSignals;
 		}
 
-		public function get from() : Number
+		public function get barFrom() : Number
 		{
-			return _from;
+			return _barFrom;
 		}
 
-		public function get to() : Number
+		public function get barTo() : Number
 		{
-			return _to;
+			return _barTo;
 		}
 		
 		public function toString(): String
 		{
-			return '[BlockInfo numSignals: ' + _numSignals + ', from: ' + _from.toFixed(3) + ', to: ' + _to.toFixed(3) + ']';
+			return '[BlockInfo numSignals: ' + _numSignals + ', barFrom: ' + _barFrom.toFixed(3) + ', barTo: ' + _barTo.toFixed(3) + ']';
 		}
 	}
 }

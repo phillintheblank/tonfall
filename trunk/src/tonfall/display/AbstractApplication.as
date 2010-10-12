@@ -42,7 +42,7 @@ package tonfall.display
 			driver.engine = engine;
 
 			// delay call to avoid glitches (Flashplayer issue)
-			setTimeout( driver.start, 100 );
+			setTimeout( driver.init, 100 );
 		}
 		
 		public function addParameterSlider( parameter: Parameter ): ParameterSlider

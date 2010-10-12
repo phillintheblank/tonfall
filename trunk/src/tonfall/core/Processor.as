@@ -1,7 +1,7 @@
 package tonfall.core
 {
 	/**
-	 * Processor is a member in the digital audio processing chain.
+	 * Processor is a member in the engine's processing chain.
 	 * 
 	 * A Processor can generate audio or sequence events.
 	 * 
@@ -33,9 +33,9 @@ package tonfall.core
 		
 		private function sortOnPosition( a: TimeEvent, b: TimeEvent ): int
 		{
-			if( a.position > b.position )
+			if( a.barPosition > b.barPosition )
 				return 1;
-			if( a.position < b.position )
+			if( a.barPosition < b.barPosition )
 				return -1;
 
 			return 0;

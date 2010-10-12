@@ -34,6 +34,7 @@ package tonfall.core
 		private var _engine: Engine;
 		private var _soundChannel: SoundChannel;
 		private var _latency: Number = 0.0;
+		private var _running: Boolean;
 
 		public function Driver()
 		{
@@ -77,9 +78,26 @@ package tonfall.core
 			return _soundChannel.rightPeak;
 		}
 		
-		public function start() : void
+		public function init() : void
 		{
+			if ( null != _soundChannel )
+			{
+				throw new Error( 'Cannot inited twice.' );
+			}
+			
 			_soundChannel = sound.play();
+			
+			_running = true;
+		}
+
+		public function get running(): Boolean
+		{
+			return _running;
+		}
+
+		public function set running( running: Boolean ): void
+		{
+			_running = running;
 		}
 		
 		private function sampleData( event: SampleDataEvent ) : void
@@ -90,7 +108,7 @@ package tonfall.core
 				_latency = event.position / 44.1 - _soundChannel.position;
 			}
 
-			if( _engine == null )
+			if( _engine == null || !_running )
 			{
 				event.data.writeBytes( zeroBytes );
 			}

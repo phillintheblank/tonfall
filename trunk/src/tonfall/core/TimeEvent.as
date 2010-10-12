@@ -7,7 +7,7 @@ package tonfall.core
 	 */
 	public class TimeEvent
 	{
-		public var position: Number; // in bars
+		public var barPosition: Number; // in bars
 
 		public function dispose() : void {}
 	}

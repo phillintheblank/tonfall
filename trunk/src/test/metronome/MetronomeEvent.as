@@ -13,7 +13,7 @@ package test.metronome
 		
 		public function toString(): String
 		{
-			return '[MetronomeEvent position: ' + position + ', bar: ' + bar + ', beat: ' + beat + ']';
+			return '[MetronomeEvent position: ' + bar + ', bar: ' + bar + ', beat: ' + beat + ']';
 		}
 	}
 }

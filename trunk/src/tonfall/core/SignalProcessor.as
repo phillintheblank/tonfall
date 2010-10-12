@@ -13,9 +13,9 @@ package tonfall.core
 		{
 			var event: TimeEvent;
 			
-			var localOffset:int = 0;
+			var localIndex:int = 0;
 
-			var numSignals: int = info.numSignals;
+			var remaining: int = info.numSignals;
 
 			var eventOffset: int;
 
@@ -23,15 +23,15 @@ package tonfall.core
 			{
 				event = events.shift();
 
-				eventOffset = engine.deltaBlockIndexAt( event.position ) - localOffset;
+				eventOffset = engine.deltaBlockIndexAt( event.barPosition ) - localIndex;
 				
 				if( 0 < eventOffset )
 				{
 					// ADVANCE IN BUFFER
 					processSignals( eventOffset );
 
-					numSignals -= eventOffset;
-					localOffset += eventOffset;
+					remaining -= eventOffset;
+					localIndex += eventOffset;
 				}
 				
 				// SEND EVENT ON THE EXACT POSITION
@@ -40,10 +40,10 @@ package tonfall.core
 				event.dispose();
 			}
 
-			if( numSignals )
+			if( remaining )
 			{
 				// PROCESS REST
-				processSignals( numSignals );
+				processSignals( remaining );
 			}
 		}
 		

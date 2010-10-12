@@ -181,12 +181,12 @@ final class TonematrixSequencer extends Processor
 	override public function process( info : BlockInfo ) : void
 	{
 		
-		var index: int = int( info.from * 16.0 );
+		var index: int = int( info.barFrom * 16.0 );
 		var position: Number = index / 16.0;
 		
-		while( position < info.to )
+		while( position < info.barTo )
 		{
-			if( position >= info.from )
+			if( position >= info.barFrom )
 			{
 				for( var i: int = 0 ; i < 16 ; ++i )
 				{
@@ -194,9 +194,9 @@ final class TonematrixSequencer extends Processor
 					{
 						var event: TimeEventNote = new TimeEventNote();
 
-						event.position = position;
+						event.barPosition = position;
 						event.note = ToneMatrixNotes[i];
-						event.duration = 1.0/16.0;
+						event.barDuration = 1.0/16.0;
 						receiver.addTimeEvent(event);
 					}
 				}

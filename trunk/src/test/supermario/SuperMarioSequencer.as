@@ -35,8 +35,8 @@ package test.supermario
 			for( var i: int = 0 ; i < NUM_EVENTS ; ++i )
 			{
 				event = new TimeEventNote();
-				event.position = int( stream.readFloat() * 16.0 + 0.5 ) / 16.0; // QUANITIZE
-				event.duration = stream.readFloat();
+				event.barPosition = int( stream.readFloat() * 16.0 + 0.5 ) / 16.0; // QUANITIZE
+				event.barDuration = stream.readFloat();
 				event.note = stream.readUnsignedByte() + 12.0;
 
 				notes[i] = event;
@@ -62,10 +62,10 @@ package test.supermario
 			{
 				event = notes[i];
 				
-				if( event.position >= info.to )
+				if( event.barPosition >= info.barTo )
 					break;
 				
-				if( event.position >= info.from )
+				if( event.barPosition >= info.barFrom )
 				{
 					_timeEventTarget.addTimeEvent( event );
 				}
