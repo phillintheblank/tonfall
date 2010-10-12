@@ -22,7 +22,7 @@ package test.metronome
 			if( null == _timeEventTarget )
 				throw new Error( 'No event target defined.' );
 			
-			var position:Number = int( info.from * _lower ) / _lower;
+			var position:Number = int( info.barFrom * _lower ) / _lower;
 
 			var beat:int;
 			var bar:int;
@@ -31,14 +31,14 @@ package test.metronome
 
 			do
 			{
-				if( position >= info.from )
+				if( position >= info.barFrom )
 				{
 					beat = position * _lower;
 					bar  = int( beat / _upper );
 					beat %= _upper;
 
 					event = new MetronomeEvent();
-					event.position = position;
+					event.bar = position;
 					event.bar = bar;
 					event.beat = beat;
 
@@ -47,7 +47,7 @@ package test.metronome
 
 				position += 1.0 / _lower;
 			}
-			while( position < info.to );
+			while( position < info.barTo );
 		}
 
 		public function get upper() : int

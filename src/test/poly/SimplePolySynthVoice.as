@@ -35,7 +35,7 @@ package test.poly
 			_phase = 0.0;
 			_phaseIncr = noteToFrequency( noteEvent.note ) / samplingRate;
 			
-			_duration = _remaining = TimeConversion.barsToNumSamples( noteEvent.duration, engine.bpm );
+			_duration = _remaining = TimeConversion.barsToNumSamples( noteEvent.barDuration, engine.bpm );
 		}
 		
 		public function stop() : void
