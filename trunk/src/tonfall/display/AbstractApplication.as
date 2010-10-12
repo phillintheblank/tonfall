@@ -29,16 +29,11 @@ package tonfall.display
 		
 		public function AbstractApplication()
 		{
-			stage.scaleMode = StageScaleMode.NO_SCALE;
-			stage.align = StageAlign.TOP_LEFT;
-			stage.addEventListener( Event.RESIZE, resize );
-			stage.frameRate = 1000.0;
+			addEventListener( Event.ADDED_TO_STAGE, addedToStage );
 			
 			// preallocate memory for processing
 			Memory.length = Driver.BLOCK_SIZE << 3;
 			
-			resize();
-
 			driver.engine = engine;
 
 			// delay call to avoid glitches (Flashplayer issue)
@@ -80,6 +75,18 @@ package tonfall.display
 		{
 			spectrum.x = ( stage.stageWidth - spectrum.width ) >> 1;
 			spectrum.y = ( stage.stageHeight - spectrum.height ) >> 1;
+		}
+		
+		protected function addedToStage( event: Event ): void
+		{
+			removeEventListener( Event.ADDED_TO_STAGE, addedToStage );
+			
+			stage.scaleMode = StageScaleMode.NO_SCALE;
+			stage.align = StageAlign.TOP_LEFT;
+			stage.addEventListener( Event.RESIZE, resize );
+			stage.frameRate = 1000.0;
+			
+			resize();
 		}
 	}
 }
