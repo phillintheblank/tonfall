@@ -58,13 +58,7 @@ package tonfall.format.wav
 		 */
 		public function get supported() : Boolean
 		{
-			if ( 1 != _compression && 3 != _compression )
-				return false;
-
-			if ( 8 != _bits && 16 != _bits && 32 != _bits )
-				return false;
-
-			return 1 == _numChannels || 2 == _numChannels;
+			return null != _strategy;
 		}
 
 		/**
