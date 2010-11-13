@@ -6,11 +6,6 @@ package tonfall.format.wav
 	import flash.utils.Endian;
 
 	/**
-	 * WavDecoder
-	 * 
-	 * Testing with:
-	 * http://www-mmsp.ece.mcgill.ca/documents/audioformats/wave/Samples.html
-	 * 
 	 * @author Andre Michelle
 	 */
 	public final class WavDecoder
