@@ -8,7 +8,7 @@ package tonfall.format.wav
 	internal final class WAV16BitStereo44Khz
 		implements IWavDecoderStrategy
 	{
-		public static const INSTANCE: IWavDecoderStrategy = new WAV16BitMono44Khz();
+		public static const INSTANCE: IWavDecoderStrategy = new WAV16BitStereo44Khz();
 		
 		public function supports( decoder: WavDecoder ) : Boolean
 		{
