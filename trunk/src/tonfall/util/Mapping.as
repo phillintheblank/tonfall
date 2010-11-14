@@ -1,7 +1,7 @@
 package tonfall.util
 {
 	/**
-	 * @author aM
+	 * @author Andre Michelle
 	 */
 	public final class Mapping
 	{

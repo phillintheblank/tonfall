@@ -1,11 +1,10 @@
 package
 {
-	import flash.events.MouseEvent;
-	import tonfall.format.IAudioFormat;
 	import tonfall.format.wav.WavDecoder;
 
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.events.SampleDataEvent;
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
@@ -17,7 +16,7 @@ package
 	import flash.utils.ByteArray;
 
 	/**
-	 * @author aM
+	 * @author Andre Michelle
 	 */
 	[SWF(backgroundColor="#EDEDED", frameRate="31", width="512", height="192")]
 	public final class WavFormatDecoder extends Sprite
@@ -27,7 +26,7 @@ package
 		private const textField : TextField = new TextField();
 		private const sound : Sound = new Sound();
 		private const memory : ByteArray = new ByteArray();
-		private var decoder : IAudioFormat;
+		private var decoder : WavDecoder;
 		private var numSamples : Number;
 		private var position : Number;
 		private var soundChannel : SoundChannel;
@@ -104,27 +103,24 @@ package
 				textField.appendText( e.message + '\n' );
 				return;
 			}
-
-			// Not quite sure, if we get all these information from every format thinkable
-			const wav_decoder : WavDecoder = WavDecoder( decoder );
-
-			if ( 0 < wav_decoder.ignoredTags.length )
+			
+			textField.appendText( '[Wav Header] compression: ' + decoder.compression + '\n' );
+			textField.appendText( '[Wav Header] numChannels: ' + decoder.numChannels + '\n' );
+			textField.appendText( '[Wav Header] samplingRate: ' + decoder.rate + '\n' );
+			textField.appendText( '[Wav Header] bytesPerSecond: ' + decoder.bytesPerSecond + '\n' );
+			textField.appendText( '[Wav Header] blockAlign: ' + decoder.blockAlign + '\n' );
+			textField.appendText( '[Wav Header] bits: ' + decoder.bits + '\n' );
+			textField.appendText( '[Wav Header] numSamples: ' + decoder.numSamples + '\n' );
+			textField.appendText( '[Wav Header] seconds: ' + decoder.seconds.toFixed( 3 ) + '\n' );
+			textField.appendText( '[Wav Header] supported: ' + decoder.supported + '\n' );
+			
+			if ( 0 < decoder.ignoredTags.length )
 			{
 				// WAV format support additional information. Printing the IDs...
-				textField.appendText( '[Wav Header] ignored tags: ' + wav_decoder.ignoredTags + '\n' );
+				textField.appendText( '[Wav Header] ignored tags: ' + decoder.ignoredTags + '\n' );
 			}
 
-			textField.appendText( '[Wav Header] compression: ' + wav_decoder.compression + '\n' );
-			textField.appendText( '[Wav Header] numChannels: ' + wav_decoder.numChannels + '\n' );
-			textField.appendText( '[Wav Header] samplingRate: ' + wav_decoder.rate + '\n' );
-			textField.appendText( '[Wav Header] bytesPerSecond: ' + wav_decoder.bytesPerSecond + '\n' );
-			textField.appendText( '[Wav Header] blockAlign: ' + wav_decoder.blockAlign + '\n' );
-			textField.appendText( '[Wav Header] bits: ' + wav_decoder.bits + '\n' );
-			textField.appendText( '[Wav Header] numSamples: ' + wav_decoder.numSamples + '\n' );
-			textField.appendText( '[Wav Header] seconds: ' + wav_decoder.seconds.toFixed( 3 ) + '\n' );
-			textField.appendText( '[Wav Header] supported: ' + wav_decoder.supported + '\n' );
-
-			if ( wav_decoder.supported )
+			if ( decoder.supported )
 			{
 				textField.appendText( 'playback...\n' );
 				play();

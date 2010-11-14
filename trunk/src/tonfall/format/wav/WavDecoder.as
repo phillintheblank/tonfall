@@ -11,11 +11,6 @@ package tonfall.format.wav
 	public final class WavDecoder
 	implements IAudioFormat
 	{
-		private static const TAG_RIFF : uint = 0x46464952; // Resource Interchange File Format
-		private static const TAG_WAVE : uint = 0x45564157; // Wave
-		private static const TAG_FMT  : uint = 0x20746D66; // Format
-		private static const TAG_DATA : uint = 0x61746164; // Audio Data
-		
 		private static const NO_WAVE_FILE: Error = new Error( 'Not a wav-file.' );
 		private static const NOT_SUPPORTED : Error = new Error( 'Not supported.' );
 		
@@ -108,7 +103,7 @@ package tonfall.format.wav
 			if ( null == _strategy )
 				throw NOT_SUPPORTED;
 
-			_strategy.read( this, target, length, startPosition );
+			_strategy.readData( this, target, length, startPosition );
 			
 			return length;
 		}
@@ -178,7 +173,7 @@ package tonfall.format.wav
 			_bytes.position = 0;
 			_bytes.endian = Endian.LITTLE_ENDIAN;
 
-			if ( _bytes.readUnsignedInt() != TAG_RIFF )
+			if ( _bytes.readUnsignedInt() != WavTags.RIFF )
 				throw NO_WAVE_FILE;
 
 			const fileSize : int = _bytes.readUnsignedInt();
@@ -190,7 +185,7 @@ package tonfall.format.wav
 				// Skip
 			}
 
-			if ( _bytes.readUnsignedInt() != TAG_WAVE )
+			if ( _bytes.readUnsignedInt() != WavTags.WAVE )
 				throw NO_WAVE_FILE;
 
 			var chunkID : uint;
@@ -199,16 +194,13 @@ package tonfall.format.wav
 
 			while ( _bytes.bytesAvailable )
 			{
-				var p: int = _bytes.position;
 				chunkID = _bytes.readUnsignedInt();
-				_bytes.position = p;
-				trace( _bytes.readUTFBytes(4) );
 				chunkLength = _bytes.readUnsignedInt();
 				chunkPosition = _bytes.position;
 
 				switch( chunkID )
 				{
-					case TAG_FMT:
+					case WavTags.FMT:
 						_compression = _bytes.readUnsignedShort();
 						_numChannels = _bytes.readUnsignedShort();
 						_samplingRate = _bytes.readUnsignedInt();
@@ -218,7 +210,7 @@ package tonfall.format.wav
 						// WAV allows additional information here (skip)
 						break;
 						
-					case TAG_DATA:
+					case WavTags.DATA:
 						// Audio data chunk starts here (skip)
 						_dataOffset = chunkPosition;
 						_numSamples = chunkLength / _blockAlign;
@@ -251,7 +243,7 @@ package tonfall.format.wav
 			{
 				var strategy: IWavIOStrategy = SUPPORTED[i];
 
-				if ( strategy.canDecode( this ) )
+				if ( strategy.readableFor( this ) )
 				{
 					_strategy = strategy;
 					
