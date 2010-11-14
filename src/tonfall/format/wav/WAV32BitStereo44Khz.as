@@ -12,7 +12,7 @@ package tonfall.format.wav
 		
 		public function supports( decoder: WavDecoder ) : Boolean
 		{
-			return 1 == decoder.compression && 32 == decoder.bits && 2 == decoder.numChannels && 44100 == decoder.rate;
+			return 3 == decoder.compression && 32 == decoder.bits && 2 == decoder.numChannels && 44100 == decoder.rate;
 		}
 		
 		public function read( decoder: WavDecoder, target : ByteArray, length : Number, startPosition : Number ) : void
@@ -25,10 +25,8 @@ package tonfall.format.wav
 			
 			for ( var i : int = 0 ; i < length ; ++i )
 			{
-				const amplitude: Number = bytes.readFloat();
-				 
-				target.writeFloat( amplitude );
-				target.writeFloat( amplitude );
+				target.writeFloat( bytes.readFloat() );
+				target.writeFloat( bytes.readFloat() );
 			}
 		}
 	}
