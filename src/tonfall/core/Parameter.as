@@ -3,7 +3,7 @@ package tonfall.core
 	/**
 	 * Parameter stores a normalized value for external controlling
 	 * 
-	 * @author aM
+	 * @author Andre Michelle
 	 */
 	public final class Parameter
 	{

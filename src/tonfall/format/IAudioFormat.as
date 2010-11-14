@@ -2,7 +2,7 @@ package tonfall.format
 {
 	import flash.utils.ByteArray;
 	/**
-	 * @author aM
+	 * @author Andre Michelle
 	 */
 	public interface IAudioFormat
 	{
