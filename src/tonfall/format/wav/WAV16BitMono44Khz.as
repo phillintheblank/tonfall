@@ -5,7 +5,7 @@ package tonfall.format.wav
 	/**
 	 * @author Andre Michelle
 	 */
-	internal final class WAV16BitMono44Khz
+	public final class WAV16BitMono44Khz
 		implements IWavIOStrategy
 	{
 		public static const INSTANCE: IWavIOStrategy = new WAV16BitMono44Khz();
