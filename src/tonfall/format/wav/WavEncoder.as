@@ -71,6 +71,11 @@ package tonfall.format.wav
 			
 			throw WAV_HAS_NOT_BEEN_WRITTEN;
 		}
+		
+		public function dispose(): void
+		{
+			_bytes = null;
+		}
 
 		private function writeHeader() : void
 		{
