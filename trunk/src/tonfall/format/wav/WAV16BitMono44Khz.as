@@ -6,11 +6,11 @@ package tonfall.format.wav
 	 * @author aM
 	 */
 	internal final class WAV16BitMono44Khz
-		implements IWavDecoderStrategy
+		implements IWavIOStrategy
 	{
-		public static const INSTANCE: IWavDecoderStrategy = new WAV16BitMono44Khz();
+		public static const INSTANCE: IWavIOStrategy = new WAV16BitMono44Khz();
 		
-		public function supports( decoder: WavDecoder ) : Boolean
+		public function canDecode( decoder: WavDecoder ) : Boolean
 		{
 			return 1 == decoder.compression && 16 == decoder.bits && 1 == decoder.numChannels && 44100 == decoder.rate;
 		}

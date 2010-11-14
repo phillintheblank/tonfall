@@ -19,7 +19,7 @@ package tonfall.format.wav
 		private static const NO_WAVE_FILE: Error = new Error( 'Not a wav-file.' );
 		private static const NOT_SUPPORTED : Error = new Error( 'Not supported.' );
 		
-		private static const SUPPORTED : Vector.<IWavDecoderStrategy> = getSupportedWavFormats();
+		private static const SUPPORTED : Vector.<IWavIOStrategy> = getSupportedWavFormats();
 
 		/*
 		 * You can add extra strategies here.
@@ -27,9 +27,9 @@ package tonfall.format.wav
 		 * Lowest index: Most expected
 		 * Highest index: Less expected
 		 */
-		private static function getSupportedWavFormats() : Vector.<IWavDecoderStrategy>
+		private static function getSupportedWavFormats() : Vector.<IWavIOStrategy>
 		{
-			const formats: Vector.<IWavDecoderStrategy> = new Vector.<IWavDecoderStrategy>( 6, true );
+			const formats: Vector.<IWavIOStrategy> = new Vector.<IWavIOStrategy>( 6, true );
 
 			formats[0] = WAV16BitStereo44Khz.INSTANCE;
 			formats[1] = WAV16BitMono44Khz.INSTANCE;
@@ -55,7 +55,7 @@ package tonfall.format.wav
 		private var _bits : int;
 		private var _numSamples : Number;
 		private var _dataOffset : Number;
-		private var _strategy : IWavDecoderStrategy;
+		private var _strategy : IWavIOStrategy;
 
 		public function WavDecoder( bytes : ByteArray )
 		{
@@ -249,9 +249,9 @@ package tonfall.format.wav
 			
 			for( var i: int = 0 ; i < n ; ++i )
 			{
-				var strategy: IWavDecoderStrategy = SUPPORTED[i];
+				var strategy: IWavIOStrategy = SUPPORTED[i];
 
-				if ( strategy.supports( this ) )
+				if ( strategy.canDecode( this ) )
 				{
 					_strategy = strategy;
 					
