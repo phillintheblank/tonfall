@@ -11,13 +11,25 @@ package tonfall.format.wav
 	public final class WavDecoder
 	implements IAudioFormat
 	{
+		private static const TAG_RIFF : uint = 0x46464952; // Resource Interchange File Format
+		private static const TAG_WAVE : uint = 0x45564157; // Wave
+		private static const TAG_FMT  : uint = 0x20746D66; // Format
+		private static const TAG_DATA : uint = 0x61746164; // Audio Data
+		
+		private static const NO_WAVE_FILE: Error = new Error( 'Not a wav-file.' );
 		private static const NOT_SUPPORTED : Error = new Error( 'Not supported.' );
 		
 		private static const SUPPORTED : Vector.<IWavDecoderStrategy> = getSupportedWavFormats();
 
+		/*
+		 * You can add extra strategies here.
+		 * 
+		 * Lowest index: Most expected
+		 * Highest index: Less expected
+		 */
 		private static function getSupportedWavFormats() : Vector.<IWavDecoderStrategy>
 		{
-			const formats: Vector.<IWavDecoderStrategy> = new Vector.<IWavDecoderStrategy>( 7, true );
+			const formats: Vector.<IWavDecoderStrategy> = new Vector.<IWavDecoderStrategy>( 6, true );
 
 			formats[0] = WAV16BitStereo44Khz.INSTANCE;
 			formats[1] = WAV16BitMono44Khz.INSTANCE;
@@ -25,12 +37,14 @@ package tonfall.format.wav
 			formats[3] = WAV32BitMono44Khz.INSTANCE;
 			formats[4] = WAV8BitStereo44Khz.INSTANCE;
 			formats[5] = WAV8BitMono44Khz.INSTANCE;
-			formats[6] = WAV16BitMonoAllKhz.INSTANCE;
 			
 			return formats;
 		}
 		
-		public const uncatched : Array = new Array();
+		/**
+		 * Storing ignored tags to see what is still missing
+		 */
+		public const ignoredTags : Array = new Array();
 		
 		private var _bytes : ByteArray;
 		private var _compression : int;
@@ -164,48 +178,66 @@ package tonfall.format.wav
 			_bytes.position = 0;
 			_bytes.endian = Endian.LITTLE_ENDIAN;
 
-			if ( _bytes.readUnsignedInt() != 0x46464952 ) // 'RIFF'
-				throw new Error( 'Unknown Format (Not RIFF).' );
+			if ( _bytes.readUnsignedInt() != TAG_RIFF )
+				throw NO_WAVE_FILE;
 
 			const fileSize : int = _bytes.readUnsignedInt();
 
-			// I have seen this before, but worked for some reason.
 			if ( _bytes.length != fileSize + 8 )
-				trace( '[Warning] Length does not match to wav-specifications. bytes.length: ' + _bytes.length + ' fileSize: ' + fileSize );
+			{
+				// Length does not match to wav-specifications
+				// I have seen a wav with less before, but worked anyway
+				// Skip
+			}
 
-			if ( _bytes.readUnsignedInt() != 0x45564157 ) // 'WAVE'
-				throw new Error( 'Unknown Format (Not WAVE).' );
+			if ( _bytes.readUnsignedInt() != TAG_WAVE )
+				throw NO_WAVE_FILE;
 
-			var id : String;
-			var length : uint;
-			var position : uint;
+			var chunkID : uint;
+			var chunkLength : uint;
+			var chunkPosition : uint;
 
 			while ( _bytes.bytesAvailable )
 			{
-				id = _bytes.readUTFBytes( 4 );
-				length = _bytes.readUnsignedInt();
-				position = _bytes.position;
+				var p: int = _bytes.position;
+				chunkID = _bytes.readUnsignedInt();
+				_bytes.position = p;
+				trace( _bytes.readUTFBytes(4) );
+				chunkLength = _bytes.readUnsignedInt();
+				chunkPosition = _bytes.position;
 
-				switch( id )
+				switch( chunkID )
 				{
-					case 'fmt ':
+					case TAG_FMT:
 						_compression = _bytes.readUnsignedShort();
 						_numChannels = _bytes.readUnsignedShort();
 						_samplingRate = _bytes.readUnsignedInt();
 						_bytesPerSecond = _bytes.readUnsignedInt();
 						_blockAlign = _bytes.readUnsignedShort();
 						_bits = _bytes.readUnsignedShort();
+						// WAV allows additional information here (skip)
 						break;
-					case 'data':
-						_dataOffset = position;
-						_numSamples = length / _blockAlign;
+						
+					case TAG_DATA:
+						// Audio data chunk starts here (skip)
+						_dataOffset = chunkPosition;
+						_numSamples = chunkLength / _blockAlign;
 						break;
+
 					default:
-						uncatched.push( id );
+						// WAV allows additional tags to store extra information like markers (skip)
+						ignoredTags.push(
+							String.fromCharCode(
+								chunkID & 0xFF,
+								( chunkID >> 8 ) & 0xFF,
+								( chunkID >> 16 ) & 0xFF,
+								( chunkID >> 24 ) & 0xFF )
+							);
 						break;
 				}
 
-				_bytes.position = position + length;
+				// Skip
+				_bytes.position = chunkPosition + chunkLength;
 			}
 			
 			findStrategy();
@@ -223,7 +255,7 @@ package tonfall.format.wav
 				{
 					_strategy = strategy;
 					
-					break;
+					return;
 				}
 			}
 		}
