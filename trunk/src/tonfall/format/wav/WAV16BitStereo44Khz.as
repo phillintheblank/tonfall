@@ -35,7 +35,7 @@ package tonfall.format.wav
 			bytes.writeUnsignedInt( WavTags.FMT );
 			bytes.writeUnsignedInt( 16 ); // chunk length
 			bytes.writeShort( 1 ); // compression
-			bytes.writeShort( 1 ); // numChannels
+			bytes.writeShort( 2 ); // numChannels
 			bytes.writeUnsignedInt( 44100 ); // samplingRate
 			bytes.writeUnsignedInt( 44100 << 2 ); // bytesPerSecond
 			bytes.writeShort( 4 ); // blockAlign
