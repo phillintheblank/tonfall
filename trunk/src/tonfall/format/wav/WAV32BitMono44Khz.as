@@ -1,10 +1,8 @@
 package tonfall.format.wav
 {
-	import tonfall.format.pcm.PCM32BitMono44Khz;
 	import tonfall.format.AbstractAudioDecoder;
 	import tonfall.format.IAudioIOStrategy;
-
-	import flash.utils.ByteArray;
+	import tonfall.format.pcm.PCM32BitMono44Khz;
 
 	/**
 	 * @author Andre Michelle
@@ -19,16 +17,9 @@ package tonfall.format.wav
 			return 3 == decoder.compressionType && 32 == decoder.bits && 1 == decoder.numChannels && 44100 == decoder.samplingRate;
 		}
 		
-		override public function writeFormatTag( bytes : ByteArray ) : void
+		override public function get compressionType(): *
 		{
-			bytes.writeUnsignedInt( WavTags.FMT );
-			bytes.writeUnsignedInt( 16 ); // chunk length
-			bytes.writeShort( 3 ); // compression
-			bytes.writeShort( 1 ); // numChannels
-			bytes.writeUnsignedInt( 44100 ); // samplingRate
-			bytes.writeUnsignedInt( 44100 << 2 ); // bytesPerSecond
-			bytes.writeShort( 4 ); // blockAlign
-			bytes.writeShort( 32 ); // bits
+			return 3;
 		}
 	}
 }

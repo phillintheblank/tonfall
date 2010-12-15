@@ -4,8 +4,6 @@ package tonfall.format.aiff
 	import tonfall.format.IAudioIOStrategy;
 	import tonfall.format.pcm.PCM16BitStereo44Khz;
 
-	import flash.utils.ByteArray;
-
 	/**
 	 * @author Andre Michelle
 	 */
@@ -16,18 +14,12 @@ package tonfall.format.aiff
 		
 		override public function readableFor( decoder: AbstractAudioDecoder ) : Boolean
 		{
-			return ( 'SSND' == decoder.compressionType || 'CHAN' == decoder.compressionType ) && 16 == decoder.bits && 2 == decoder.numChannels && 44100 == decoder.samplingRate;
+			return ( AiffTags.SSND == decoder.compressionType || AiffTags.CHAN == decoder.compressionType ) && 16 == decoder.bits && 2 == decoder.numChannels && 44100 == decoder.samplingRate;
 		}
 		
-		override public function writeFormatTag( bytes : ByteArray ) : void
+		override public function get compressionType(): *
 		{
-			bytes.writeUTFBytes( AiffTags.COMM );
-			bytes.writeShort( 2 ); // numChannels
-			bytes.writeUnsignedInt( 0 ); // numSamples
-			bytes.writeShort( 16 ); // bits
-			// TODO write extended
-			bytes.writeUTF( AiffTags.SSND );
-			// TODO
+			return AiffTags.SSND;
 		}
 	}
 }

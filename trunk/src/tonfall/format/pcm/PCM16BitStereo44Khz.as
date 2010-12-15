@@ -61,9 +61,24 @@ package tonfall.format.pcm
 			return true;
 		}
 
-		public function writeFormatTag( bytes: ByteArray ): void
+		public function get compressionType(): *
 		{
-			// No Header
+			return null;
+		}
+
+		public function get samplingRate(): Number
+		{
+			return 44100.0;
+		}
+
+		public function get numChannels(): int
+		{
+			return 2;
+		}
+
+		public function get bits(): int
+		{
+			return 16;
 		}
 	}
 }

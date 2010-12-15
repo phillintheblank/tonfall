@@ -1,10 +1,10 @@
 package tonfall.format.pcm
 {
-	import flash.utils.Endian;
 	import tonfall.format.AbstractAudioDecoder;
 	import tonfall.format.IAudioIOStrategy;
 
 	import flash.utils.ByteArray;
+	import flash.utils.Endian;
 
 	/**
 	 * @author Andre Michelle
@@ -71,20 +71,35 @@ package tonfall.format.pcm
 			}
 		}
 		
-		public function get blockAlign() : uint
-		{
-			return 6;
-		}
-
 		public function readableFor( decoder: AbstractAudioDecoder ): Boolean
 		{
 			// No proper check possible
 			return true;
 		}
 
-		public function writeFormatTag( bytes: ByteArray ): void
+		public function get compressionType(): *
 		{
-			// No Header
+			return null;
+		}
+
+		public function get samplingRate(): Number
+		{
+			return 44100.0;
+		}
+
+		public function get numChannels(): int
+		{
+			return 2;
+		}
+
+		public function get bits(): int
+		{
+			return 24;
+		}
+		
+		public function get blockAlign() : uint
+		{
+			return 6;
 		}
 	}
 }

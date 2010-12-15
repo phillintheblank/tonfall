@@ -88,20 +88,35 @@ package tonfall.format.pcm
 			}
 		}
 		
-		public function get blockAlign() : uint
-		{
-			return 1;
-		}
-		
 		public function readableFor( decoder: AbstractAudioDecoder ): Boolean
 		{
 			// No proper check possible
 			return true;
 		}
 
-		public function writeFormatTag( bytes: ByteArray ): void
+		public function get compressionType(): *
 		{
-			// No Header
+			return null;
+		}
+
+		public function get samplingRate(): Number
+		{
+			return 44100.0;
+		}
+
+		public function get numChannels(): int
+		{
+			return 1;
+		}
+
+		public function get bits(): int
+		{
+			return 8;
+		}
+		
+		public function get blockAlign() : uint
+		{
+			return 1;
 		}
 	}
 }
