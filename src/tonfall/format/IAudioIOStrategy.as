@@ -23,12 +23,6 @@ package tonfall.format
 		function readData( decoder: AbstractAudioDecoder, target : ByteArray, length : Number, startPosition : Number ) : void;
 
 		/**
-		 * Writes format tag
-		 * @param bytes ByteArray to write the format tag
-		 */
-		function writeFormatTag( bytes: ByteArray ): void;
-
-		/**
 		 * Reads audio data in Flashplayer format (44100Hz,Stereo,Float) and writes audio data to target format
 		 * 
 		 * @param data ByteArray with incoming audio data in Flashplayer format
@@ -41,5 +35,11 @@ package tonfall.format
 		 * @return blockAlign
 		 */
 		function get blockAlign(): uint;
+		
+		/**
+		 * Writes format tag
+		 * @param bytes ByteArray to write the format tag
+		 */
+		function writeFormatTag( bytes: ByteArray ): void;
 	}
 }
