@@ -1,5 +1,6 @@
 package tonfall.format.aiff
 {
+	import tonfall.format.FormatError;
 	import tonfall.format.AbstractAudioDecoder;
 	import tonfall.format.IAudioIOStrategy;
 
@@ -11,8 +12,6 @@ package tonfall.format.aiff
 	 */
 	public final class AiffDecoder extends AbstractAudioDecoder
 	{
-		private static const NO_AIFF_FILE: Error = new Error( 'Not a aiff-file.' );
-		
 		private static const STRATEGIES : Vector.<IAudioIOStrategy> = getSupportedStrategies();
 
 		/*
@@ -59,13 +58,13 @@ package tonfall.format.aiff
 			
 			if( ckID != AiffTags.FORM )
 			{
-				throw new Error( 'NO FORM TAG' );
+				throw new FormatError( 'FORM TAG missing', 'AIFF' );
 				return;
 			}
 			
 			if( ckDataSize != bytes.length - 8 ) // SUBTRACT ID & SIZE
 			{
-				throw new Error( 'WRONG SIZE' );
+				throw new FormatError( 'Wrong size', 'AIFF' );
 				return;
 			}
 			
@@ -73,8 +72,7 @@ package tonfall.format.aiff
 			
 			if( formType != AiffTags.AIFF )
 			{
-				throw NO_AIFF_FILE;
-				return;
+				throw new FormatError( 'AIFF TAG missing', 'AIFF' );
 			}
 			
 			var ckPosition: uint;
@@ -113,7 +111,7 @@ package tonfall.format.aiff
 				
 				if( ckPosition >= bytes.length )
 				{
-					trace( 'EOF', ckPosition - bytes.length );
+					//trace( 'EOF', ckPosition - bytes.length );
 					return;
 				}
 				

@@ -1,6 +1,7 @@
 package tonfall.format.wav
 {
 	import tonfall.format.AbstractAudioDecoder;
+	import tonfall.format.FormatError;
 	import tonfall.format.IAudioIOStrategy;
 
 	import flash.utils.ByteArray;
@@ -11,8 +12,6 @@ package tonfall.format.wav
 	 */
 	public final class WavDecoder extends AbstractAudioDecoder
 	{
-		private static const NO_WAVE_FILE: Error = new Error( 'Not a wav-file.' );
-		
 		private static const STRATEGIES : Vector.<IAudioIOStrategy> = getSupportedStrategies();
 
 		/*
@@ -60,7 +59,7 @@ package tonfall.format.wav
 			bytes.endian = Endian.LITTLE_ENDIAN;
 
 			if ( bytes.readUnsignedInt() != WavTags.RIFF )
-				throw NO_WAVE_FILE;
+				throw new FormatError( 'RIFF TAG missing', 'WAV' );
 
 			const fileSize : int = bytes.readUnsignedInt();
 
@@ -72,7 +71,7 @@ package tonfall.format.wav
 			}
 
 			if ( bytes.readUnsignedInt() != WavTags.WAVE )
-				throw NO_WAVE_FILE;
+				throw new FormatError( 'WAVE TAG missing', 'WAV' );
 
 			var chunkID : uint;
 			var chunkLength : uint;
