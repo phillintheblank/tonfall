@@ -1,6 +1,6 @@
 package tonfall.format.wav
 {
-	import tonfall.format.AudioDecoder;
+	import tonfall.format.AbstractAudioDecoder;
 	import tonfall.format.IAudioIOStrategy;
 	import tonfall.format.pcm.PCM16BitStereo44Khz;
 
@@ -14,7 +14,7 @@ package tonfall.format.wav
 	{
 		public static const INSTANCE: IAudioIOStrategy = new WAV16BitStereo44Khz();
 		
-		override public function readableFor( decoder: AudioDecoder ) : Boolean
+		override public function readableFor( decoder: AbstractAudioDecoder ) : Boolean
 		{
 			return 1 == decoder.compressionType && 16 == decoder.bits && 2 == decoder.numChannels && 44100 == decoder.samplingRate;
 		}

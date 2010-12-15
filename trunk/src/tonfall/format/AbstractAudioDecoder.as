@@ -1,10 +1,11 @@
 package tonfall.format
 {
 	import flash.utils.ByteArray;
+	
 	/**
 	 * @author Andre Michelle
 	 */
-	public class AudioDecoder
+	public class AbstractAudioDecoder
 	{
 		/**
 		 * Storing ignored tags to see what is still missing
@@ -24,7 +25,7 @@ package tonfall.format
 		protected var _blockAlign: int;
 		protected var _dataOffset: Number;
 
-		public function AudioDecoder( bytes : ByteArray, strategies: Vector.<IAudioIOStrategy> )
+		public function AbstractAudioDecoder( bytes : ByteArray, strategies: Vector.<IAudioIOStrategy> )
 		{
 			if ( null == bytes )
 				throw new Error( 'bytes must not be null' );

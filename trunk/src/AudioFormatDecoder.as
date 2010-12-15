@@ -1,6 +1,6 @@
 package
 {
-	import tonfall.format.AudioDecoder;
+	import tonfall.format.AbstractAudioDecoder;
 	import tonfall.format.aiff.AiffDecoder;
 	import tonfall.format.wav.WavDecoder;
 
@@ -28,7 +28,7 @@ package
 		private const textField : TextField = new TextField();
 		private const sound : Sound = new Sound();
 		private const memory : ByteArray = new ByteArray();
-		private var decoder : AudioDecoder;
+		private var decoder : AbstractAudioDecoder;
 		private var numSamples : Number;
 		private var position : Number;
 		private var soundChannel : SoundChannel;

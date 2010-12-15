@@ -1,6 +1,6 @@
 package tonfall.format.pcm
 {
-	import tonfall.format.AudioDecoder;
+	import tonfall.format.AbstractAudioDecoder;
 	import tonfall.format.IAudioIOStrategy;
 
 	import flash.utils.ByteArray;
@@ -11,7 +11,7 @@ package tonfall.format.pcm
 	public class PCM32BitMono44Khz
 		implements IAudioIOStrategy
 	{
-		public function readData( decoder: AudioDecoder, target : ByteArray, length : Number, startPosition : Number ) : void
+		public function readData( decoder: AbstractAudioDecoder, target : ByteArray, length : Number, startPosition : Number ) : void
 		{
 			const bytes: ByteArray = decoder.bytes;
 
@@ -41,7 +41,7 @@ package tonfall.format.pcm
 			return 4;
 		}
 
-		public function readableFor( decoder: AudioDecoder ): Boolean
+		public function readableFor( decoder: AbstractAudioDecoder ): Boolean
 		{
 			// No proper check possible
 			return true;

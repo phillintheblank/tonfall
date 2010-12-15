@@ -1,6 +1,14 @@
 package
 {
+	import tonfall.core.samplingRate;
+	import tonfall.format.wav.WAV16BitMono44Khz;
+	import tonfall.format.wav.WAV16BitStereo44Khz;
+	import tonfall.format.wav.WAV24BitMono44Khz;
+	import tonfall.format.wav.WAV24BitStereo44Khz;
 	import tonfall.format.wav.WAV32BitMono44Khz;
+	import tonfall.format.wav.WAV32BitStereo44Khz;
+	import tonfall.format.wav.WAV8BitMono44Khz;
+	import tonfall.format.wav.WAV8BitStereo44Khz;
 	import tonfall.format.wav.WavEncoder;
 
 	import flash.display.Sprite;
@@ -9,6 +17,10 @@ package
 	import flash.utils.getQualifiedClassName;
 
 	/**
+	 * Encoding Test
+	 * 
+	 * Renders 100 cycles of 220Hz Sinewave
+	 * 
 	 * @author Andre Michelle
 	 */
 	public final class AudioFormatEncoder extends Sprite
@@ -19,7 +31,14 @@ package
 		
 		private const fileRef : FileReference = new FileReference();
 
-		private const encoder: WavEncoder = new WavEncoder( WAV32BitMono44Khz.INSTANCE );
+		private const encoder: WavEncoder = new WavEncoder( WAV8BitMono44Khz.INSTANCE );
+//		private const encoder: WavEncoder = new WavEncoder( WAV8BitStereo44Khz.INSTANCE );
+//		private const encoder: WavEncoder = new WavEncoder( WAV16BitMono44Khz.INSTANCE );
+//		private const encoder: WavEncoder = new WavEncoder( WAV16BitStereo44Khz.INSTANCE );
+//		private const encoder: WavEncoder = new WavEncoder( WAV24BitMono44Khz.INSTANCE );
+//		private const encoder: WavEncoder = new WavEncoder( WAV24BitStereo44Khz.INSTANCE );
+//		private const encoder: WavEncoder = new WavEncoder( WAV32BitMono44Khz.INSTANCE );
+//		private const encoder: WavEncoder = new WavEncoder( WAV32BitStereo44Khz.INSTANCE );
 
 		public function AudioFormatEncoder()
 		{
@@ -32,9 +51,11 @@ package
 		{
 			const frequency: Number = 220.0;
 			
+			const numCircles: int = 100;
+			
 			var phase: Number = 0.0;
 			
-			var numSamples: int = 44100 / 220.0;
+			var numSamples: int = samplingRate / frequency * numCircles;
 			
 			while( numSamples )
 			{
