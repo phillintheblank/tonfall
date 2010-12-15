@@ -11,34 +11,80 @@ package tonfall.format.pcm
 	public class PCM8BitMono44Khz
 		implements IAudioIOStrategy
 	{
+		private var _signed: Boolean;
+
+		public function PCM8BitMono44Khz( signed: Boolean )
+		{
+			_signed = signed;
+		}
+
 		public function readData( decoder: AbstractAudioDecoder, target : ByteArray, length : Number, startPosition : Number ) : void
 		{
 			const bytes: ByteArray = decoder.bytes;
 
 			bytes.position = decoder.dataOffset + startPosition;
 			
-			for ( var i : int = 0 ; i < length ; ++i )
+			var amplitude : Number;
+			
+			var i : int;
+			
+			if( _signed )
 			{
-				const amplitude : Number = ( bytes.readUnsignedByte() - 0x7F ) / 0x7F;
-
-				target.writeFloat( amplitude );
-				target.writeFloat( amplitude );
+				for ( i = 0 ; i < length ; ++i )
+				{
+					amplitude = bytes.readByte() / 0x7F;
+	
+					target.writeFloat( amplitude );
+					target.writeFloat( amplitude );
+				}
+			}
+			else
+			{
+				for ( i = 0 ; i < length ; ++i )
+				{
+					amplitude = ( bytes.readUnsignedByte() - 0x7F ) / 0x7F;
+	
+					target.writeFloat( amplitude );
+					target.writeFloat( amplitude );
+				}
 			}
 		}
 		
 		public function write32BitStereo44KHz( data : ByteArray, target: ByteArray, numSamples : uint ) : void
 		{
-			for ( var i : int = 0 ; i < numSamples ; ++i )
+			var amplitude : Number;
+			
+			var i : int;
+			
+			if( _signed )
 			{
-				const amplitude : Number = ( data.readFloat() + data.readFloat() ) * 0.5;
-				
-				if( amplitude > 1.0 )
-					target.writeByte( 0xFF );
-				else
-				if( amplitude < -1.0 )
-					target.writeByte( 0x00 );
-				else
-					target.writeByte( amplitude * 0x7F + 0x7F );
+				for ( i = 0 ; i < numSamples ; ++i )
+				{
+					amplitude = ( data.readFloat() + data.readFloat() ) * 0.5;
+					
+					if( amplitude > 1.0 )
+						target.writeByte( 0x7F );
+					else
+					if( amplitude < -1.0 )
+						target.writeByte( -0x7F );
+					else
+						target.writeByte( amplitude * 0x7F );
+				}
+			}
+			else
+			{
+				for ( i = 0 ; i < numSamples ; ++i )
+				{
+					amplitude = ( data.readFloat() + data.readFloat() ) * 0.5;
+					
+					if( amplitude > 1.0 )
+						target.writeByte( 0xFF );
+					else
+					if( amplitude < -1.0 )
+						target.writeByte( 0x00 );
+					else
+						target.writeByte( amplitude * 0x7F + 0x7F );
+				}
 			}
 		}
 		

@@ -13,7 +13,12 @@ package tonfall.format.wav
 		implements IAudioIOStrategy
 	{
 		public static const INSTANCE: IAudioIOStrategy = new WAV8BitMono44Khz();
-		
+
+		public function WAV8BitMono44Khz()
+		{
+			super( false );
+		}
+
 		override public function readableFor( decoder: AbstractAudioDecoder ) : Boolean
 		{
 			return 1 == decoder.compressionType && 8 == decoder.bits && 1 == decoder.numChannels && 44100 == decoder.samplingRate;
