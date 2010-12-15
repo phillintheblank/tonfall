@@ -9,8 +9,6 @@ package tonfall.format.wav
 	 */
 	public final class WavEncoder
 	{
-		private static const WAV_HAS_NOT_BEEN_WRITTEN : Error = new Error( 'Wav has not been written.' );
-
 		private var _bytes: ByteArray;
 		
 		private var _strategy : IAudioIOStrategy;
@@ -44,23 +42,8 @@ package tonfall.format.wav
 			_strategy.write32BitStereo44KHz( data, _bytes, numSamples );
 
 			_samplePosition += numSamples;
-		}
-		
-		/**
-		 * Finalizes wav format after writing audio data
-		 */
-		public function finalize(): void
-		{
-			// WRITE FILE SIZE
-			_bytes.position = 4;
-			_bytes.writeUnsignedInt( _bytes.length - 8 );
-
-			// WRITE AUDIO SIZE
-			_bytes.position = _dtlo;
-			_bytes.writeUnsignedInt( _samplePosition * _strategy.blockAlign );
 			
-			// REWIND
-			_bytes.position = 0;
+			updateHeader();
 		}
 		
 		/**
@@ -68,10 +51,7 @@ package tonfall.format.wav
 		 */
 		public function get bytes() : ByteArray
 		{
-			if( 0 == _bytes.position )
-				return _bytes;
-			
-			throw WAV_HAS_NOT_BEEN_WRITTEN;
+			return _bytes;
 		}
 		
 		public function get strategy(): IAudioIOStrategy
@@ -106,6 +86,22 @@ package tonfall.format.wav
 			_dtlo = _bytes.position;
 			
 			_bytes.writeUnsignedInt( 0 );
+		}
+		
+		private function updateHeader(): void
+		{
+			const position: uint = _bytes.position;
+			
+			// WRITE FILE SIZE
+			_bytes.position = 4;
+			_bytes.writeUnsignedInt( _bytes.length - 8 );
+
+			// WRITE AUDIO SIZE
+			_bytes.position = _dtlo;
+			_bytes.writeUnsignedInt( _samplePosition * _strategy.blockAlign );
+			
+			// REVERT POSITION
+			_bytes.position = position;
 		}
 	}
 }
