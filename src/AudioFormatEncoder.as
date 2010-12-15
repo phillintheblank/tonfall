@@ -1,10 +1,11 @@
 package
 {
-	import tonfall.format.aiff.AIFF8BitStereo44Khz;
-	import tonfall.format.aiff.AIFF24BitStereo44Khz;
-	import tonfall.format.aiff.AIFF16BitStereo44Khz;
-	import tonfall.format.aiff.AiffEncoder;
 	import tonfall.core.samplingRate;
+	import tonfall.format.aiff.AIFF16BitStereo44Khz;
+	import tonfall.format.aiff.AIFF24BitStereo44Khz;
+	import tonfall.format.aiff.AIFF32BitStereo44Khz;
+	import tonfall.format.aiff.AIFF8BitStereo44Khz;
+	import tonfall.format.aiff.AiffEncoder;
 	import tonfall.format.wav.WAV16BitMono44Khz;
 	import tonfall.format.wav.WAV16BitStereo44Khz;
 	import tonfall.format.wav.WAV24BitMono44Khz;
@@ -38,13 +39,16 @@ package
 //		private const encoder: WavEncoder = new WavEncoder( WAV8BitMono44Khz.INSTANCE );
 //		private const encoder: WavEncoder = new WavEncoder( WAV8BitStereo44Khz.INSTANCE );
 //		private const encoder: WavEncoder = new WavEncoder( WAV16BitMono44Khz.INSTANCE );
-//		private const encoder: WavEncoder = new WavEncoder( WAV16BitStereo44Khz.INSTANCE );
+		private const encoder: WavEncoder = new WavEncoder( WAV16BitStereo44Khz.INSTANCE );
 //		private const encoder: WavEncoder = new WavEncoder( WAV24BitMono44Khz.INSTANCE );
 //		private const encoder: WavEncoder = new WavEncoder( WAV24BitStereo44Khz.INSTANCE );
 //		private const encoder: WavEncoder = new WavEncoder( WAV32BitMono44Khz.INSTANCE );
 //		private const encoder: WavEncoder = new WavEncoder( WAV32BitStereo44Khz.INSTANCE );
 
-		private const encoder: AiffEncoder = new AiffEncoder( AIFF8BitStereo44Khz.INSTANCE );
+//		private const encoder: AiffEncoder = new AiffEncoder( AIFF8BitStereo44Khz.INSTANCE );
+//		private const encoder: AiffEncoder = new AiffEncoder( AIFF16BitStereo44Khz.INSTANCE );
+//		private const encoder: AiffEncoder = new AiffEncoder( AIFF24BitStereo44Khz.INSTANCE ); // TODO CREATES ARTIFACT
+//		private const encoder: AiffEncoder = new AiffEncoder( AIFF32BitStereo44Khz.INSTANCE ); // TODO I GUESS WE NEED A DIFFERENT COMPRESSION AS IN WAV
 
 		public function AudioFormatEncoder()
 		{
@@ -76,7 +80,7 @@ package
 					buffer.writeFloat( amplitude );
 					buffer.writeFloat( amplitude );
 					
-					phase += frequency / 44100.0;
+					phase += frequency / samplingRate;
 					phase -= Math.floor( phase );
 				}
 				
@@ -89,7 +93,7 @@ package
 			
 			const name: String = getQualifiedClassName( encoder.strategy );
 			
-			fileRef.save( encoder.bytes, name.substr( name.indexOf( '::' ) + 2 ) + '.aif' );
+			fileRef.save( encoder.bytes, name.substr( name.indexOf( '::' ) + 2 ) + '.wav' );
 		}
 	}
 }
