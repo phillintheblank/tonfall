@@ -1,16 +1,16 @@
-package tonfall.format.wav
+package tonfall.format
 {
 	import flash.utils.ByteArray;
 
 	/**
 	 * @author Andre Michelle
 	 */
-	public interface IWavIOStrategy
+	public interface IAudioIOStrategy
 	{
 		/**
 		 * @return true, if strategy can read decoder format information
 		 */
-		function readableFor( decoder: WavDecoder ): Boolean;
+		function readableFor( decoder: AudioDecoder ): Boolean;
 		
 		/**
 		 * Reads audio data from source format and write audio data in Flashplayer format (44100Hz,Stereo,Float)
@@ -20,11 +20,11 @@ package tonfall.format.wav
 		 * @param length How many samples must be written
 		 * @param startPosition position, where to start reading
 		 */
-		function readData( decoder: WavDecoder, target : ByteArray, length : Number, startPosition : Number ) : void;
+		function readData( decoder: AudioDecoder, target : ByteArray, length : Number, startPosition : Number ) : void;
 
 		/**
-		 * Writes FMT tag
-		 * @param bytes ByteArray to write the FMT tag
+		 * Writes format tag
+		 * @param bytes ByteArray to write the format tag
 		 */
 		function writeFormatTag( bytes: ByteArray ): void;
 
@@ -35,7 +35,7 @@ package tonfall.format.wav
 		 * @param target ByteArray to write the data in target format
 		 * @param numSamples Number of samples to process 
 		 */
-		function writeData( data: ByteArray, target: ByteArray, numSamples: uint ): void;
+		function write32BitStereo44KHz( data: ByteArray, target: ByteArray, numSamples: uint ): void;
 		
 		/**
 		 * @return blockAlign
