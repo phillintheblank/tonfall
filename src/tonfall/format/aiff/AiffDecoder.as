@@ -1,5 +1,7 @@
 package tonfall.format.aiff
 {
+	import tonfall.data.readPString;
+	import tonfall.data.IeeeExtended;
 	import tonfall.format.FormatError;
 	import tonfall.format.AbstractAudioDecoder;
 	import tonfall.format.IAudioIOStrategy;
@@ -84,20 +86,30 @@ package tonfall.format.aiff
 				ckDataSize = bytes.readInt();
 				ckPosition = bytes.position;
 				
+				trace( 'ckID', ckID );
+				trace( 'ckDataSize', ckDataSize );
+				
 				switch( ckID )
 				{
 					case AiffTags.COMM:
 						_numChannels  = bytes.readUnsignedShort();
 						_numSamples   = bytes.readUnsignedInt();
 						_bits         = bytes.readUnsignedShort();
-						_samplingRate = readExtended( bytes );
+						_samplingRate = IeeeExtended.inverse( bytes );
 						_compressionType = bytes.readUTFBytes( 4 );
 						_compressionName = readPString( bytes );
 						
+						trace( 'compressionType', _compressionType );
+						trace( 'compressionName', _compressionName );
+
 						_blockAlign = ( _bits >> 3 ) * _numChannels;
 						break;
 						
 					case AiffTags.SSND:
+						if( _numSamples * _blockAlign != ckDataSize )
+						{
+							trace( 'Warning:',  _numSamples * _blockAlign, ckDataSize );
+						}
 						_dataOffset = bytes.position;
 						break;
 						
@@ -117,39 +129,6 @@ package tonfall.format.aiff
 				
 				bytes.position = ckPosition;
 			}
-		}
-		
-		/**
-		 * http://www.gotoandlearnforum.com/viewtopic.php?f=29&t=19428
-		 */
-		private function readExtended( bytes: ByteArray ): uint
-		{
-			var byte1:uint = bytes.readUnsignedByte();
-			var byte2:uint = bytes.readUnsignedByte();
-			var bytes3_4:uint = bytes.readUnsignedShort();
-			var value:uint = bytes3_4;
-			var shift:int = 14 - byte2;
-			if (shift > 0) value >>= shift;
-			else if (shift < 0) value <<= Math.abs(shift);
-			
-			bytes.position += 6;
-			
-			return value;
-		}
-		
-		/**
-		 * http://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/AIFF/Docs/AIFF-C.9.26.91.pdf
-		 * 
-		 * Pascal-style string, one byte count followed by text bytes followed—when needed— by one pad byte.
-		 * The total number of bytes in a pstring must be even.The pad byte is included when the number of
-		 * text bytes is even, so the total of text bytes + one count byte + one pad byte will be even.
-		 * This pad byte is not reflected in the count.
-		 */
-		private function readPString( bytes: ByteArray ): String
-		{
-			const count: int = bytes.readUnsignedByte();
-
-			return bytes.readUTFBytes( count + ( count & 1 ) );
 		}
 	}
 }

@@ -90,7 +90,6 @@ package tonfall.data
 				else
 				{
 					/* Finite */
-					trace( 'Finite' );
 					expon += 16382;
 
 					if ( expon < 0 )

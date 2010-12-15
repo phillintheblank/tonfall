@@ -1,5 +1,7 @@
 package tonfall.format.aiff
 {
+	import tonfall.data.writePString;
+	import tonfall.data.IeeeExtended;
 	import tonfall.format.IAudioIOStrategy;
 
 	import flash.utils.ByteArray;
@@ -16,7 +18,8 @@ package tonfall.format.aiff
 		
 		private var _strategy : IAudioIOStrategy;
 		
-		private var _dtlo: uint; // store data tag length offset for writing later
+		private var _nsao: uint; // store numSamples offset for writing later
+		private var _dtlo: uint; // store ssnd tag offset for writing later
 		
 		private var _samplePosition: uint;
 
@@ -75,26 +78,36 @@ package tonfall.format.aiff
 			_bytes.writeUTFBytes( AiffTags.FORM );
 			_bytes.writeUnsignedInt( 0 );
 			_bytes.writeUTFBytes( AiffTags.AIFF );
-
-			// TODO
-
+			_bytes.writeUTFBytes( AiffTags.COMM );
+			_bytes.writeUnsignedInt( 18 ); // Actually 22 (But this way it works in Audacity) 
+			_bytes.writeShort( _strategy.numChannels );
+			_nsao = _bytes.position;
+			_bytes.writeUnsignedInt( 0 ); // numSamples
+			_bytes.writeShort( _strategy.bits );
+			IeeeExtended.forward( _strategy.samplingRate, _bytes );
+			_bytes.writeUTFBytes( AiffTags.SSND );
+			writePString( '', _bytes );
+			//_bytes.writeUTFBytes( AiffTags.SSND ); // Check aboves comment
 			_dtlo = _bytes.position;
-			
-			_bytes.writeUnsignedInt( 0 );
+			_bytes.writeUnsignedInt( 0 ); // SSND length
 		}
 		
 		private function updateHeader(): void
 		{
+			const position: uint = _bytes.position;
+			
 			// WRITE FILE SIZE
 			_bytes.position = 4;
-			_bytes.writeUnsignedInt( _bytes.length - 8 );
+			_bytes.writeInt( _bytes.length - 8 );
 
 			// WRITE AUDIO SIZE
+			_bytes.position = _nsao;
+			_bytes.writeUnsignedInt( _samplePosition );
 			_bytes.position = _dtlo;
-			_bytes.writeUnsignedInt( _samplePosition * _strategy.blockAlign );
+			_bytes.writeInt( _samplePosition * _strategy.blockAlign );
 			
 			// REWIND
-			_bytes.position = 0;
+			_bytes.position = position;
 		}
 	}
 }
