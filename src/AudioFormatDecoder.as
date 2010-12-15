@@ -1,5 +1,7 @@
 package
 {
+	import tonfall.format.AudioDecoder;
+	import tonfall.format.aiff.AiffDecoder;
 	import tonfall.format.wav.WavDecoder;
 
 	import flash.display.Sprite;
@@ -19,20 +21,20 @@ package
 	 * @author Andre Michelle
 	 */
 	[SWF(backgroundColor="#EDEDED", frameRate="31", width="512", height="192")]
-	public final class WavFormatDecoder extends Sprite
+	public final class AudioFormatDecoder extends Sprite
 	{
 		private static const BUFFER_SIZE : int = 2048;
 		private const fileRef : FileReference = new FileReference();
 		private const textField : TextField = new TextField();
 		private const sound : Sound = new Sound();
 		private const memory : ByteArray = new ByteArray();
-		private var decoder : WavDecoder;
+		private var decoder : AudioDecoder;
 		private var numSamples : Number;
 		private var position : Number;
 		private var soundChannel : SoundChannel;
 		private var firstRun: Boolean;
 
-		public function WavFormatDecoder()
+		public function AudioFormatDecoder()
 		{
 			textField.autoSize = TextFieldAutoSize.LEFT;
 			textField.defaultTextFormat = new TextFormat( 'Verdana', 10, 0x666666, true );
@@ -67,7 +69,7 @@ package
 
 			fileRef.addEventListener( Event.SELECT, select );
 			fileRef.addEventListener( Event.CANCEL, cancel );
-			fileRef.browse( [ new FileFilter( 'Wavformat', '.wav' ) ] );
+			fileRef.browse( [ new FileFilter( 'Wav', '*.wav' ), new FileFilter( 'Aiff', '*.aiff' ), new FileFilter( 'Aiff', '*.aif' ) ] );
 		}
 
 		private function cancel( event : Event ) : void
@@ -91,33 +93,48 @@ package
 		{
 			fileRef.removeEventListener( Event.COMPLETE, complete );
 
-			textField.appendText( 'Loaded ' + fileRef.name + '\n' );
-
+			textField.appendText( 'Loaded ' + fileRef.name + ', fileSize: ' + fileRef.data.length + '\n' );
+			
+			var extension: String = fileRef.name;
+			
+			extension = extension.substr( extension.lastIndexOf( '.' ) + 1 );
+			
 			try
 			{
-				decoder = new WavDecoder( fileRef.data );
+				switch( extension )
+				{
+					case 'wav':
+						decoder = new WavDecoder( fileRef.data );
+						break;
+						
+					case 'aif':
+					case 'aiff':
+						decoder = new AiffDecoder( fileRef.data );
+						break;
+					
+					default: throw new Error( 'Unknown extension.' );
+				}
 			}
 			catch( e : Error )
 			{
 				textField.appendText( 'Error while parsing ' + e.name + ' occured.\n' );
 				textField.appendText( e.message + '\n' );
+				trace( e.getStackTrace() );
 				return;
 			}
 			
-			textField.appendText( '[Wav Header] compression: ' + decoder.compression + '\n' );
-			textField.appendText( '[Wav Header] numChannels: ' + decoder.numChannels + '\n' );
-			textField.appendText( '[Wav Header] samplingRate: ' + decoder.rate + '\n' );
-			textField.appendText( '[Wav Header] bytesPerSecond: ' + decoder.bytesPerSecond + '\n' );
-			textField.appendText( '[Wav Header] blockAlign: ' + decoder.blockAlign + '\n' );
-			textField.appendText( '[Wav Header] bits: ' + decoder.bits + '\n' );
-			textField.appendText( '[Wav Header] numSamples: ' + decoder.numSamples + '\n' );
-			textField.appendText( '[Wav Header] seconds: ' + decoder.seconds.toFixed( 3 ) + '\n' );
-			textField.appendText( '[Wav Header] supported: ' + decoder.supported + '\n' );
+			textField.appendText( '[Header] compression: ' + decoder.compressionType + '\n' );
+			textField.appendText( '[Header] numChannels: ' + decoder.numChannels + '\n' );
+			textField.appendText( '[Header] samplingRate: ' + decoder.samplingRate + '\n' );
+			textField.appendText( '[Header] bits: ' + decoder.bits + '\n' );
+			textField.appendText( '[Header] numSamples: ' + decoder.numSamples + '\n' );
+			textField.appendText( '[Header] seconds: ' + decoder.seconds.toFixed( 3 ) + '\n' );
+			textField.appendText( '[Header] supported: ' + decoder.supported + '\n' );
 			
 			if ( 0 < decoder.ignoredTags.length )
 			{
 				// WAV format support additional information. Printing the IDs...
-				textField.appendText( '[Wav Header] ignored tags: ' + decoder.ignoredTags + '\n' );
+				textField.appendText( '[Format] ignored tags: ' + decoder.ignoredTags + '\n' );
 			}
 
 			if ( decoder.supported )
@@ -133,7 +150,6 @@ package
 
 		private function play() : void
 		{
-			// get numSamples in Flashplayer samplingRate space (44100Hz)
 			numSamples = decoder.getNumSamples( 44100.0 );
 
 			position = 0;
@@ -173,8 +189,11 @@ package
 
 			for ( var i : int = 0 ; i < read ; ++i )
 			{
-				data.writeFloat( memory.readFloat() );
-				data.writeFloat( memory.readFloat() );
+				var l: Number = memory.readFloat();
+				var r: Number = memory.readFloat();
+				
+				data.writeFloat( l );
+				data.writeFloat( r );
 			}
 
 			for ( ; i < BUFFER_SIZE ; ++i )

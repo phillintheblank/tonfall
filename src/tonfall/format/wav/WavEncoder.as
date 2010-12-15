@@ -1,7 +1,9 @@
 package tonfall.format.wav
 {
-	import flash.utils.Endian;
+	import tonfall.format.IAudioIOStrategy;
+
 	import flash.utils.ByteArray;
+	import flash.utils.Endian;
 	/**
 	 * @author Andre Michelle
 	 */
@@ -11,13 +13,13 @@ package tonfall.format.wav
 
 		private var _bytes: ByteArray;
 		
-		private var _strategy : IWavIOStrategy;
+		private var _strategy : IAudioIOStrategy;
 		
 		private var _dtlo: uint; // store data tag length offset for writing later
 		
 		private var _samplePosition: uint;
 
-		public function WavEncoder( strategy : IWavIOStrategy )
+		public function WavEncoder( strategy : IAudioIOStrategy )
 		{
 			if( null == strategy )
 			{
@@ -39,7 +41,7 @@ package tonfall.format.wav
 		 */
 		public function writeData( data: ByteArray, numSamples: uint ): void
 		{
-			_strategy.writeData( data, _bytes, numSamples );
+			_strategy.write32BitStereo44KHz( data, _bytes, numSamples );
 
 			_samplePosition += numSamples;
 		}
