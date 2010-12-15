@@ -1,5 +1,6 @@
 package
 {
+	import tonfall.data.IeeeExtended;
 	import tonfall.format.AbstractAudioDecoder;
 	import tonfall.format.aiff.AiffDecoder;
 	import tonfall.format.wav.WavDecoder;
