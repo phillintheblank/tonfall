@@ -39,7 +39,7 @@ package tonfall.format.wav
 		 * @param data ByteArray consisting audio format (44100,Stereo,Float)
 		 * @param numSamples number of samples to be processed
 		 */
-		public function writeData( data: ByteArray, numSamples: uint ): void
+		public function write32BitStereo44KHz( data: ByteArray, numSamples: uint ): void
 		{
 			_strategy.write32BitStereo44KHz( data, _bytes, numSamples );
 
@@ -72,6 +72,11 @@ package tonfall.format.wav
 				return _bytes;
 			
 			throw WAV_HAS_NOT_BEEN_WRITTEN;
+		}
+		
+		public function get strategy(): IAudioIOStrategy
+		{
+			return _strategy;
 		}
 		
 		public function dispose(): void
