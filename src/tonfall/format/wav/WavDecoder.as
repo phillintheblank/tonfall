@@ -1,6 +1,6 @@
 package tonfall.format.wav
 {
-	import tonfall.format.AudioDecoder;
+	import tonfall.format.AbstractAudioDecoder;
 	import tonfall.format.IAudioIOStrategy;
 
 	import flash.utils.ByteArray;
@@ -9,7 +9,7 @@ package tonfall.format.wav
 	/**
 	 * @author Andre Michelle
 	 */
-	public final class WavDecoder extends AudioDecoder
+	public final class WavDecoder extends AbstractAudioDecoder
 	{
 		private static const NO_WAVE_FILE: Error = new Error( 'Not a wav-file.' );
 		

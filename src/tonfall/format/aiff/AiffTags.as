@@ -1,0 +1,13 @@
+package tonfall.format.aiff
+{
+	/**
+	 * @author Andre Michelle
+	 */
+	public final class AiffTags
+	{
+		public static const AIFF: String = 'AIFF';
+		public static const FORM: String = 'FORM';
+		public static const COMM: String = 'COMM';
+		public static const SSND: String = 'SSND';
+	}
+}

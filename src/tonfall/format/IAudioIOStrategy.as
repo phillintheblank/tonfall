@@ -10,7 +10,7 @@ package tonfall.format
 		/**
 		 * @return true, if strategy can read decoder format information
 		 */
-		function readableFor( decoder: AudioDecoder ): Boolean;
+		function readableFor( decoder: AbstractAudioDecoder ): Boolean;
 		
 		/**
 		 * Reads audio data from source format and write audio data in Flashplayer format (44100Hz,Stereo,Float)
@@ -20,7 +20,7 @@ package tonfall.format
 		 * @param length How many samples must be written
 		 * @param startPosition position, where to start reading
 		 */
-		function readData( decoder: AudioDecoder, target : ByteArray, length : Number, startPosition : Number ) : void;
+		function readData( decoder: AbstractAudioDecoder, target : ByteArray, length : Number, startPosition : Number ) : void;
 
 		/**
 		 * Writes format tag

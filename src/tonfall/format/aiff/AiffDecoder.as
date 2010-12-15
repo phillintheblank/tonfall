@@ -1,6 +1,6 @@
 package tonfall.format.aiff
 {
-	import tonfall.format.AudioDecoder;
+	import tonfall.format.AbstractAudioDecoder;
 	import tonfall.format.IAudioIOStrategy;
 
 	import flash.utils.ByteArray;
@@ -9,7 +9,7 @@ package tonfall.format.aiff
 	/**
 	 * @author Andre Michelle
 	 */
-	public final class AiffDecoder extends AudioDecoder
+	public final class AiffDecoder extends AbstractAudioDecoder
 	{
 		private static const NO_AIFF_FILE: Error = new Error( 'Not a aiff-file.' );
 		
@@ -57,7 +57,7 @@ package tonfall.format.aiff
 			var ckID: String = bytes.readUTFBytes( 4 );
 			var ckDataSize: int = bytes.readInt();
 			
-			if( ckID != 'FORM' )
+			if( ckID != AiffTags.FORM )
 			{
 				throw new Error( 'NO FORM TAG' );
 				return;
@@ -71,7 +71,7 @@ package tonfall.format.aiff
 			
 			const formType: String = bytes.readUTFBytes( 4 );
 			
-			if( formType != 'AIFF' )
+			if( formType != AiffTags.AIFF )
 			{
 				throw NO_AIFF_FILE;
 				return;
@@ -88,7 +88,7 @@ package tonfall.format.aiff
 				
 				switch( ckID )
 				{
-					case 'COMM':
+					case AiffTags.COMM:
 						_numChannels  = bytes.readUnsignedShort();
 						_numSamples   = bytes.readUnsignedInt();
 						_bits         = bytes.readUnsignedShort();
@@ -99,7 +99,7 @@ package tonfall.format.aiff
 						_blockAlign = ( _bits >> 3 ) * _numChannels;
 						break;
 						
-					case 'SSND':
+					case AiffTags.SSND:
 						_dataOffset = bytes.position;
 						break;
 						

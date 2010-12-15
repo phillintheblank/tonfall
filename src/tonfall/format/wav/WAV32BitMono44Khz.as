@@ -1,7 +1,7 @@
 package tonfall.format.wav
 {
 	import tonfall.format.pcm.PCM32BitMono44Khz;
-	import tonfall.format.AudioDecoder;
+	import tonfall.format.AbstractAudioDecoder;
 	import tonfall.format.IAudioIOStrategy;
 
 	import flash.utils.ByteArray;
@@ -14,7 +14,7 @@ package tonfall.format.wav
 	{
 		public static const INSTANCE: IAudioIOStrategy = new WAV32BitMono44Khz();
 		
-		override public function readableFor( decoder: AudioDecoder ) : Boolean
+		override public function readableFor( decoder: AbstractAudioDecoder ) : Boolean
 		{
 			return 3 == decoder.compressionType && 32 == decoder.bits && 1 == decoder.numChannels && 44100 == decoder.samplingRate;
 		}
