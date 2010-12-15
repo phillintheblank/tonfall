@@ -91,8 +91,15 @@ package tonfall.format.wav
 			_bytes.writeUnsignedInt( WavTags.RIFF );
 			_bytes.writeUnsignedInt( 0 );
 			_bytes.writeUnsignedInt( WavTags.WAVE );
-
-			_strategy.writeFormatTag( _bytes );
+			
+			_bytes.writeUnsignedInt( WavTags.FMT );
+			_bytes.writeUnsignedInt( 16 ); // chunk length
+			_bytes.writeShort( _strategy.compressionType ); // compression
+			_bytes.writeShort( _strategy.numChannels ); // numChannels
+			_bytes.writeUnsignedInt( _strategy.samplingRate ); // samplingRate
+			_bytes.writeUnsignedInt( _strategy.samplingRate * _strategy.blockAlign ); // bytesPerSecond
+			_bytes.writeShort( _strategy.blockAlign ); // blockAlign
+			_bytes.writeShort( _strategy.bits ); // bits
 
 			_bytes.writeUnsignedInt( WavTags.DATA );
 			

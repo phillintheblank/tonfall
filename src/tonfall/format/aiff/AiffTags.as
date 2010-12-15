@@ -9,5 +9,6 @@ package tonfall.format.aiff
 		public static const FORM: String = 'FORM';
 		public static const COMM: String = 'COMM';
 		public static const SSND: String = 'SSND';
+		public static const CHAN: String = 'CHAN';
 	}
 }

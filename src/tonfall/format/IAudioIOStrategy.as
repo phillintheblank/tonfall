@@ -35,11 +35,25 @@ package tonfall.format
 		 * @return blockAlign
 		 */
 		function get blockAlign(): uint;
+
+		/**
+		 * @return compressionType
+		 */
+		function get compressionType(): *;
+
+		/**
+		 * @return samplingRate
+		 */
+		function get samplingRate(): Number;
 		
 		/**
-		 * Writes format tag
-		 * @param bytes ByteArray to write the format tag
+		 * @return numChannels
 		 */
-		function writeFormatTag( bytes: ByteArray ): void;
+		function get numChannels(): int;
+
+		/**
+		 * @return bits
+		 */
+		function get bits(): int;
 	}
 }

@@ -96,8 +96,6 @@ package tonfall.format.aiff
 			_bytes.writeUnsignedInt( 0 );
 			_bytes.writeUTFBytes( AiffTags.AIFF );
 
-			_strategy.writeFormatTag( _bytes );
-			
 			// TODO
 
 			_dtlo = _bytes.position;
