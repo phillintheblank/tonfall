@@ -81,8 +81,6 @@ package
 				numSamples -= write;
 			}
 			
-			encoder.finalize();
-			
 			const name: String = getQualifiedClassName( encoder.strategy );
 			
 			fileRef.save( encoder.bytes, name.substr( name.indexOf( '::' ) + 2 ) + '.wav' );
