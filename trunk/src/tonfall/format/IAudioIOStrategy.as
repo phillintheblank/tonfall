@@ -1,5 +1,7 @@
 package tonfall.format
 {
+	import tonfall.format.pcm.PCMDecoder;
+
 	import flash.utils.ByteArray;
 
 	/**
@@ -8,9 +10,9 @@ package tonfall.format
 	public interface IAudioIOStrategy
 	{
 		/**
-		 * @return true, if strategy can read decoder format information
+		 * @return true, if strategy can read format information
 		 */
-		function readableFor( decoder: AbstractAudioDecoder ): Boolean;
+		function supports( compressionType: *, bits: uint,numChannels: uint, samplingRate: Number ): Boolean;
 		
 		/**
 		 * Reads audio data from source format and write audio data in Flashplayer format (44100Hz,Stereo,Float)
@@ -20,7 +22,7 @@ package tonfall.format
 		 * @param length How many samples must be written
 		 * @param startPosition position, where to start reading
 		 */
-		function readData( decoder: AbstractAudioDecoder, target : ByteArray, length : Number, startPosition : Number ) : void;
+		function read32BitStereo44KHz( decoder: PCMDecoder, target : ByteArray, length : Number, startPosition : Number ) : void;
 
 		/**
 		 * Reads audio data in Flashplayer format (44100Hz,Stereo,Float) and writes audio data to target format

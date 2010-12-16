@@ -1,9 +1,9 @@
 package tonfall.format.aiff
 {
 	import tonfall.data.IeeeExtended;
-	import tonfall.format.AbstractAudioDecoder;
 	import tonfall.format.FormatError;
 	import tonfall.format.IAudioIOStrategy;
+	import tonfall.format.pcm.PCMDecoder;
 
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
@@ -11,7 +11,7 @@ package tonfall.format.aiff
 	/**
 	 * @author Andre Michelle
 	 */
-	public final class AiffDecoder extends AbstractAudioDecoder
+	public final class AiffDecoder extends PCMDecoder
 	{
 		private static const STRATEGIES : Vector.<IAudioIOStrategy> = getSupportedStrategies();
 
@@ -33,17 +33,31 @@ package tonfall.format.aiff
 			return strategies;
 		}
 		
+		private var _numSamples: Number;
+		private var _dataOffset: Number;
+		private var _blockAlign: uint;
+		
 		public function AiffDecoder( bytes: ByteArray )
 		{
-			super( bytes, STRATEGIES );
+			super( bytes, evaluateHeader( bytes ) );
 		}
 		
-		public function toString() : String
+		override public function get numSamples(): Number
 		{
-			return '[AiffFormat compression: ' + _compressionType + ']';
+			return _numSamples;
 		}
 		
-		override protected function parseHeader( bytes: ByteArray ) : void
+		override public function get dataOffset(): Number
+		{
+			return _dataOffset;
+		}
+		
+		override public function get blockAlign(): int
+		{
+			return _blockAlign;
+		}
+		
+		private function evaluateHeader( bytes: ByteArray ) : IAudioIOStrategy
 		{
 			bytes.endian = Endian.BIG_ENDIAN;
 			
@@ -69,6 +83,11 @@ package tonfall.format.aiff
 				throw new FormatError( 'AIFF TAG missing', 'AIFF' );
 			}
 			
+			var compressionType: *;
+			var numChannels: uint;
+			var samplingRate: Number;
+			var bits: uint;
+			
 			var ckPosition: uint;
 			
 			for(;;)
@@ -81,22 +100,22 @@ package tonfall.format.aiff
 				switch( ckID )
 				{
 					case AiffTags.COMM:
-						_numChannels  = bytes.readUnsignedShort();
+						numChannels  = bytes.readUnsignedShort();
 						_numSamples   = bytes.readUnsignedInt();
-						_bits         = bytes.readUnsignedShort();
-						_samplingRate = IeeeExtended.inverse( bytes );
-						_compressionType = bytes.readUTFBytes( 4 );
+						bits         = bytes.readUnsignedShort();
+						samplingRate = IeeeExtended.inverse( bytes );
+						compressionType = bytes.readUTFBytes( 4 );
 						
-						_blockAlign = ( _bits >> 3 ) * _numChannels;
+						_blockAlign = ( bits >> 3 ) * numChannels;
 						break;
-						
+
 					case AiffTags.SSND:
 						_dataOffset = bytes.position;
 						break;
 						
 					default:
 						// AIFF allows additional tags to store extra information like markers (skip)
-						ignoredTags.push( ckID );
+//						ignoredTags.push( ckID );
 						break;
 				}
 				
@@ -104,12 +123,26 @@ package tonfall.format.aiff
 				
 				if( ckPosition >= bytes.length )
 				{
-					//trace( 'EOF', ckPosition - bytes.length );
-					return;
+					// EOF
+					break;
 				}
 				
 				bytes.position = ckPosition;
 			}
+			
+			const n : int = STRATEGIES.length;
+			
+			for( var i: int = 0 ; i < n ; ++i )
+			{
+				var strategy: IAudioIOStrategy = STRATEGIES[i];
+				
+				if ( strategy.supports( compressionType, bits, numChannels, samplingRate ) )
+				{
+					return strategy;
+				}
+			}
+			
+			return null;
 		}
 	}
 }

@@ -1,6 +1,5 @@
 package tonfall.format.wav
 {
-	import tonfall.format.AbstractAudioDecoder;
 	import tonfall.format.IAudioIOStrategy;
 	import tonfall.format.pcm.PCM8BitStereo44Khz;
 
@@ -17,9 +16,9 @@ package tonfall.format.wav
 			super( false );
 		}
 		
-		override public function readableFor( decoder: AbstractAudioDecoder ) : Boolean
+		override public function supports( compressionType: *, bits: uint,numChannels: uint, samplingRate: Number ): Boolean
 		{
-			return 1 == decoder.compressionType && 8 == decoder.bits && 2 == decoder.numChannels && 44100 == decoder.samplingRate;
+			return 1 == compressionType && 8 == bits && 2 == numChannels && 44100 == samplingRate;
 		}
 		
 		override public function get compressionType(): *
