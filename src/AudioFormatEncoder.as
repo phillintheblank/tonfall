@@ -93,7 +93,7 @@ package
 			
 			const name: String = getQualifiedClassName( encoder.strategy );
 			
-			fileRef.save( encoder.bytes, name.substr( name.indexOf( '::' ) + 2 ) + '.wav' );
+			fileRef.save( encoder.bytes, name.substr( name.indexOf( '::' ) + 2 ) + encoder.fileExt );
 		}
 	}
 }

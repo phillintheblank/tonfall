@@ -19,6 +19,14 @@ package tonfall.format.aiff
 			super( strategy );
 		}
 		
+		/**
+		 * @return file extension
+		 */
+		override public function get fileExt(): String
+		{
+			return '.aiff';
+		}
+		
 		override protected function writeHeader( bytes: ByteArray ) : void
 		{
 			bytes.endian = Endian.BIG_ENDIAN;
