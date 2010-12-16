@@ -48,11 +48,19 @@ package tonfall.format.pcm
 		}
 		
 		/**
-		 * @return wav format
+		 * @return file
 		 */
 		public function get bytes() : ByteArray
 		{
 			return _bytes;
+		}
+		
+		/**
+		 * @return file extension
+		 */
+		public function get fileExt(): String
+		{
+			return '.raw';
 		}
 		
 		public function get strategy(): IPCMIOStrategy

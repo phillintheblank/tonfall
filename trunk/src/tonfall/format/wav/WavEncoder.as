@@ -1,9 +1,9 @@
 package tonfall.format.wav
 {
+	import tonfall.format.pcm.PCMEncoder;
+
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
-	import tonfall.format.pcm.IPCMIOStrategy;
-	import tonfall.format.pcm.PCMEncoder;
 	/**
 	 * @author Andre Michelle
 	 */
@@ -14,6 +14,14 @@ package tonfall.format.wav
 		public function WavEncoder( strategy : IWAVIOStrategy )
 		{
 			super( strategy );
+		}
+		
+		/**
+		 * @return file extension
+		 */
+		override public function get fileExt(): String
+		{
+			return '.wav';
 		}
 		
 		override protected function writeHeader( bytes: ByteArray ) : void
