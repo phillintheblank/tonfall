@@ -1,8 +1,7 @@
 package
 {
-	import tonfall.data.IeeeExtended;
-	import tonfall.format.AbstractAudioDecoder;
 	import tonfall.format.aiff.AiffDecoder;
+	import tonfall.format.pcm.PCMDecoder;
 	import tonfall.format.wav.WavDecoder;
 
 	import flash.display.Sprite;
@@ -29,7 +28,8 @@ package
 		private const textField : TextField = new TextField();
 		private const sound : Sound = new Sound();
 		private const memory : ByteArray = new ByteArray();
-		private var decoder : AbstractAudioDecoder;
+
+		private var decoder : PCMDecoder;
 		private var numSamples : Number;
 		private var position : Number;
 		private var soundChannel : SoundChannel;
@@ -132,11 +132,11 @@ package
 			textField.appendText( '[Header] seconds: ' + decoder.seconds.toFixed( 3 ) + '\n' );
 			textField.appendText( '[Header] supported: ' + decoder.supported + '\n' );
 			
-			if ( 0 < decoder.ignoredTags.length )
-			{
-				// WAV format support additional information. Printing the IDs...
-				textField.appendText( '[Format] ignored tags: ' + decoder.ignoredTags + '\n' );
-			}
+//			if ( 0 < decoder.ignoredTags.length )
+//			{
+//				// WAV format support additional information. Printing the IDs...
+//				textField.appendText( '[Format] ignored tags: ' + decoder.ignoredTags + '\n' );
+//			}
 
 			if ( decoder.supported )
 			{
