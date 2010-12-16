@@ -17,11 +17,9 @@ package tonfall.format.pcm
 			_signed = signed;
 		}
 
-		public function read32BitStereo44KHz( decoder: PCMDecoder, target : ByteArray, length : Number, startPosition : Number ) : void
+		public function read32BitStereo44KHz( data: ByteArray, dataOffset: Number, target : ByteArray, length : Number, startPosition : Number ) : void
 		{
-			const bytes: ByteArray = decoder.bytes;
-
-			bytes.position = decoder.dataOffset + startPosition;
+			data.position = dataOffset + startPosition;
 			
 			var amplitude : Number;
 			
@@ -31,7 +29,7 @@ package tonfall.format.pcm
 			{
 				for ( i = 0 ; i < length ; ++i )
 				{
-					amplitude = bytes.readByte() / 0x7F;
+					amplitude = data.readByte() / 0x7F;
 	
 					target.writeFloat( amplitude );
 					target.writeFloat( amplitude );
@@ -41,7 +39,7 @@ package tonfall.format.pcm
 			{
 				for ( i = 0 ; i < length ; ++i )
 				{
-					amplitude = ( bytes.readUnsignedByte() - 0x7F ) / 0x7F;
+					amplitude = ( data.readUnsignedByte() - 0x7F ) / 0x7F;
 	
 					target.writeFloat( amplitude );
 					target.writeFloat( amplitude );

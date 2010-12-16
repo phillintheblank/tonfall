@@ -1,7 +1,5 @@
 package tonfall.format
 {
-	import tonfall.format.pcm.PCMDecoder;
-
 	import flash.utils.ByteArray;
 
 	/**
@@ -22,7 +20,7 @@ package tonfall.format
 		 * @param length How many samples must be written
 		 * @param startPosition position, where to start reading
 		 */
-		function read32BitStereo44KHz( decoder: PCMDecoder, target : ByteArray, length : Number, startPosition : Number ) : void;
+		function read32BitStereo44KHz( data: ByteArray, dataOffset: Number, target : ByteArray, length : Number, startPosition : Number ) : void;
 
 		/**
 		 * Reads audio data in Flashplayer format (44100Hz,Stereo,Float) and writes audio data to target format
