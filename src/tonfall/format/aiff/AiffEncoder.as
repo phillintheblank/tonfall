@@ -1,8 +1,8 @@
 package tonfall.format.aiff
 {
-	import tonfall.format.pcm.PCMEncoder;
 	import tonfall.data.IeeeExtended;
 	import tonfall.format.IAudioIOStrategy;
+	import tonfall.format.pcm.PCMEncoder;
 
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;

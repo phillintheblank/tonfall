@@ -1,6 +1,5 @@
 package tonfall.format.pcm
 {
-	import tonfall.format.AbstractAudioDecoder;
 	import tonfall.format.IAudioIOStrategy;
 
 	import flash.utils.ByteArray;
@@ -24,7 +23,7 @@ package tonfall.format.pcm
 			return bytes;
 		}
 		
-		public function readData( decoder: AbstractAudioDecoder, target : ByteArray, length : Number, startPosition : Number ) : void
+		public function read32BitStereo44KHz( decoder: PCMDecoder, target : ByteArray, length : Number, startPosition : Number ) : void
 		{
 			const bytes: ByteArray = decoder.bytes;
 
@@ -74,7 +73,7 @@ package tonfall.format.pcm
 			}
 		}
 		
-		public function readableFor( decoder: AbstractAudioDecoder ): Boolean
+		public function supports( compressionType: *, bits: uint,numChannels: uint, samplingRate: Number ): Boolean
 		{
 			// No proper check possible
 			return true;

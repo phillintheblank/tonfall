@@ -1,8 +1,8 @@
 package tonfall.format.wav
 {
-	import tonfall.format.AbstractAudioDecoder;
 	import tonfall.format.FormatError;
 	import tonfall.format.IAudioIOStrategy;
+	import tonfall.format.pcm.PCMDecoder;
 
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
@@ -10,7 +10,7 @@ package tonfall.format.wav
 	/**
 	 * @author Andre Michelle
 	 */
-	public final class WavDecoder extends AbstractAudioDecoder
+	public final class WavDecoder extends PCMDecoder
 	{
 		private static const STRATEGIES : Vector.<IAudioIOStrategy> = getSupportedStrategies();
 
@@ -36,24 +36,31 @@ package tonfall.format.wav
 			return strategies;
 		}
 		
-		private var _bytesPerSecond : int;
-
+		private var _numSamples: Number;
+		private var _dataOffset: Number;
+		private var _blockAlign: uint;
+		
 		public function WavDecoder( bytes : ByteArray )
 		{
-			super( bytes, STRATEGIES );
+			super( bytes, evaluateHeader( bytes ) );
+		}
+		
+		override public function get numSamples(): Number
+		{
+			return _numSamples;
+		}
+		
+		override public function get dataOffset(): Number
+		{
+			return _dataOffset;
+		}
+		
+		override public function get blockAlign(): int
+		{
+			return _blockAlign;
 		}
 
-		public function get bytesPerSecond() : int
-		{
-			return _bytesPerSecond;
-		}
-		
-		public function toString() : String
-		{
-			return '[WavFormat compression: ' + _compressionType + ', bytesPerSecond: ' + _bytesPerSecond + ', blockAlign: ' + _blockAlign + ']';
-		}
-		
-		override protected function parseHeader( bytes: ByteArray ) : void
+		private function evaluateHeader( bytes: ByteArray ) : IAudioIOStrategy
 		{
 			bytes.position = 0;
 			bytes.endian = Endian.LITTLE_ENDIAN;
@@ -76,6 +83,11 @@ package tonfall.format.wav
 			var chunkID : uint;
 			var chunkLength : uint;
 			var chunkPosition : uint;
+			
+			var compressionType: *;
+			var numChannels: uint;
+			var samplingRate: Number;
+			var bits: uint;
 
 			while( 8 <= bytes.bytesAvailable ) // Had a wav with a dead byte at the end (skip)
 			{
@@ -86,12 +98,12 @@ package tonfall.format.wav
 				switch( chunkID )
 				{
 					case WavTags.FMT:
-						_compressionType = bytes.readUnsignedShort();
-						_numChannels = bytes.readUnsignedShort();
-						_samplingRate = bytes.readUnsignedInt();
-						_bytesPerSecond = bytes.readUnsignedInt();
+						compressionType = bytes.readUnsignedShort();
+						numChannels = bytes.readUnsignedShort();
+						samplingRate = bytes.readUnsignedInt();
+						bytes.readUnsignedInt(); // bytesPerSecond (redundant)
 						_blockAlign = bytes.readUnsignedShort();
-						_bits = bytes.readUnsignedShort();
+						bits = bytes.readUnsignedShort();
 						// WAV allows additional information here (skip)
 						break;
 						
@@ -103,19 +115,33 @@ package tonfall.format.wav
 
 					default:
 						// WAV allows additional tags to store extra information like markers (skip)
-						ignoredTags.push(
-							String.fromCharCode(
-								chunkID & 0xFF,
-								( chunkID >> 8 ) & 0xFF,
-								( chunkID >> 16 ) & 0xFF,
-								( chunkID >> 24 ) & 0xFF )
-							);
+//						ignoredTags.push(
+//							String.fromCharCode(
+//								chunkID & 0xFF,
+//								( chunkID >> 8 ) & 0xFF,
+//								( chunkID >> 16 ) & 0xFF,
+//								( chunkID >> 24 ) & 0xFF )
+//							);
 						break;
 				}
 
 				// Skip
 				bytes.position = chunkPosition + chunkLength;
 			}
+			
+			const n : int = STRATEGIES.length;
+			
+			for( var i: int = 0 ; i < n ; ++i )
+			{
+				var strategy: IAudioIOStrategy = STRATEGIES[i];
+				
+				if ( strategy.supports( compressionType, bits, numChannels, samplingRate ) )
+				{
+					return strategy;
+				}
+			}
+			
+			return null;
 		}
 	}
 }

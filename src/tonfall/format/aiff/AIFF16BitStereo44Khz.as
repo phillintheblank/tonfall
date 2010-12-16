@@ -1,6 +1,5 @@
 package tonfall.format.aiff
 {
-	import tonfall.format.AbstractAudioDecoder;
 	import tonfall.format.IAudioIOStrategy;
 	import tonfall.format.pcm.PCM16BitStereo44Khz;
 
@@ -12,9 +11,9 @@ package tonfall.format.aiff
 	{
 		public static const INSTANCE: IAudioIOStrategy = new AIFF16BitStereo44Khz();
 		
-		override public function readableFor( decoder: AbstractAudioDecoder ) : Boolean
+		override public function supports( compressionType: *, bits: uint,numChannels: uint, samplingRate: Number ): Boolean
 		{
-			return ( AiffTags.SSND == decoder.compressionType || AiffTags.CHAN == decoder.compressionType ) && 16 == decoder.bits && 2 == decoder.numChannels && 44100 == decoder.samplingRate;
+			return ( AiffTags.SSND == compressionType || AiffTags.CHAN == compressionType ) && 16 == bits && 2 == numChannels && 44100 == samplingRate;
 		}
 		
 		override public function get compressionType(): *
