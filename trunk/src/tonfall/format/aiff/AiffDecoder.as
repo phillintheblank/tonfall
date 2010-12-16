@@ -1,9 +1,8 @@
 package tonfall.format.aiff
 {
-	import tonfall.data.readPString;
 	import tonfall.data.IeeeExtended;
-	import tonfall.format.FormatError;
 	import tonfall.format.AbstractAudioDecoder;
+	import tonfall.format.FormatError;
 	import tonfall.format.IAudioIOStrategy;
 
 	import flash.utils.ByteArray;
@@ -34,16 +33,9 @@ package tonfall.format.aiff
 			return strategies;
 		}
 		
-		private var _compressionName: String;
-		
 		public function AiffDecoder( bytes: ByteArray )
 		{
 			super( bytes, STRATEGIES );
-		}
-		
-		public function get compressionName(): String
-		{
-			return _compressionName;
 		}
 		
 		public function toString() : String
@@ -86,9 +78,6 @@ package tonfall.format.aiff
 				ckDataSize = bytes.readInt();
 				ckPosition = bytes.position;
 				
-				trace( 'ckID', ckID );
-				trace( 'ckDataSize', ckDataSize );
-				
 				switch( ckID )
 				{
 					case AiffTags.COMM:
@@ -97,19 +86,11 @@ package tonfall.format.aiff
 						_bits         = bytes.readUnsignedShort();
 						_samplingRate = IeeeExtended.inverse( bytes );
 						_compressionType = bytes.readUTFBytes( 4 );
-						_compressionName = readPString( bytes );
 						
-						trace( 'compressionType', _compressionType );
-						trace( 'compressionName', _compressionName );
-
 						_blockAlign = ( _bits >> 3 ) * _numChannels;
 						break;
 						
 					case AiffTags.SSND:
-						if( _numSamples * _blockAlign != ckDataSize )
-						{
-							trace( 'Warning:',  _numSamples * _blockAlign, ckDataSize );
-						}
 						_dataOffset = bytes.position;
 						break;
 						

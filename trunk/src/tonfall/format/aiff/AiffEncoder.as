@@ -1,6 +1,5 @@
 package tonfall.format.aiff
 {
-	import tonfall.data.writePString;
 	import tonfall.data.IeeeExtended;
 	import tonfall.format.IAudioIOStrategy;
 
@@ -8,8 +7,6 @@ package tonfall.format.aiff
 	import flash.utils.Endian;
 	
 	/**
-	 * TODO Not finally implemented
-	 * 
 	 * @author Andre Michelle
 	 */
 	public final class AiffEncoder
@@ -79,15 +76,13 @@ package tonfall.format.aiff
 			_bytes.writeUnsignedInt( 0 );
 			_bytes.writeUTFBytes( AiffTags.AIFF );
 			_bytes.writeUTFBytes( AiffTags.COMM );
-			_bytes.writeUnsignedInt( 18 ); // Actually 22 (But this way it works in Audacity) 
+			_bytes.writeUnsignedInt( 18 ); 
 			_bytes.writeShort( _strategy.numChannels );
 			_nsao = _bytes.position;
 			_bytes.writeUnsignedInt( 0 ); // numSamples
 			_bytes.writeShort( _strategy.bits );
 			IeeeExtended.forward( _strategy.samplingRate, _bytes );
 			_bytes.writeUTFBytes( AiffTags.SSND );
-			writePString( '', _bytes );
-			//_bytes.writeUTFBytes( AiffTags.SSND ); // Check aboves comment
 			_dtlo = _bytes.position;
 			_bytes.writeUnsignedInt( 0 ); // SSND length
 		}
