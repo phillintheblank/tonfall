@@ -10,15 +10,13 @@ package tonfall.format.pcm
 	public class PCM16BitMono44Khz
 		implements IAudioIOStrategy
 	{
-		public function read32BitStereo44KHz( decoder: PCMDecoder, target : ByteArray, length : Number, startPosition : Number ) : void
+		public function read32BitStereo44KHz( data: ByteArray, dataOffset: Number, target : ByteArray, length : Number, startPosition : Number ) : void
 		{
-			const bytes: ByteArray = decoder.bytes;
-
-			bytes.position = decoder.dataOffset + ( startPosition << 1 );
+			data.position = dataOffset + ( startPosition << 1 );
 			
 			for ( var i : int = 0 ; i < length ; ++i )
 			{
-				const amplitude : Number = bytes.readShort() * 3.051850947600e-05; // DIV 0x7FFF
+				const amplitude : Number = data.readShort() * 3.051850947600e-05; // DIV 0x7FFF
 
 				target.writeFloat( amplitude );
 				target.writeFloat( amplitude );

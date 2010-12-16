@@ -56,7 +56,7 @@ package tonfall.format.pcm
 				length = numSamples - startPosition;
 			}
 			
-			_strategy.read32BitStereo44KHz( this, target, length, startPosition );
+			_strategy.read32BitStereo44KHz( _bytes, dataOffset, target, length, startPosition );
 			
 			return length;
 		}

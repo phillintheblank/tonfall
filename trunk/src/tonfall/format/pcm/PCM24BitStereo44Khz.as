@@ -23,16 +23,14 @@ package tonfall.format.pcm
 			return bytes;
 		}
 		
-		public function read32BitStereo44KHz( decoder: PCMDecoder, target : ByteArray, length : Number, startPosition : Number ) : void
+		public function read32BitStereo44KHz( data: ByteArray, dataOffset: Number, target : ByteArray, length : Number, startPosition : Number ) : void
 		{
-			const bytes: ByteArray = decoder.bytes;
-
-			bytes.position = decoder.dataOffset + startPosition * 6;
+			data.position = dataOffset + startPosition * 6;
 			
 			for ( var i : int = 0 ; i < length ; ++i )
 			{
-				target.writeFloat( int( ( bytes.readUnsignedByte() << 8 | bytes.readUnsignedByte() << 16 | bytes.readUnsignedByte() << 24 ) ) * 0.000000000465661 ); // DIV 0x80000000
-				target.writeFloat( int( ( bytes.readUnsignedByte() << 8 | bytes.readUnsignedByte() << 16 | bytes.readUnsignedByte() << 24 ) ) * 0.000000000465661 ); // DIV 0x80000000
+				target.writeFloat( int( ( data.readUnsignedByte() << 8 | data.readUnsignedByte() << 16 | data.readUnsignedByte() << 24 ) ) * 0.000000000465661 ); // DIV 0x80000000
+				target.writeFloat( int( ( data.readUnsignedByte() << 8 | data.readUnsignedByte() << 16 | data.readUnsignedByte() << 24 ) ) * 0.000000000465661 ); // DIV 0x80000000
 			}
 		}
 
