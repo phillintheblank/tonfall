@@ -8,19 +8,21 @@ package tonfall.format.pcm
 	/**
 	 * @author Andre Michelle
 	 */
-	public class PCM32BitStereo44Khz
+	public class PCM32BitIntMono44Khz
 		implements IAudioIOStrategy
 	{
 		public function readData( decoder: AbstractAudioDecoder, target : ByteArray, length : Number, startPosition : Number ) : void
 		{
 			const bytes: ByteArray = decoder.bytes;
 
-			bytes.position = decoder.dataOffset + ( startPosition << 3 );
+			bytes.position = decoder.dataOffset + ( startPosition << 2 );
 			
 			for ( var i : int = 0 ; i < length ; ++i )
 			{
-				target.writeFloat( bytes.readFloat() );
-				target.writeFloat( bytes.readFloat() );
+				const amplitude: Number = bytes.readInt() / 0x7FFFFFFF;
+				
+				target.writeFloat( amplitude );
+				target.writeFloat( amplitude );
 			}
 		}
 		
@@ -28,11 +30,18 @@ package tonfall.format.pcm
 		{
 			for ( var i : int = 0 ; i < numSamples ; ++i )
 			{
-				target.writeFloat( data.readFloat() );
-				target.writeFloat( data.readFloat() );
+				const amplitude : Number = ( data.readFloat() + data.readFloat() ) * 0.5;
+				
+				if( amplitude > 1.0 )
+					target.writeInt( 0x7FFFFFFF );
+				else
+				if( amplitude < -1.0 )
+					target.writeInt( -0x7FFFFFFF );
+				else
+					target.writeInt( amplitude * 0x7FFFFFFF );
 			}
 		}
-
+		
 		public function readableFor( decoder: AbstractAudioDecoder ): Boolean
 		{
 			// No proper check possible
@@ -51,7 +60,7 @@ package tonfall.format.pcm
 
 		public function get numChannels(): int
 		{
-			return 2;
+			return 1;
 		}
 
 		public function get bits(): int
@@ -61,7 +70,7 @@ package tonfall.format.pcm
 		
 		public function get blockAlign() : uint
 		{
-			return 8;
+			return 4;
 		}
 	}
 }
