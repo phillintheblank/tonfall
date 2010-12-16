@@ -1,14 +1,12 @@
 package tonfall.format.pcm
 {
-	import tonfall.format.IAudioIOStrategy;
-
 	import flash.utils.ByteArray;
 
 	/**
 	 * @author Andre Michelle
 	 */
 	public class PCM32BitFloatStereo44Khz
-		implements IAudioIOStrategy
+		implements IPCMIOStrategy
 	{
 		public function read32BitStereo44KHz( data: ByteArray, dataOffset: Number, target : ByteArray, length : Number, startPosition : Number ) : void
 		{

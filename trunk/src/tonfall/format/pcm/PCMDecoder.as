@@ -1,7 +1,5 @@
 package tonfall.format.pcm
 {
-	import tonfall.format.IAudioIOStrategy;
-
 	import flash.utils.ByteArray;
 	
 	/**
@@ -10,9 +8,9 @@ package tonfall.format.pcm
 	public class PCMDecoder
 	{
 		private var _bytes : ByteArray;
-		private var _strategy: IAudioIOStrategy;
+		private var _strategy: IPCMIOStrategy;
 		
-		public function PCMDecoder( bytes : ByteArray, strategy: IAudioIOStrategy )
+		public function PCMDecoder( bytes : ByteArray, strategy: IPCMIOStrategy )
 		{
 			if ( null == bytes )
 				throw new Error( 'bytes must not be null' );

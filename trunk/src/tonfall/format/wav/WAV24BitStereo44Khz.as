@@ -1,15 +1,14 @@
 package tonfall.format.wav
 {
-	import tonfall.format.IAudioIOStrategy;
 	import tonfall.format.pcm.PCM24BitStereo44Khz;
 
 	/**
 	 * @author Andre Michelle
 	 */
 	public final class WAV24BitStereo44Khz extends PCM24BitStereo44Khz
-		implements IAudioIOStrategy
+		implements IWAVIOStrategy
 	{
-		public static const INSTANCE: IAudioIOStrategy = new WAV24BitStereo44Khz();
+		public static const INSTANCE: IWAVIOStrategy = new WAV24BitStereo44Khz();
 		
 		override public function supports( compressionType: *, bits: uint,numChannels: uint, samplingRate: Number ): Boolean
 		{

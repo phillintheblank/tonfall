@@ -1,7 +1,7 @@
 package tonfall.format.wav
 {
 	import tonfall.format.FormatError;
-	import tonfall.format.IAudioIOStrategy;
+	import tonfall.format.pcm.IPCMIOStrategy;
 	import tonfall.format.pcm.PCMDecoder;
 
 	import flash.utils.ByteArray;
@@ -12,7 +12,7 @@ package tonfall.format.wav
 	 */
 	public final class WavDecoder extends PCMDecoder
 	{
-		private static const STRATEGIES : Vector.<IAudioIOStrategy> = getSupportedStrategies();
+		private static const STRATEGIES : Vector.<IWAVIOStrategy> = getSupportedStrategies();
 
 		/*
 		 * You can add extra strategies here.
@@ -20,9 +20,9 @@ package tonfall.format.wav
 		 * Lowest index: Most expected
 		 * Highest index: Less expected
 		 */
-		private static function getSupportedStrategies() : Vector.<IAudioIOStrategy>
+		private static function getSupportedStrategies() : Vector.<IWAVIOStrategy>
 		{
-			const strategies: Vector.<IAudioIOStrategy> = new Vector.<IAudioIOStrategy>( 8, true );
+			const strategies: Vector.<IWAVIOStrategy> = new Vector.<IWAVIOStrategy>( 8, true );
 
 			strategies[0] = WAV16BitStereo44Khz.INSTANCE;
 			strategies[1] = WAV16BitMono44Khz.INSTANCE;
@@ -60,7 +60,7 @@ package tonfall.format.wav
 			return _blockAlign;
 		}
 
-		private function evaluateHeader( bytes: ByteArray ) : IAudioIOStrategy
+		private function evaluateHeader( bytes: ByteArray ) : IPCMIOStrategy
 		{
 			bytes.position = 0;
 			bytes.endian = Endian.LITTLE_ENDIAN;
@@ -115,13 +115,6 @@ package tonfall.format.wav
 
 					default:
 						// WAV allows additional tags to store extra information like markers (skip)
-//						ignoredTags.push(
-//							String.fromCharCode(
-//								chunkID & 0xFF,
-//								( chunkID >> 8 ) & 0xFF,
-//								( chunkID >> 16 ) & 0xFF,
-//								( chunkID >> 24 ) & 0xFF )
-//							);
 						break;
 				}
 
@@ -133,7 +126,7 @@ package tonfall.format.wav
 			
 			for( var i: int = 0 ; i < n ; ++i )
 			{
-				var strategy: IAudioIOStrategy = STRATEGIES[i];
+				var strategy: IWAVIOStrategy = STRATEGIES[i];
 				
 				if ( strategy.supports( compressionType, bits, numChannels, samplingRate ) )
 				{

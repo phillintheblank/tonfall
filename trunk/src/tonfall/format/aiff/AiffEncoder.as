@@ -1,7 +1,6 @@
 package tonfall.format.aiff
 {
 	import tonfall.data.IeeeExtended;
-	import tonfall.format.IAudioIOStrategy;
 	import tonfall.format.pcm.PCMEncoder;
 
 	import flash.utils.ByteArray;
@@ -15,7 +14,7 @@ package tonfall.format.aiff
 		private var _nsao: uint; // store numSamples offset for writing later
 		private var _dtlo: uint; // store ssnd tag offset for writing later
 		
-		public function AiffEncoder( strategy : IAudioIOStrategy )
+		public function AiffEncoder( strategy : IAIFFIOStrategy )
 		{
 			super( strategy );
 		}

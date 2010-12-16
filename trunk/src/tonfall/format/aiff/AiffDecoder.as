@@ -1,19 +1,18 @@
 package tonfall.format.aiff
 {
-	import tonfall.data.IeeeExtended;
-	import tonfall.format.FormatError;
-	import tonfall.format.IAudioIOStrategy;
-	import tonfall.format.pcm.PCMDecoder;
-
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
+	import tonfall.data.IeeeExtended;
+	import tonfall.format.FormatError;
+	import tonfall.format.pcm.IPCMIOStrategy;
+	import tonfall.format.pcm.PCMDecoder;
 
 	/**
 	 * @author Andre Michelle
 	 */
 	public final class AiffDecoder extends PCMDecoder
 	{
-		private static const STRATEGIES : Vector.<IAudioIOStrategy> = getSupportedStrategies();
+		private static const STRATEGIES : Vector.<IAIFFIOStrategy> = getSupportedStrategies();
 
 		/*
 		 * You can add extra strategies here.
@@ -21,9 +20,9 @@ package tonfall.format.aiff
 		 * Lowest index: Most expected
 		 * Highest index: Less expected
 		 */
-		private static function getSupportedStrategies() : Vector.<IAudioIOStrategy>
+		private static function getSupportedStrategies() : Vector.<IAIFFIOStrategy>
 		{
-			const strategies: Vector.<IAudioIOStrategy> = new Vector.<IAudioIOStrategy>( 4, true );
+			const strategies: Vector.<IAIFFIOStrategy> = new Vector.<IAIFFIOStrategy>( 4, true );
 
 			strategies[0] = AIFF16BitStereo44Khz.INSTANCE;
 			strategies[1] = AIFF24BitStereo44Khz.INSTANCE;
@@ -57,7 +56,7 @@ package tonfall.format.aiff
 			return _blockAlign;
 		}
 		
-		private function evaluateHeader( bytes: ByteArray ) : IAudioIOStrategy
+		private function evaluateHeader( bytes: ByteArray ) : IPCMIOStrategy
 		{
 			bytes.endian = Endian.BIG_ENDIAN;
 			
@@ -134,7 +133,7 @@ package tonfall.format.aiff
 			
 			for( var i: int = 0 ; i < n ; ++i )
 			{
-				var strategy: IAudioIOStrategy = STRATEGIES[i];
+				var strategy: IAIFFIOStrategy = STRATEGIES[i];
 				
 				if ( strategy.supports( compressionType, bits, numChannels, samplingRate ) )
 				{
