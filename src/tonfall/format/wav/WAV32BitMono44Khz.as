@@ -2,12 +2,12 @@ package tonfall.format.wav
 {
 	import tonfall.format.AbstractAudioDecoder;
 	import tonfall.format.IAudioIOStrategy;
-	import tonfall.format.pcm.PCM32BitMono44Khz;
+	import tonfall.format.pcm.PCM32BitFloatMono44Khz;
 
 	/**
 	 * @author Andre Michelle
 	 */
-	public final class WAV32BitMono44Khz extends PCM32BitMono44Khz
+	public final class WAV32BitMono44Khz extends PCM32BitFloatMono44Khz
 		implements IAudioIOStrategy
 	{
 		public static const INSTANCE: IAudioIOStrategy = new WAV32BitMono44Khz();

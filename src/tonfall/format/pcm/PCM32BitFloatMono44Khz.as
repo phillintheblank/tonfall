@@ -8,7 +8,7 @@ package tonfall.format.pcm
 	/**
 	 * @author Andre Michelle
 	 */
-	public class PCM32BitMono44Khz
+	public class PCM32BitFloatMono44Khz
 		implements IAudioIOStrategy
 	{
 		public function readData( decoder: AbstractAudioDecoder, target : ByteArray, length : Number, startPosition : Number ) : void

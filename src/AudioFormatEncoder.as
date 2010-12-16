@@ -38,8 +38,8 @@ package
 
 //		private const encoder: WavEncoder = new WavEncoder( WAV8BitMono44Khz.INSTANCE );
 //		private const encoder: WavEncoder = new WavEncoder( WAV8BitStereo44Khz.INSTANCE );
-//		private const encoder: WavEncoder = new WavEncoder( WAV16BitMono44Khz.INSTANCE );
-		private const encoder: WavEncoder = new WavEncoder( WAV16BitStereo44Khz.INSTANCE );
+		private const encoder: WavEncoder = new WavEncoder( WAV16BitMono44Khz.INSTANCE );
+//		private const encoder: WavEncoder = new WavEncoder( WAV16BitStereo44Khz.INSTANCE );
 //		private const encoder: WavEncoder = new WavEncoder( WAV24BitMono44Khz.INSTANCE );
 //		private const encoder: WavEncoder = new WavEncoder( WAV24BitStereo44Khz.INSTANCE );
 //		private const encoder: WavEncoder = new WavEncoder( WAV32BitMono44Khz.INSTANCE );
@@ -48,7 +48,7 @@ package
 //		private const encoder: AiffEncoder = new AiffEncoder( AIFF8BitStereo44Khz.INSTANCE );
 //		private const encoder: AiffEncoder = new AiffEncoder( AIFF16BitStereo44Khz.INSTANCE );
 //		private const encoder: AiffEncoder = new AiffEncoder( AIFF24BitStereo44Khz.INSTANCE ); // TODO CREATES ARTIFACT
-//		private const encoder: AiffEncoder = new AiffEncoder( AIFF32BitStereo44Khz.INSTANCE ); // TODO I GUESS WE NEED A DIFFERENT COMPRESSION AS IN WAV
+//		private const encoder: AiffEncoder = new AiffEncoder( AIFF32BitStereo44Khz.INSTANCE );
 
 		public function AudioFormatEncoder()
 		{
