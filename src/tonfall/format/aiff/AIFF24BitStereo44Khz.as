@@ -1,15 +1,14 @@
 package tonfall.format.aiff
 {
-	import tonfall.format.IAudioIOStrategy;
 	import tonfall.format.pcm.PCM24BitStereo44Khz;
 
 	/**
 	 * @author Andre Michelle
 	 */
 	public final class AIFF24BitStereo44Khz extends PCM24BitStereo44Khz
-		implements IAudioIOStrategy
+		implements IAIFFIOStrategy
 	{
-		public static const INSTANCE: IAudioIOStrategy = new AIFF24BitStereo44Khz();
+		public static const INSTANCE: IAIFFIOStrategy = new AIFF24BitStereo44Khz();
 		
 		override public function supports( compressionType: *, bits: uint,numChannels: uint, samplingRate: Number ): Boolean
 		{

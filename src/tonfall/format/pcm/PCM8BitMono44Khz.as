@@ -1,14 +1,12 @@
 package tonfall.format.pcm
 {
-	import tonfall.format.IAudioIOStrategy;
-
 	import flash.utils.ByteArray;
 
 	/**
 	 * @author Andre Michelle
 	 */
 	public class PCM8BitMono44Khz
-		implements IAudioIOStrategy
+		implements IPCMIOStrategy
 	{
 		private var _signed: Boolean;
 

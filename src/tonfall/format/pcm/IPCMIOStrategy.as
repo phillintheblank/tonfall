@@ -1,11 +1,11 @@
-package tonfall.format
+package tonfall.format.pcm
 {
 	import flash.utils.ByteArray;
 
 	/**
 	 * @author Andre Michelle
 	 */
-	public interface IAudioIOStrategy
+	public interface IPCMIOStrategy
 	{
 		/**
 		 * @return true, if strategy can read format information

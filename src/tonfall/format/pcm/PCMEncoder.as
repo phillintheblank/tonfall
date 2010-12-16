@@ -1,7 +1,5 @@
 package tonfall.format.pcm
 {
-	import tonfall.format.IAudioIOStrategy;
-
 	import flash.utils.ByteArray;
 	/**
 	 * @author Andre Michelle
@@ -10,11 +8,11 @@ package tonfall.format.pcm
 	{
 		private var _bytes: ByteArray;
 		
-		private var _strategy : IAudioIOStrategy;
+		private var _strategy : IPCMIOStrategy;
 		
 		private var _samplePosition: uint;
 
-		public function PCMEncoder( strategy : IAudioIOStrategy )
+		public function PCMEncoder( strategy : IPCMIOStrategy )
 		{
 			if( null == strategy )
 			{
@@ -57,7 +55,7 @@ package tonfall.format.pcm
 			return _bytes;
 		}
 		
-		public function get strategy(): IAudioIOStrategy
+		public function get strategy(): IPCMIOStrategy
 		{
 			return _strategy;
 		}

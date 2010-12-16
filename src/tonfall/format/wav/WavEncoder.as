@@ -1,10 +1,9 @@
 package tonfall.format.wav
 {
-	import tonfall.format.IAudioIOStrategy;
-	import tonfall.format.pcm.PCMEncoder;
-
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
+	import tonfall.format.pcm.IPCMIOStrategy;
+	import tonfall.format.pcm.PCMEncoder;
 	/**
 	 * @author Andre Michelle
 	 */
@@ -12,7 +11,7 @@ package tonfall.format.wav
 	{
 		private var _dtlo: uint; // store data tag length offset for writing later
 
-		public function WavEncoder( strategy : IAudioIOStrategy )
+		public function WavEncoder( strategy : IWAVIOStrategy )
 		{
 			super( strategy );
 		}

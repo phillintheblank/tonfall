@@ -1,7 +1,5 @@
 package tonfall.format.pcm
 {
-	import tonfall.format.IAudioIOStrategy;
-
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
 
@@ -9,7 +7,7 @@ package tonfall.format.pcm
 	 * @author Andre Michelle
 	 */
 	public class PCM24BitMono44Khz
-		implements IAudioIOStrategy
+		implements IPCMIOStrategy
 	{
 		private static const bytes: ByteArray = createByteArray();
 
