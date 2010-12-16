@@ -15,7 +15,8 @@ package tonfall.format
 		/**
 		 * Reads audio data from source format and write audio data in Flashplayer format (44100Hz,Stereo,Float)
 		 * 
-		 * @param decoder WavDecoder providing all wav header information
+		 * @param data ByteArray to read from
+		 * @param dataOffset position, where audio data starts
 		 * @param target The ByteArray to write the audio data
 		 * @param length How many samples must be written
 		 * @param startPosition position, where to start reading
