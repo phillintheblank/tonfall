@@ -8,7 +8,7 @@ package tonfall.format.wav
 	{
 		public function WAVSound( bytes: ByteArray, onComplete: Function = null )
 		{
-			super( bytes, WavDecoder.parseHeader( bytes ), onComplete );
+			super( bytes, WAVDecoder.parseHeader( bytes ), onComplete );
 		}
 	}
 }
