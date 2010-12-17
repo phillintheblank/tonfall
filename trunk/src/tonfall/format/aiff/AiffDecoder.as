@@ -1,17 +1,100 @@
 package tonfall.format.aiff
 {
-	import flash.utils.ByteArray;
-	import flash.utils.Endian;
 	import tonfall.data.IeeeExtended;
+	import tonfall.format.FormatInfo;
 	import tonfall.format.FormatError;
 	import tonfall.format.pcm.IPCMIOStrategy;
 	import tonfall.format.pcm.PCMDecoder;
+
+	import flash.utils.ByteArray;
+	import flash.utils.Endian;
 
 	/**
 	 * @author Andre Michelle
 	 */
 	public final class AiffDecoder extends PCMDecoder
 	{
+		public static function parseHeader( bytes: ByteArray ): FormatInfo
+		{
+			bytes.endian = Endian.BIG_ENDIAN;
+			
+			var ckID: String = bytes.readUTFBytes( 4 );
+			var ckDataSize: int = bytes.readInt();
+			
+			if( ckID != AiffTags.FORM )
+			{
+				throw FormatError.TAG_MISMATCH;
+				return;
+			}
+			
+			if( ckDataSize != bytes.length - 8 ) // SUBTRACT ID & SIZE
+			{
+				throw FormatError.SIZE_MISMATCH;
+			}
+			
+			const formType: String = bytes.readUTFBytes( 4 );
+			
+			if( formType != AiffTags.AIFF )
+			{
+				throw FormatError.TAG_MISMATCH;
+			}
+			
+			var compressionType: Object;
+			var numChannels: uint;
+			var samplingRate: Number;
+			var bits: uint;
+			var blockAlign: uint;
+			var dataOffset: uint;
+			var dataLength: uint;
+			var numSamples: uint;
+			
+			var ckPosition: uint;
+			
+			for(;;)
+			{
+				//-- NEXT CHUNK
+				ckID = bytes.readUTFBytes( 4 );
+				ckDataSize = bytes.readInt();
+				ckPosition = bytes.position;
+				
+				switch( ckID )
+				{
+					case AiffTags.COMM:
+						numChannels  = bytes.readUnsignedShort();
+						numSamples   = bytes.readUnsignedInt();
+						bits         = bytes.readUnsignedShort();
+						samplingRate = IeeeExtended.inverse( bytes );
+						compressionType = bytes.readUTFBytes( 4 );
+						
+						blockAlign = ( bits >> 3 ) * numChannels;
+						break;
+
+					case AiffTags.SSND:
+						dataOffset = bytes.position;
+						dataLength = ckDataSize;
+						break;
+						
+					default:
+						// AIFF allows additional tags to store extra information like markers (skip)
+						break;
+				}
+				
+				ckPosition += ckDataSize;
+				
+				if( ckPosition >= bytes.length ) // EOF
+					break;
+				
+				bytes.position = ckPosition;
+			}
+			
+			if( numSamples != dataLength / blockAlign )
+			{
+				throw FormatError.UNKNOWN;
+			}
+			
+			return new FormatInfo( compressionType, samplingRate, numChannels, bits, numSamples, dataOffset );
+		}
+		
 		private static const STRATEGIES : Vector.<IAIFFIOStrategy> = getSupportedStrategies();
 
 		/*
@@ -58,76 +141,7 @@ package tonfall.format.aiff
 		
 		private function evaluateHeader( bytes: ByteArray ) : IPCMIOStrategy
 		{
-			bytes.endian = Endian.BIG_ENDIAN;
-			
-			var ckID: String = bytes.readUTFBytes( 4 );
-			var ckDataSize: int = bytes.readInt();
-			
-			if( ckID != AiffTags.FORM )
-			{
-				throw new FormatError( 'FORM TAG missing', 'AIFF' );
-				return;
-			}
-			
-			if( ckDataSize != bytes.length - 8 ) // SUBTRACT ID & SIZE
-			{
-				throw new FormatError( 'Wrong size', 'AIFF' );
-				return;
-			}
-			
-			const formType: String = bytes.readUTFBytes( 4 );
-			
-			if( formType != AiffTags.AIFF )
-			{
-				throw new FormatError( 'AIFF TAG missing', 'AIFF' );
-			}
-			
-			var compressionType: *;
-			var numChannels: uint;
-			var samplingRate: Number;
-			var bits: uint;
-			
-			var ckPosition: uint;
-			
-			for(;;)
-			{
-				//-- NEXT CHUNK
-				ckID = bytes.readUTFBytes( 4 );
-				ckDataSize = bytes.readInt();
-				ckPosition = bytes.position;
-				
-				switch( ckID )
-				{
-					case AiffTags.COMM:
-						numChannels  = bytes.readUnsignedShort();
-						_numSamples   = bytes.readUnsignedInt();
-						bits         = bytes.readUnsignedShort();
-						samplingRate = IeeeExtended.inverse( bytes );
-						compressionType = bytes.readUTFBytes( 4 );
-						
-						_blockAlign = ( bits >> 3 ) * numChannels;
-						break;
-
-					case AiffTags.SSND:
-						_dataOffset = bytes.position;
-						break;
-						
-					default:
-						// AIFF allows additional tags to store extra information like markers (skip)
-//						ignoredTags.push( ckID );
-						break;
-				}
-				
-				ckPosition += ckDataSize;
-				
-				if( ckPosition >= bytes.length )
-				{
-					// EOF
-					break;
-				}
-				
-				bytes.position = ckPosition;
-			}
+			const info: FormatInfo = parseHeader( bytes );
 			
 			const n : int = STRATEGIES.length;
 			
@@ -135,7 +149,7 @@ package tonfall.format.aiff
 			{
 				var strategy: IAIFFIOStrategy = STRATEGIES[i];
 				
-				if ( strategy.supports( compressionType, bits, numChannels, samplingRate ) )
+				if ( strategy.supports( info ) )
 				{
 					return strategy;
 				}

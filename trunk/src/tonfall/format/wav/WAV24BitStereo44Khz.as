@@ -9,15 +9,10 @@ package tonfall.format.wav
 		implements IWAVIOStrategy
 	{
 		public static const INSTANCE: IWAVIOStrategy = new WAV24BitStereo44Khz();
-		
-		override public function supports( compressionType: *, bits: uint,numChannels: uint, samplingRate: Number ): Boolean
+
+		public function WAV24BitStereo44Khz()
 		{
-			return 1 == compressionType && 24 == bits && 2 == numChannels && 44100 == samplingRate;
-		}
-		
-		override public function get compressionType(): *
-		{
-			return 1;
+			super( 1 );
 		}
 	}
 }

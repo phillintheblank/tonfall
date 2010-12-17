@@ -6,7 +6,7 @@ package tonfall.format.pcm
 	/**
 	 * @author Andre Michelle
 	 */
-	public class PCM24BitStereo44Khz
+	public class PCM24BitStereo44Khz extends PCMStrategy
 		implements IPCMIOStrategy
 	{
 		private static const bytes: ByteArray = createByteArray();
@@ -19,6 +19,11 @@ package tonfall.format.pcm
 			bytes.length = 4;
 			
 			return bytes;
+		}
+		
+		public function PCM24BitStereo44Khz( compressionType: Object = null )
+		{
+			super( compressionType, 44100.0, 2, 24 );
 		}
 		
 		public function read32BitStereo44KHz( data: ByteArray, dataOffset: Number, target : ByteArray, length : Number, startPosition : Number ) : void
@@ -67,37 +72,6 @@ package tonfall.format.pcm
 
 				target.writeBytes( bytes, 1, 3 );
 			}
-		}
-		
-		public function supports( compressionType: *, bits: uint,numChannels: uint, samplingRate: Number ): Boolean
-		{
-			// No proper check possible
-			return true;
-		}
-
-		public function get compressionType(): *
-		{
-			return null;
-		}
-
-		public function get samplingRate(): Number
-		{
-			return 44100.0;
-		}
-
-		public function get numChannels(): int
-		{
-			return 2;
-		}
-
-		public function get bits(): int
-		{
-			return 24;
-		}
-		
-		public function get blockAlign() : uint
-		{
-			return 6;
 		}
 	}
 }

@@ -12,17 +12,7 @@ package tonfall.format.wav
 
 		public function WAV8BitMono44Khz()
 		{
-			super( false );
-		}
-
-		override public function supports( compressionType: *, bits: uint,numChannels: uint, samplingRate: Number ): Boolean
-		{
-			return 1 == compressionType && 8 == bits && 1 == numChannels && 44100 == samplingRate;
-		}
-		
-		override public function get compressionType(): *
-		{
-			return 1;
+			super( false, 1 );
 		}
 	}
 }

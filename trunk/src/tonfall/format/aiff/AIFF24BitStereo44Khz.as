@@ -10,14 +10,9 @@ package tonfall.format.aiff
 	{
 		public static const INSTANCE: IAIFFIOStrategy = new AIFF24BitStereo44Khz();
 		
-		override public function supports( compressionType: *, bits: uint,numChannels: uint, samplingRate: Number ): Boolean
+		public function AIFF24BitStereo44Khz()
 		{
-			return ( AiffTags.SSND == compressionType || AiffTags.CHAN == compressionType ) && 24 == bits && 2 == numChannels && 44100 == samplingRate;
-		}
-		
-		override public function get compressionType(): *
-		{
-			return AiffTags.SSND;
+			super( AiffTags.SSND );
 		}
 	}
 }

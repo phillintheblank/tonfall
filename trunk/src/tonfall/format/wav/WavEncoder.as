@@ -10,8 +10,7 @@ package tonfall.format.wav
 	public final class WavEncoder extends PCMEncoder
 	{
 		private var _dtlo: uint; // store data tag length offset for writing later
-
-		public function WavEncoder( strategy : IWAVIOStrategy )
+		public function WavEncoder( strategy: IWAVIOStrategy )
 		{
 			super( strategy );
 		}
@@ -33,7 +32,7 @@ package tonfall.format.wav
 			
 			bytes.writeUnsignedInt( WavTags.FMT );
 			bytes.writeUnsignedInt( 16 ); // chunk length
-			bytes.writeShort( strategy.compressionType ); // compression
+			bytes.writeShort( int( strategy.compressionType ) ); // compression
 			bytes.writeShort( strategy.numChannels ); // numChannels
 			bytes.writeUnsignedInt( strategy.samplingRate ); // samplingRate
 			bytes.writeUnsignedInt( strategy.samplingRate * strategy.blockAlign ); // bytesPerSecond

@@ -12,17 +12,7 @@ package tonfall.format.aiff
 
 		public function AIFF8BitStereo44Khz()
 		{
-			super( true );
-		}
-		
-		override public function supports( compressionType: *, bits: uint,numChannels: uint, samplingRate: Number ): Boolean
-		{
-			return ( AiffTags.SSND == compressionType || AiffTags.CHAN == compressionType ) && 8 == bits && 2 == numChannels && 44100 == samplingRate;
-		}
-		
-		override public function get compressionType(): *
-		{
-			return AiffTags.SSND;
+			super( true, AiffTags.SSND );
 		}
 	}
 }

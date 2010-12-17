@@ -1,8 +1,8 @@
 package
 {
+	import tonfall.format.wav.WavDecoder;
 	import tonfall.format.aiff.AiffDecoder;
 	import tonfall.format.pcm.PCMDecoder;
-	import tonfall.format.wav.WavDecoder;
 
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -60,10 +60,10 @@ package
 				textField.text = 'Browsing\n';
 			}
 			
-			browseWav();
+			browseAudioFile();
 		}
 
-		private function browseWav() : void
+		private function browseAudioFile() : void
 		{
 			// allocate memory (sizeof float:4)*2
 			memory.length = BUFFER_SIZE << 3;

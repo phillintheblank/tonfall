@@ -1,5 +1,7 @@
 package tonfall.format.pcm
 {
+	import tonfall.format.FormatInfo;
+
 	import flash.utils.ByteArray;
 
 	/**
@@ -10,7 +12,7 @@ package tonfall.format.pcm
 		/**
 		 * @return true, if strategy can read format information
 		 */
-		function supports( compressionType: *, bits: uint,numChannels: uint, samplingRate: Number ): Boolean;
+		function supports( info: FormatInfo ): Boolean;
 		
 		/**
 		 * Reads audio data from source format and write audio data in Flashplayer format (44100Hz,Stereo,Float)
@@ -40,7 +42,7 @@ package tonfall.format.pcm
 		/**
 		 * @return compressionType
 		 */
-		function get compressionType(): *;
+		function get compressionType(): Object;
 
 		/**
 		 * @return samplingRate
@@ -50,11 +52,11 @@ package tonfall.format.pcm
 		/**
 		 * @return numChannels
 		 */
-		function get numChannels(): int;
+		function get numChannels(): uint;
 
 		/**
 		 * @return bits
 		 */
-		function get bits(): int;
+		function get bits(): uint;
 	}
 }
