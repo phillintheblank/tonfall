@@ -78,7 +78,7 @@ package
 					var amplitude: Number = Math.sin( phase * 2.0 * Math.PI );
 					
 					buffer.writeFloat( amplitude );
-					buffer.writeFloat( -amplitude );
+					buffer.writeFloat( amplitude );
 					
 					phase += frequency / samplingRate;
 					phase -= Math.floor( phase );

@@ -1,7 +1,7 @@
 package tonfall.format.pcm
 {
-	import tonfall.format.FormatInfo;
 	import tonfall.format.FormatError;
+	import tonfall.format.FormatInfo;
 
 	import flash.display.Loader;
 	import flash.display.LoaderInfo;
@@ -68,18 +68,17 @@ package tonfall.format.pcm
 		{
 			_sound = null;
 		}
+		
+		protected function writeSoundData( swf: ByteArray, data: ByteArray, info: FormatInfo ): void
+		{
+			swf.writeBytes( data, info.dataOffset, info.dataLength );
+		}
 
 		private function generateSound( bytes: ByteArray, info: FormatInfo ): void
 		{
-			// TODO ... but I do not know, why...
-			if( 1 == info.numChannels )
-			{
-				throw new Error( 'Mono is not supported.' );
-			}
-			
 			//-- get naked swf bytearray
-			var swf: ByteArray = ByteArray( new SWF() );
-
+			const swf: ByteArray = ByteArray( new SWF() );
+			
 			swf.endian = Endian.LITTLE_ENDIAN;
 			swf.position = swf.length;
 
@@ -88,7 +87,7 @@ package tonfall.format.pcm
 			swf.writeUnsignedInt( info.dataLength + 7 );
 			
 			//-- assemble audio property byte (uncompressed little endian)
-			var byte2: uint = 3 << 4;
+			var byte2: uint = 0x30;
 			
 			switch( info.samplingRate )
 			{
@@ -104,35 +103,19 @@ package tonfall.format.pcm
 			else
 			if( 1 != info.numChannels )
 				throw FormatError.NUM_CHANNELS;
-
+				
 			if( 16 == info.bits )
 				byte2 |= 2;
 			else
 			if( 8 != info.bits )
 				throw FormatError.BIT;
-
+				
 			//-- write define sound tag
 			swf.writeShort( 1 );
 			swf.writeByte( byte2 );
 			swf.writeUnsignedInt( uint( info.numSamples ) );
 			
-			if( Endian.LITTLE_ENDIAN == bytes.endian )
-			{
-				swf.writeBytes( bytes, info.dataOffset, info.dataLength );
-			}
-			else
-			{
-				bytes.position = info.dataOffset;
-
-				var i: int = 0;
-				var n: int = info.numSamples;
-
-				for( ; i < n ; ++i)
-				{
-					swf.writeShort( bytes.readShort() );
-					swf.writeShort( bytes.readShort() );
-				}
-			}
+			writeSoundData( swf, bytes, info );
 			
 			//-- write eof tag in swf stream
 			swf.writeShort( 1 << 6 );
@@ -172,7 +155,7 @@ package tonfall.format.pcm
 					_onComplete = null;
 				}
 				else
-					throw new ArgumentError( 'Callback must have at least one arguments (PCMSound).' );
+					throw new ArgumentError( 'Callback must have at maximum one argument (PCMSound).' );
 			}
 		}
 	}
