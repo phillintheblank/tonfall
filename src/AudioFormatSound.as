@@ -100,35 +100,14 @@ package
 				return;
 			}
 			
-//			textField.appendText( '[Header] compression: ' + decoder.compressionType + '\n' );
-//			textField.appendText( '[Header] numChannels: ' + decoder.numChannels + '\n' );
-//			textField.appendText( '[Header] samplingRate: ' + decoder.samplingRate + '\n' );
-//			textField.appendText( '[Header] bits: ' + decoder.bits + '\n' );
-//			textField.appendText( '[Header] numSamples: ' + decoder.numSamples + '\n' );
-//			textField.appendText( '[Header] seconds: ' + decoder.seconds.toFixed( 3 ) + '\n' );
-//			textField.appendText( '[Header] supported: ' + decoder.supported + '\n' );
-			
-//			if ( 0 < decoder.ignoredTags.length )
-//			{
-//				// WAV format support additional information. Printing the IDs...
-//				textField.appendText( '[Format] ignored tags: ' + decoder.ignoredTags + '\n' );
-//			}
-//
-//			if ( decoder.supported )
-//			{
-//				textField.appendText( 'playback...\n' );
-//				play();
-//			}
-//			else
-//			{
-//				finished();
-//			}
+			textField.appendText( 'Parsing Complete... waiting for flash.media.Sound.\n' );
 		}
 
 		private function onPCMSoundComplete( sound: PCMSound ): void
 		{
-			textField.appendText( 'playback...\n' );
-
+			textField.appendText( 'seconds: ' + ( sound.length / 1000 ).toFixed(3) + '\n' );
+			textField.appendText( 'playback... (reload to try again)\n' );
+			
 			sound.play();
 		}
 	}
