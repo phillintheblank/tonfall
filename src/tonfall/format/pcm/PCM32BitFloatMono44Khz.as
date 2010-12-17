@@ -5,9 +5,14 @@ package tonfall.format.pcm
 	/**
 	 * @author Andre Michelle
 	 */
-	public class PCM32BitFloatMono44Khz
+	public class PCM32BitFloatMono44Khz extends PCMStrategy
 		implements IPCMIOStrategy
 	{
+		public function PCM32BitFloatMono44Khz( compressionType: Object = null )
+		{
+			super( compressionType, 44100.0, 1, 32 );
+		}
+		
 		public function read32BitStereo44KHz( data: ByteArray, dataOffset: Number, target : ByteArray, length : Number, startPosition : Number ) : void
 		{
 			data.position = dataOffset + ( startPosition << 2 );
@@ -29,37 +34,6 @@ package tonfall.format.pcm
 				
 				target.writeFloat( amplitude );
 			}
-		}
-		
-		public function supports( compressionType: *, bits: uint,numChannels: uint, samplingRate: Number ): Boolean
-		{
-			// No proper check possible
-			return true;
-		}
-
-		public function get compressionType(): *
-		{
-			return null;
-		}
-
-		public function get samplingRate(): Number
-		{
-			return 44100.0;
-		}
-
-		public function get numChannels(): int
-		{
-			return 1;
-		}
-
-		public function get bits(): int
-		{
-			return 32;
-		}
-		
-		public function get blockAlign() : uint
-		{
-			return 4;
 		}
 	}
 }

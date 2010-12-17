@@ -5,17 +5,19 @@ package tonfall.format.pcm
 	/**
 	 * @author Andre Michelle
 	 */
-	public class PCM8BitStereo44Khz
+	public class PCM8BitStereo44Khz extends PCMStrategy
 		implements IPCMIOStrategy
 	{
 		private var _signed: Boolean;
 
-		public function PCM8BitStereo44Khz( signed: Boolean )
+		public function PCM8BitStereo44Khz( signed: Boolean, compressionType: Object = null )
 		{
+			super( compressionType, 44100.0, 2, 8 );
+			
 			_signed = signed;
 		}
 
-		public function read32BitStereo44KHz( data: ByteArray, dataOffset: Number, target : ByteArray, length : Number, startPosition : Number ) : void
+		final public function read32BitStereo44KHz( data: ByteArray, dataOffset: Number, target : ByteArray, length : Number, startPosition : Number ) : void
 		{
 			data.position = dataOffset + ( startPosition << 1 );
 			
@@ -39,7 +41,7 @@ package tonfall.format.pcm
 			}
 		}
 		
-		public function write32BitStereo44KHz( data : ByteArray, target: ByteArray, numSamples : uint ) : void
+		final public function write32BitStereo44KHz( data : ByteArray, target: ByteArray, numSamples : uint ) : void
 		{
 			var left : Number;
 			var right : Number;
@@ -96,37 +98,6 @@ package tonfall.format.pcm
 						target.writeByte( right * 0x7F + 0x7F );
 				}
 			}
-		}
-		
-		public function supports( compressionType: *, bits: uint,numChannels: uint, samplingRate: Number ): Boolean
-		{
-			// No proper check possible
-			return true;
-		}
-
-		public function get compressionType(): *
-		{
-			return null;
-		}
-
-		public function get samplingRate(): Number
-		{
-			return 44100.0;
-		}
-
-		public function get numChannels(): int
-		{
-			return 2;
-		}
-
-		public function get bits(): int
-		{
-			return 8;
-		}
-		
-		public function get blockAlign() : uint
-		{
-			return 2;
 		}
 	}
 }

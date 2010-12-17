@@ -38,8 +38,8 @@ package
 
 //		private const encoder: WavEncoder = new WavEncoder( WAV8BitMono44Khz.INSTANCE );
 //		private const encoder: WavEncoder = new WavEncoder( WAV8BitStereo44Khz.INSTANCE );
-		private const encoder: WavEncoder = new WavEncoder( WAV16BitMono44Khz.INSTANCE );
-//		private const encoder: WavEncoder = new WavEncoder( WAV16BitStereo44Khz.INSTANCE );
+//		private const encoder: WavEncoder = new WavEncoder( WAV16BitMono44Khz.INSTANCE );
+		private const encoder: WavEncoder = new WavEncoder( WAV16BitStereo44Khz.INSTANCE );
 //		private const encoder: WavEncoder = new WavEncoder( WAV24BitMono44Khz.INSTANCE );
 //		private const encoder: WavEncoder = new WavEncoder( WAV24BitStereo44Khz.INSTANCE );
 //		private const encoder: WavEncoder = new WavEncoder( WAV32BitMono44Khz.INSTANCE );
@@ -78,7 +78,7 @@ package
 					var amplitude: Number = Math.sin( phase * 2.0 * Math.PI );
 					
 					buffer.writeFloat( amplitude );
-					buffer.writeFloat( amplitude );
+					buffer.writeFloat( -amplitude );
 					
 					phase += frequency / samplingRate;
 					phase -= Math.floor( phase );

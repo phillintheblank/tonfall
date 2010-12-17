@@ -5,13 +5,15 @@ package tonfall.format.pcm
 	/**
 	 * @author Andre Michelle
 	 */
-	public class PCM8BitMono44Khz
+	public class PCM8BitMono44Khz extends PCMStrategy
 		implements IPCMIOStrategy
 	{
 		private var _signed: Boolean;
 
-		public function PCM8BitMono44Khz( signed: Boolean )
+		public function PCM8BitMono44Khz( signed: Boolean, compressionType: Object = null )
 		{
+			super( compressionType, 44100.0, 1, 8 );
+
 			_signed = signed;
 		}
 
@@ -81,37 +83,6 @@ package tonfall.format.pcm
 						target.writeByte( amplitude * 0x7F + 0x7F );
 				}
 			}
-		}
-		
-		public function supports( compressionType: *, bits: uint,numChannels: uint, samplingRate: Number ): Boolean
-		{
-			// No proper check possible
-			return true;
-		}
-
-		public function get compressionType(): *
-		{
-			return null;
-		}
-
-		public function get samplingRate(): Number
-		{
-			return 44100.0;
-		}
-
-		public function get numChannels(): int
-		{
-			return 1;
-		}
-
-		public function get bits(): int
-		{
-			return 8;
-		}
-		
-		public function get blockAlign() : uint
-		{
-			return 1;
 		}
 	}
 }
