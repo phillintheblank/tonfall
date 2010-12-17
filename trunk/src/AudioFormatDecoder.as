@@ -1,7 +1,7 @@
 package
 {
-	import tonfall.format.wav.WavDecoder;
-	import tonfall.format.aiff.AiffDecoder;
+	import tonfall.format.wav.WAVDecoder;
+	import tonfall.format.aiff.AIFFDecoder;
 	import tonfall.format.pcm.PCMDecoder;
 
 	import flash.display.Sprite;
@@ -105,12 +105,12 @@ package
 				switch( extension )
 				{
 					case 'wav':
-						decoder = new WavDecoder( fileRef.data );
+						decoder = new WAVDecoder( fileRef.data );
 						break;
 						
 					case 'aif':
 					case 'aiff':
-						decoder = new AiffDecoder( fileRef.data );
+						decoder = new AIFFDecoder( fileRef.data );
 						break;
 					
 					default: throw new Error( 'Unknown extension.' );

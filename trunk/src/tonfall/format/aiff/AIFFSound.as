@@ -10,7 +10,7 @@ package tonfall.format.aiff
 	{
 		public function AIFFSound( bytes: ByteArray, onComplete: Function = null )
 		{
-			super( bytes, AiffDecoder.parseHeader( bytes ), onComplete );
+			super( bytes, AIFFDecoder.parseHeader( bytes ), onComplete );
 		}
 		
 		

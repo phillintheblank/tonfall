@@ -12,7 +12,7 @@ package tonfall.format.aiff
 		
 		public function AIFF24BitStereo44Khz()
 		{
-			super( AiffTags.SSND );
+			super( AIFFTags.SSND );
 		}
 	}
 }

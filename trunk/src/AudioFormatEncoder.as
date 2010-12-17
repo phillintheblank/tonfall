@@ -5,7 +5,7 @@ package
 	import tonfall.format.aiff.AIFF24BitStereo44Khz;
 	import tonfall.format.aiff.AIFF32BitStereo44Khz;
 	import tonfall.format.aiff.AIFF8BitStereo44Khz;
-	import tonfall.format.aiff.AiffEncoder;
+	import tonfall.format.aiff.AIFFEncoder;
 	import tonfall.format.wav.WAV16BitMono44Khz;
 	import tonfall.format.wav.WAV16BitStereo44Khz;
 	import tonfall.format.wav.WAV24BitMono44Khz;
@@ -14,7 +14,7 @@ package
 	import tonfall.format.wav.WAV32BitStereo44Khz;
 	import tonfall.format.wav.WAV8BitMono44Khz;
 	import tonfall.format.wav.WAV8BitStereo44Khz;
-	import tonfall.format.wav.WavEncoder;
+	import tonfall.format.wav.WAVEncoder;
 
 	import flash.display.Sprite;
 	import flash.net.FileReference;
@@ -39,11 +39,11 @@ package
 //		private const encoder: WavEncoder = new WavEncoder( WAV8BitMono44Khz.INSTANCE );
 //		private const encoder: WavEncoder = new WavEncoder( WAV8BitStereo44Khz.INSTANCE );
 //		private const encoder: WavEncoder = new WavEncoder( WAV16BitMono44Khz.INSTANCE );
-		private const encoder: WavEncoder = new WavEncoder( WAV16BitStereo44Khz.INSTANCE );
-//		private const encoder: WavEncoder = new WavEncoder( WAV24BitMono44Khz.INSTANCE );
-//		private const encoder: WavEncoder = new WavEncoder( WAV24BitStereo44Khz.INSTANCE );
-//		private const encoder: WavEncoder = new WavEncoder( WAV32BitMono44Khz.INSTANCE );
-//		private const encoder: WavEncoder = new WavEncoder( WAV32BitStereo44Khz.INSTANCE );
+		private const encoder: WAVEncoder = new WAVEncoder( WAV16BitStereo44Khz.INSTANCE );
+//		private const encoder: WAVEEncoder = new WAVEEncoder( WAV24BitMono44Khz.INSTANCE );
+//		private const encoder: WAVEEncoder = new WAVEEncoder( WAV24BitStereo44Khz.INSTANCE );
+//		private const encoder: WAVEEncoder = new WAVEEncoder( WAV32BitMono44Khz.INSTANCE );
+//		private const encoder: WAVEEncoder = new WAVEEncoder( WAV32BitStereo44Khz.INSTANCE );
 
 //		private const encoder: AiffEncoder = new AiffEncoder( AIFF8BitStereo44Khz.INSTANCE );
 //		private const encoder: AiffEncoder = new AiffEncoder( AIFF16BitStereo44Khz.INSTANCE );
