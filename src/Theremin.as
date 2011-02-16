@@ -125,36 +125,26 @@ final class ThereminProcessor extends SignalProcessor
 			signal.l = signal.r = Math.sin( _phase * PI_2 ) * _gainCurrent;
 			signal = signal.next;
 
-			//-- ADVANCE WAVFORM PHASE
+			//-- ADVANCE WAVESHAPE PHASE
 			_phase += _phaseIncrCurrent;
 			_phase -= Math.floor( _phase );
 			
 			//-- INTERPOLATE FREQUENCY (IN PHASE DOMAIN)
-			if( _phaseIncrInterpolationRemaining )
+			if( _phaseIncrInterpolationRemaining ) // greater than zero
 			{
 				if( 0 == --_phaseIncrInterpolationRemaining )
-				{
-					_phaseIncrCurrent = _phaseIncrTarget;
-					_phaseIncrVelocity = 0.0;
-				}
+					_phaseIncrCurrent = _phaseIncrTarget; // done interpolate
 				else
-				{
-					_phaseIncrCurrent += _phaseIncrVelocity;
-				}
+					_phaseIncrCurrent += _phaseIncrVelocity; // interpolate
 			}
 
 			//-- INTERPOLATE GAIN
-			if( _gainInterpolationRemaining )
+			if( _gainInterpolationRemaining ) // greater than zero
 			{
 				if( 0 == --_gainInterpolationRemaining )
-				{
-					_gainCurrent = _gainTarget;
-					_gainVelocity = 0.0;
-				}
+					_gainCurrent = _gainTarget; // done interpolate
 				else
-				{
-					_gainCurrent += _gainVelocity;
-				}
+					_gainCurrent += _gainVelocity; // interpolate
 			}
 		}
 	}		
