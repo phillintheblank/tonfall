@@ -1,8 +1,8 @@
 package test.poly
 {
-	import tonfall.core.TimeConversion;
 	import tonfall.core.Engine;
 	import tonfall.core.Signal;
+	import tonfall.core.TimeConversion;
 	import tonfall.core.TimeEvent;
 	import tonfall.core.TimeEventNote;
 	import tonfall.core.noteToFrequency;

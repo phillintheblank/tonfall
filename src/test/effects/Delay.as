@@ -1,10 +1,10 @@
 package test.effects
 {
-	import tonfall.core.Signal;
 	import tonfall.core.BlockInfo;
-	import tonfall.core.samplingRate;
-	import tonfall.core.SignalBuffer;
 	import tonfall.core.Processor;
+	import tonfall.core.Signal;
+	import tonfall.core.SignalBuffer;
+	import tonfall.core.samplingRate;
 
 	/**
 	 * Simple static delay

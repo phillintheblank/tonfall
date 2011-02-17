@@ -1,8 +1,9 @@
-package
+package demo
 {
-	import tonfall.util.Mapping;
-	import flash.events.MouseEvent;
 	import tonfall.display.AbstractApplication;
+	import tonfall.util.Mapping;
+
+	import flash.events.MouseEvent;
 
 	/**
 	 * Simple example of Mouse-Theremin
@@ -14,34 +15,36 @@ package
 	 * @author Andre Michelle
 	 */
 	[SWF(backgroundColor="#FFFFFF", frameRate="31", width="640", height="480")]
-	public final class Theremin extends AbstractApplication
+	public final class DemoTheremin extends AbstractApplication
 	{
-		private const thereminProcessor: ThereminProcessor = new ThereminProcessor();
+		private const theremin: ThereminProcessor = new ThereminProcessor();
 		private const mapping: Mapping = new Mapping();
-		
-		public function Theremin()
+
+		public function DemoTheremin()
 		{
-			engine.processors.push( thereminProcessor );
-			engine.input = thereminProcessor.output;
+			engine.processors.push( theremin );
+
+			engine.input = theremin.output;
 			
 			showSpectrum = true;
-
+			
 			stage.addEventListener( MouseEvent.MOUSE_MOVE, mouseMove );
 		}
 
 		private function mouseMove( event: MouseEvent ): void
 		{
 			// Map Y to gain
-			thereminProcessor.setGain( 1.0 - mouseY / stage.stageHeight );
+			const gain: Number = mouseY / stage.stageHeight;
+			
+			theremin.setGain( gain );
 			
 			// Map X to frequency log-style (20-22050Hz)
-			const frequency: Number = mapping.mapExp( mouseX / stage.stageWidth, 20.0, 22050.0 );
+			const normFreq: Number = mouseX / stage.stageWidth;
 			
-			thereminProcessor.setFrequency( frequency );
+			theremin.setFrequency( mapping.mapExp( normFreq, 20.0, 22050.0 ) );
 		}
 	}
 }
-
 import tonfall.core.Signal;
 import tonfall.core.SignalBuffer;
 import tonfall.core.SignalProcessor;

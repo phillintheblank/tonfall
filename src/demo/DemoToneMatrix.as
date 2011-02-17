@@ -1,4 +1,4 @@
-package
+package demo
 {
 	import test.effects.Delay;
 	import test.poly.SimplePolySynthVoiceFactory;
@@ -20,7 +20,7 @@ package
 	 * @author Andre Michelle
 	 */
 	[SWF(backgroundColor="#000000", frameRate="31", width="768", height="768")]
-	public final class ToneMatrix extends AbstractApplication
+	public final class DemoToneMatrix extends AbstractApplication
 	{
 		private const sequencer : TonematrixSequencer = new TonematrixSequencer();
 		private const generator : PolySynth = new PolySynth( SimplePolySynthVoiceFactory.INSTANCE );
@@ -29,7 +29,7 @@ package
 		private var _container: Sprite;
 		private var _selectMode: Boolean;
 		
-		public function ToneMatrix()
+		public function DemoToneMatrix()
 		{
 			initView();
 			initAudio();

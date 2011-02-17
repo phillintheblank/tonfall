@@ -1,8 +1,8 @@
-package
+package demo
 {
-	import tonfall.format.wav.WAVDecoder;
 	import tonfall.format.aiff.AIFFDecoder;
 	import tonfall.format.pcm.PCMDecoder;
+	import tonfall.format.wav.WAVDecoder;
 
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -18,10 +18,12 @@ package
 	import flash.utils.ByteArray;
 
 	/**
+	 * Showcasing different audio decoders
+	 * 
 	 * @author Andre Michelle
 	 */
 	[SWF(backgroundColor="#EDEDED", frameRate="31", width="512", height="192")]
-	public final class AudioFormatDecoder extends Sprite
+	public final class DemoAudioDecoder extends Sprite
 	{
 		private static const BUFFER_SIZE : int = 2048;
 		private const fileRef : FileReference = new FileReference();
@@ -35,7 +37,7 @@ package
 		private var soundChannel : SoundChannel;
 		private var firstRun: Boolean;
 
-		public function AudioFormatDecoder()
+		public function DemoAudioDecoder()
 		{
 			textField.autoSize = TextFieldAutoSize.LEFT;
 			textField.defaultTextFormat = new TextFormat( 'Verdana', 10, 0x666666, true );

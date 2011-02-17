@@ -1,8 +1,8 @@
-package
+package demo
 {
-	import flash.display.StageScaleMode;
-	import flash.display.StageAlign;
 	import flash.display.Sprite;
+	import flash.display.StageAlign;
+	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.SampleDataEvent;
 	import flash.media.Sound;
@@ -19,7 +19,7 @@ package
 	 * @author Andre Michelle
 	 */
 	[SWF(backgroundColor="#DDDDDD", frameRate="31", width="512", height="96")]
-	public final class LatencyCheck extends Sprite
+	public final class DemoLatency extends Sprite
 	{
 		private static const TESTS: Vector.<int> = Vector.<int>( [ 2048, 3072, 4096, 8192 ] );
 		
@@ -33,7 +33,7 @@ package
 		
 		private var _buildIndex: int = 0;
 		
-		public function LatencyCheck()
+		public function DemoLatency()
 		{
 			textField.autoSize = TextFieldAutoSize.LEFT;
 			textField.defaultTextFormat = new TextFormat( 'Verdana', 10, 0x0, false );
