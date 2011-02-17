@@ -91,13 +91,13 @@ package test
 				if( null == input )
 					continue;
 
-				var pan: Number = _pans[i];
-				var gain: Number = _gains[i];
+				//-- CONSTANT POWER PANNING
+				//-- Zero means 1 / sqrt(2)
+				var x: Number = ( _pans[i] + 1.0 ) * Math.PI * 0.25;
+				var y: Number = _gains[i];
 
-				gain /= 1.0 + Math.abs( pan );
-
-				var gainL: Number = ( 1.0 - pan ) * gain;
-				var gainR: Number = ( pan + 1.0 ) * gain;
+				var gainL: Number = Math.cos( x ) * y;
+				var gainR: Number = Math.sin( x ) * y;
 				
 				if( first )
 				{
