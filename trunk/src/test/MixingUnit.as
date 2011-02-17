@@ -92,7 +92,9 @@ package test
 					continue;
 
 				//-- CONSTANT POWER PANNING
-				//-- Zero means 1 / sqrt(2)
+				//   0 is center (gain: 1 / sqrt(2))
+				//  -1 is full left
+				//  +1 is full right
 				var x: Number = ( _pans[i] + 1.0 ) * Math.PI * 0.25;
 				var y: Number = _gains[i];
 
