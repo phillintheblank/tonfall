@@ -1,4 +1,4 @@
-package
+package demo
 {
 	import tonfall.format.aiff.AIFFSound;
 	import tonfall.format.pcm.PCMSound;
@@ -14,14 +14,16 @@ package
 	import flash.text.TextFormat;
 
 	/**
+	 * Creates a flash.media.Sound by different audio decoders
+	 * 
 	 * @author Andre Michelle
 	 */
-	public final class AudioFormatSound extends Sprite
+	public final class DemoAudioToSound extends Sprite
 	{
 		private const fileRef : FileReference = new FileReference();
 		private const textField : TextField = new TextField();
 		
-		public function AudioFormatSound()
+		public function DemoAudioToSound()
 		{
 			textField.autoSize = TextFieldAutoSize.LEFT;
 			textField.defaultTextFormat = new TextFormat( 'Verdana', 10, 0x666666, true );

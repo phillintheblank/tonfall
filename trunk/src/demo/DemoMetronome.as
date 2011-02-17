@@ -1,4 +1,4 @@
-package
+package demo
 {
 	import test.metronome.MetronomeGenerator;
 	import test.metronome.MetronomeSequencer;
@@ -11,9 +11,9 @@ package
 	 * @author Andre Michelle
 	 */
 	[SWF(width='640',height='480',backgroundColor='0x1b1b1b',frameRate='32',scriptTimeLimit='255')]
-	public final class Metronome extends AbstractApplication
+	public final class DemoMetronome extends AbstractApplication
 	{
-		public function Metronome()
+		public function DemoMetronome()
 		{
 			const sequencer: MetronomeSequencer = new MetronomeSequencer();
 			const generator: MetronomeGenerator = new MetronomeGenerator();

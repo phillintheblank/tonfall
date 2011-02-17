@@ -1,7 +1,7 @@
 package tonfall.poly
 {
-	import tonfall.core.TimeEvent;
 	import tonfall.core.Signal;
+	import tonfall.core.TimeEvent;
 
 	/**
 	 * IPolySynthVoice does the actual audio generation of a PolySynth.

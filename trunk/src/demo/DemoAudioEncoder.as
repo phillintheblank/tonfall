@@ -1,19 +1,7 @@
-package
+package demo
 {
 	import tonfall.core.samplingRate;
-	import tonfall.format.aiff.AIFF16BitStereo44Khz;
-	import tonfall.format.aiff.AIFF24BitStereo44Khz;
-	import tonfall.format.aiff.AIFF32BitStereo44Khz;
-	import tonfall.format.aiff.AIFF8BitStereo44Khz;
-	import tonfall.format.aiff.AIFFEncoder;
-	import tonfall.format.wav.WAV16BitMono44Khz;
 	import tonfall.format.wav.WAV16BitStereo44Khz;
-	import tonfall.format.wav.WAV24BitMono44Khz;
-	import tonfall.format.wav.WAV24BitStereo44Khz;
-	import tonfall.format.wav.WAV32BitMono44Khz;
-	import tonfall.format.wav.WAV32BitStereo44Khz;
-	import tonfall.format.wav.WAV8BitMono44Khz;
-	import tonfall.format.wav.WAV8BitStereo44Khz;
 	import tonfall.format.wav.WAVEncoder;
 
 	import flash.display.Sprite;
@@ -22,13 +10,13 @@ package
 	import flash.utils.getQualifiedClassName;
 
 	/**
-	 * Encoding Test
+	 * Showcasing different audio encoders
 	 * 
 	 * Renders 100 cycles of 220Hz Sinewave
 	 * 
 	 * @author Andre Michelle
 	 */
-	public final class AudioFormatEncoder extends Sprite
+	public final class DemoAudioEncoder extends Sprite
 	{
 		private static const BUFFER_SIZE : int = 2048;
 		
@@ -50,7 +38,7 @@ package
 //		private const encoder: AiffEncoder = new AiffEncoder( AIFF24BitStereo44Khz.INSTANCE ); // TODO CREATES ARTIFACT
 //		private const encoder: AiffEncoder = new AiffEncoder( AIFF32BitStereo44Khz.INSTANCE );
 
-		public function AudioFormatEncoder()
+		public function DemoAudioEncoder()
 		{
 			buffer.length = BUFFER_SIZE << 3;
 			

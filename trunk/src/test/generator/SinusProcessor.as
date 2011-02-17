@@ -1,4 +1,4 @@
-package test
+package test.generator
 {
 	import tonfall.core.BlockInfo;
 	import tonfall.core.Processor;
@@ -10,14 +10,14 @@ package test
 	 * 
 	 * @author Andre Michelle
 	 */
-	public final class ContinuousSinusProcessor extends Processor
+	public final class SinusProcessor extends Processor
 	{
 		public const output: SignalBuffer = new SignalBuffer();
 	
 		private var _frequency: Number;
 		private var _phase: Number;
 
-		public function ContinuousSinusProcessor( frequency: Number = 220.0 )
+		public function SinusProcessor( frequency: Number = 220.0 )
 		{
 			_frequency = frequency;
 			_phase = 0.0;

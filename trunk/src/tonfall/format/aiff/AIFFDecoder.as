@@ -1,8 +1,8 @@
 package tonfall.format.aiff
 {
 	import tonfall.data.IeeeExtended;
-	import tonfall.format.FormatInfo;
 	import tonfall.format.FormatError;
+	import tonfall.format.FormatInfo;
 	import tonfall.format.pcm.IPCMIOStrategy;
 	import tonfall.format.pcm.PCMDecoder;
 

@@ -1,7 +1,7 @@
 package tonfall.format.wav
 {
-	import tonfall.format.FormatInfo;
 	import tonfall.format.FormatError;
+	import tonfall.format.FormatInfo;
 	import tonfall.format.pcm.IPCMIOStrategy;
 	import tonfall.format.pcm.PCMDecoder;
 
