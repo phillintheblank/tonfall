@@ -79,7 +79,21 @@ package tonfall.util
 				rr = gain;
 			}
 		}
+		
+		/**
+		 * Merge stereo signal into mono
+		 */
+		public function mono( gain: Number = 1.0 ): void
+		{
+			lr =
+			rl =
+			ll =
+			rr = gain;
+		}
 
+		/**
+		 * Identity matrix
+		 */
 		public function identity( gain: Number = 1.0 ): void
 		{
 			lr =
