@@ -1,6 +1,6 @@
 package assets
 {
-	import tonfall.core.WavSample;
+	import tonfall.format.wav.WAVDecoder;
 
 	/**
 	 * CasioRZ1Sample contains all samples of the Casio RZ1 drumcomputer
@@ -40,20 +40,20 @@ package assets
 		[ Embed( source='../../assets/casio_rz1/TM3RZ.WAV', mimeType='application/octet-stream' ) ]
 			private static const CLASS_TOM_LOW: Class;
 
-		public static const BASSDRUM: WavSample = new WavSample( new CLASS_BASSDRUM() );
-		public static const RIMSHOT: WavSample = new WavSample( new CLASS_RIMSHOT() );
-		public static const SNAREDRUM: WavSample = new WavSample( new CLASS_SNAREDRUM() );
-		public static const CLAP: WavSample = new WavSample( new CLASS_CLAP() );
-		public static const COWBELL: WavSample = new WavSample( new CLASS_COWBELL() );
-		public static const CRASH: WavSample = new WavSample( new CLASS_CRASH() );
-		public static const RIDE: WavSample = new WavSample( new CLASS_RIDE() );
-		public static const HIGHHAT_CLOSED: WavSample = new WavSample( new CLASS_HIGHHAT_CLOSED() );
-		public static const HIGHHAT_OPEN: WavSample = new WavSample( new CLASS_HIGHHAT_OPEN() );
-		public static const TOM_HIGH: WavSample = new WavSample( new CLASS_TOM_HIGH() );
-		public static const TOM_MID: WavSample = new WavSample( new CLASS_TOM_MID() );
-		public static const TOM_LOW: WavSample = new WavSample( new CLASS_TOM_LOW() );
+		public static const BASSDRUM: WAVDecoder = new WAVDecoder( new CLASS_BASSDRUM() );
+		public static const RIMSHOT: WAVDecoder = new WAVDecoder( new CLASS_RIMSHOT() );
+		public static const SNAREDRUM: WAVDecoder = new WAVDecoder( new CLASS_SNAREDRUM() );
+		public static const CLAP: WAVDecoder = new WAVDecoder( new CLASS_CLAP() );
+		public static const COWBELL: WAVDecoder = new WAVDecoder( new CLASS_COWBELL() );
+		public static const CRASH: WAVDecoder = new WAVDecoder( new CLASS_CRASH() );
+		public static const RIDE: WAVDecoder = new WAVDecoder( new CLASS_RIDE() );
+		public static const HIGHHAT_CLOSED: WAVDecoder = new WAVDecoder( new CLASS_HIGHHAT_CLOSED() );
+		public static const HIGHHAT_OPEN: WAVDecoder = new WAVDecoder( new CLASS_HIGHHAT_OPEN() );
+		public static const TOM_HIGH: WAVDecoder = new WAVDecoder( new CLASS_TOM_HIGH() );
+		public static const TOM_MID: WAVDecoder = new WAVDecoder( new CLASS_TOM_MID() );
+		public static const TOM_LOW: WAVDecoder = new WAVDecoder( new CLASS_TOM_LOW() );
 		
-		public static const LIST: Vector.<WavSample> = new Vector.<WavSample>( 12, true );
+		public static const LIST: Vector.<WAVDecoder> = new Vector.<WAVDecoder>( 12, true );
 		
 		LIST[ 0] = BASSDRUM;
 		LIST[ 1] = RIMSHOT;
