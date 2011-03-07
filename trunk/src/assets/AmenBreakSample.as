@@ -1,6 +1,6 @@
 package assets
 {
-	import tonfall.core.WavSample;
+	import tonfall.format.wav.WAVDecoder;
 	/**
 	 * @author Andre Michelle
 	 */
@@ -9,6 +9,6 @@ package assets
 		[ Embed( source='../../assets/amenbreak.wav', mimeType='application/octet-stream' ) ]
 			private static const CLASS: Class;
 			
-		public static const INSTANCE: WavSample = new WavSample( new CLASS() );
+		public static const INSTANCE: WAVDecoder = new WAVDecoder( new CLASS() );
 	}
 }
