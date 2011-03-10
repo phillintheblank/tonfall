@@ -11,8 +11,6 @@ package tonfall.util
 	 */
 	public interface ISoundSheet
 	{
-		function get numSamplesEachKey(): Number;
-		
 		function getKeyIndexByNote( note: int ): int;
 		
 		function getFrequencyByKeyIndex( keyIndex: int ): Number;
