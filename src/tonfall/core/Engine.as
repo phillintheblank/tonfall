@@ -26,7 +26,7 @@ package tonfall.core
 		
 		private const blockInfo: BlockInfo = new BlockInfo();
 		
-		private var _bar: Number; // BAR POSITION
+		private var _barPosition: Number; // BAR POSITION
 		private var _bpm: Number; // BEATS PER MINUTE
 		private var _processors: Vector.<Processor>; // LINEAR LIST OF PROCESSORS
 		private var _input: SignalBuffer;
@@ -38,20 +38,20 @@ package tonfall.core
 				throw new Error( 'AudioEngine is Singleton.' );
 			}
 
-			_bar = 0.0;
+			_barPosition = 0.0;
 			_bpm = 120.0;
 			_processors = new Vector.<Processor>();
 		}
 
 		internal function render( target: ByteArray, numSignals: int ) : void
 		{
-			const to: Number = _bar + TimeConversion.numSamplesToBars( numSignals, _bpm );
+			const to: Number = _barPosition + TimeConversion.numSamplesToBars( numSignals, _bpm );
 
-			blockInfo.reset( numSignals, _bar, to );
+			blockInfo.reset( numSignals, _barPosition, to );
 
 			renderProcessors();
 			
-			_bar = to;
+			_barPosition = to;
 			
 			if( null != _input )
 			{
@@ -83,14 +83,14 @@ package tonfall.core
 			}
 		}
 
-		public function get bar() : Number
+		public function get barPosition() : Number
 		{
-			return _bar;
+			return _barPosition;
 		}
 
-		public function set bar( value: Number ) : void
+		public function set barPosition( value: Number ) : void
 		{
-			_bar = value;
+			_barPosition = value;
 		}
 
 		public function get bpm() : Number
@@ -115,7 +115,7 @@ package tonfall.core
 
 		public function deltaBlockIndexAt( position: Number ) : int
 		{
-			const value: int = TimeConversion.barsToNumSamples( position - _bar, _bpm );
+			const value: int = TimeConversion.barsToNumSamples( position - _barPosition, _bpm );
 
 			if( value < 0 || value >= Driver.BLOCK_SIZE )
 			{

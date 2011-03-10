@@ -1,11 +1,14 @@
 package tonfall.format.pcm
 {
+	import tonfall.format.IAudioDecoder;
+
 	import flash.utils.ByteArray;
 	
 	/**
 	 * @author Andre Michelle
 	 */
 	public class PCMDecoder
+		implements IAudioDecoder
 	{
 		private var _bytes : ByteArray;
 		private var _strategy: IPCMIOStrategy;
@@ -44,7 +47,7 @@ package tonfall.format.pcm
 		 * 
 		 * @return The number of samples has been read
 		 */
-		public function extract( target : ByteArray, length : Number, startPosition : Number ) : Number
+		public function extract( target : ByteArray, length : Number, startPosition : Number = -1.0 ) : Number
 		{
 			if ( startPosition >= numSamples )
 				return 0.0;

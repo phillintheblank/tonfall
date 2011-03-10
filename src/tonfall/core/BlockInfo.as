@@ -1,7 +1,7 @@
 package tonfall.core
 {
 	/**
-	 * BlockInfo describes all time information to process an audio block
+	 * BlockInfo describes all time information to process a single audio block
 	 * 
 	 * @author Andre Michelle
 	 */

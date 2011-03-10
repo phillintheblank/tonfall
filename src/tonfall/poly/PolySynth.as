@@ -27,6 +27,14 @@ package tonfall.poly
 		{
 			_voicefactory = voicefactory;
 		}
+
+		public function clear(): void
+		{
+			while( activeVoices.length )
+			{
+				IPolySynthVoice( activeVoices.pop() ).dispose();
+			}
+		}
 		
 		override protected function processTimeEvent( event: TimeEvent ) : void
 		{
