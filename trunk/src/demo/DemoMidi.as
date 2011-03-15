@@ -21,7 +21,7 @@ package demo
 	{
 		private const sheet: SoundSheet = new SoundSheet();
 		
-		private const sequencer: MidiNoteSequencer = new MidiNoteSequencer( Schumann.MIDI.toTimeEventContainer() );
+		private const sequencer: MidiNoteSequencer = new MidiNoteSequencer( Schumann.MIDI.toTimeEventContainer( 1.0 / 128.0 ) );
 		private const generator: PolySynth = new PolySynth( new SoundSheetVoiceFactory( sheet ) );
 
 		private const textField: TextField = new TextField();
@@ -99,34 +99,7 @@ import tonfall.poly.IPolySynthVoiceFactory;
 import tonfall.util.ISoundSheet;
 
 import flash.media.Sound;
-import flash.text.TextField;
-import flash.text.TextFormat;
 import flash.utils.ByteArray;
-
-final class Button extends TextField
-{
-	private static const format: TextFormat = new TextFormat( 'Arial', 10, 0xFFFFFF );
-	
-	private var _url: String;
-
-	public function Button( text: String, url: String, width: Number )
-	{
-		defaultTextFormat = format;
-		opaqueBackground = 0xFFCC33;
-		selectable = false;
-
-		this.width = width;
-		this.height = 14;
-		this.text = text;
-		
-		_url = url;
-	}
-
-	public function get url(): String
-	{
-		return _url;
-	}
-}
 
 final class MP3 extends Sound
 	implements IAudioDecoder
@@ -229,6 +202,7 @@ final class SoundSheetVoice
 	private var _end: Number;
 	private var _envelopePointer: int;
 	private var _sheet: ISoundSheet;
+	private var _velocity: Number;
 
 	public function SoundSheetVoice( sheet: ISoundSheet )
 	{
@@ -248,6 +222,8 @@ final class SoundSheetVoice
 
 		_position = _sheet.getStartPositionFromKeyIndex( keyIndex );
 		_end = _sheet.getEndPositionFromKeyIndex( keyIndex );
+		
+		_velocity = TimeEventNote( event ).velocity;
 		
 		_envelopePointer = TimeConversion.barsToNumSamples( TimeEventNote( event ).barDuration, engine.bpm );
 	}
@@ -298,6 +274,8 @@ final class SoundSheetVoice
 				return true;
 			else
 				env = 1.0 + _envelopePointer / RELEASE_DURATION;
+			
+			env *= _velocity;
 
 			integer = bufferPosition;
 			alpha = bufferPosition - integer;
