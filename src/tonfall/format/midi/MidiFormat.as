@@ -96,7 +96,7 @@ package tonfall.format.midi
 			return _tracks;
 		}
 		
-		public function toTimeEventContainer(): TimeEventContainer
+		public function toTimeEventContainer( humanize: Number = 0.0 ): TimeEventContainer
 		{
 			const container: TimeEventContainer = new TimeEventContainer();
 			
@@ -105,8 +105,6 @@ package tonfall.format.midi
 			for( var ti: int = 0 ; ti < tn ; ++ti )
 			{
 				const track: MidiTrack = tracks[ti];
-				
-				trace( track );
 				
 				const channels: Vector.<Vector.<MidiChannelEvent>> = track.channels;
 				
@@ -141,9 +139,7 @@ package tonfall.format.midi
 							{
 								startEvent = table[ event.param0 ];
 								
-								trace( event );
-								
-								container.push( createNote( startEvent.param0, startEvent.param1 / 0x7F, startEvent.position, event.position ) );
+								container.push( createNote( startEvent.param0, startEvent.param1 / 0x7F, startEvent.position, event.position, humanize ) );
 							}
 							
 							table[ event.param0 ] = event;
@@ -159,7 +155,7 @@ package tonfall.format.midi
 							}
 							else
 							{
-								container.push( createNote( startEvent.param0, startEvent.param1 / 0x7F, startEvent.position, event.position ) );
+								container.push( createNote( startEvent.param0, startEvent.param1 / 0x7F, startEvent.position, event.position, humanize ) );
 								
 								delete table[ event.param0 ];
 							}
@@ -174,8 +170,6 @@ package tonfall.format.midi
 				}
 			}
 			
-			trace( 'written', container.length );
-			
 			return container;
 		}
 		
@@ -189,14 +183,14 @@ package tonfall.format.midi
 			_tracks = null;
 		}
 		
-		private function createNote( note: int, velocity: Number, startPosition: Number, endPosition: Number ): TimeEventNote
+		private function createNote( note: int, velocity: Number, startPosition: Number, endPosition: Number, humanize: Number ): TimeEventNote
 		{
 			if( startPosition > endPosition )
 				throw new RangeError();
 			
 			const event: TimeEventNote = new TimeEventNote();
 			
-			event.barPosition = startPosition;
+			event.barPosition = startPosition + Math.random() * humanize;
 			event.barDuration = endPosition - startPosition;
 			event.note = note;
 			event.velocity = velocity;
