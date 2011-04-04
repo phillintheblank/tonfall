@@ -1,15 +1,16 @@
 package demo
 {
+	import assets.BubbleBobble;
 	import assets.Schumann;
-
-	import tonfall.display.AbstractApplication;
-	import tonfall.format.midi.MidiNoteSequencer;
-	import tonfall.poly.PolySynth;
-
 	import flash.events.Event;
 	import flash.events.ProgressEvent;
 	import flash.net.URLRequest;
 	import flash.text.TextField;
+	import tonfall.core.TimeEventContainerSequencer;
+	import tonfall.display.AbstractApplication;
+	import tonfall.poly.PolySynth;
+
+
 
 	/**
 	 * Demoes Midi
@@ -21,7 +22,8 @@ package demo
 	{
 		private const sheet: SoundSheet = new SoundSheet();
 		
-		private const sequencer: MidiNoteSequencer = new MidiNoteSequencer( Schumann.MIDI.toTimeEventContainer( 1.0 / 128.0 ) );
+		private const sequencer: TimeEventContainerSequencer = new TimeEventContainerSequencer( Schumann.MIDI.toTimeEventContainer( 1.0 / 128.0 ) );
+		//private const sequencer: TimeEventContainerSequencer = new TimeEventContainerSequencer( BubbleBobble.MIDI.toTimeEventContainer( 1.0 / 128.0 ) );
 		private const generator: PolySynth = new PolySynth( new SoundSheetVoiceFactory( sheet ) );
 
 		private const textField: TextField = new TextField();
