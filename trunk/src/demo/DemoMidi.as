@@ -137,7 +137,7 @@ final class SoundSheet
 		_decoder = decoder;
 	}
 
-	public function getKeyIndexByNote( note: int ): int
+	public function getNearestKeyIndexByNote( note: int ): int
 	{
 		var index: int = ( note - 36.0 ) / 6.0 + 0.5;
 
@@ -215,7 +215,7 @@ final class SoundSheetVoice
 	{
 		const note: int = TimeEventNote( event ).note;
 
-		const keyIndex: int = _sheet.getKeyIndexByNote( note );
+		const keyIndex: int = _sheet.getNearestKeyIndexByNote( note );
 		
 		const sampleFrequency: Number = _sheet.getFrequencyByKeyIndex( keyIndex );
 		const noteFrequency: Number = noteToFrequency( note );

@@ -4,6 +4,8 @@ package tonfall.core
 	/**
 	 * Simple TimeEventSequencer for TimeEventContainer
 	 * 
+	 * Feeds a target processor with events from a container
+	 * 
 	 * @author Andre Michelle
 	 */
 	public final class TimeEventContainerSequencer extends Processor
