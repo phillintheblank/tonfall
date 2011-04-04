@@ -1,19 +1,17 @@
-package tonfall.format.midi
+package tonfall.core
 {
-	import tonfall.core.BlockInfo;
-	import tonfall.core.Processor;
-	import tonfall.core.TimeEvent;
-	import tonfall.core.TimeEventContainer;
 
 	/**
+	 * Simple TimeEventSequencer for TimeEventContainer
+	 * 
 	 * @author Andre Michelle
 	 */
-	public final class MidiNoteSequencer extends Processor
+	public final class TimeEventContainerSequencer extends Processor
 	{
 		private var _timeEventTarget: Processor;
 		private var _container: TimeEventContainer;
 
-		public function MidiNoteSequencer( container: TimeEventContainer )
+		public function TimeEventContainerSequencer( container: TimeEventContainer )
 		{
 			_container = container;
 		}
