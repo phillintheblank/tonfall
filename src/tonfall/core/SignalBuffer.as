@@ -49,6 +49,14 @@ package tonfall.core
 			}
 		}
 		
+		public function getSignalAt( index: int ): Signal
+		{
+			if( index < 0 )
+				index += _length;
+			
+			return _vector[index];
+		}
+		
 		public function deltaPointer( delta: int ): Signal
 		{
 			var index: int = _index + delta;
