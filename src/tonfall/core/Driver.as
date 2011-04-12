@@ -12,8 +12,6 @@ package tonfall.core
 	 */
 	public final class Driver
 	{
-		public static const BLOCK_SIZE:int = 3072;
-		
 		public static function getInstance(): Driver
 		{
 			if( null == instance )
@@ -43,8 +41,8 @@ package tonfall.core
 				throw new Error( 'AudioDriver is Singleton.' );
 			}
 
-			zeroBytes.length = BLOCK_SIZE << 3;
-			fillBytes.length = BLOCK_SIZE << 3;
+			zeroBytes.length = blockSize << 3;
+			fillBytes.length = blockSize << 3;
 
 			sound.addEventListener( SampleDataEvent.SAMPLE_DATA, sampleData );
 		}
@@ -118,7 +116,7 @@ package tonfall.core
 
 				try
 				{
-					_engine.render( fillBytes, BLOCK_SIZE );
+					_engine.render( fillBytes );
 				}
 				catch( e: Error )
 				{

@@ -1,5 +1,6 @@
 package tonfall.display
 {
+	import tonfall.core.blockSize;
 	import tonfall.core.Driver;
 	import tonfall.core.Engine;
 	import tonfall.core.Memory;
@@ -12,7 +13,9 @@ package tonfall.display
 	import flash.utils.setTimeout;
 
 	/**
-	 * Abstract application class to provide minimal audio processing setup
+	 * Abstract application class provides minimal audio processing setup
+	 * 
+	 * Extend this for simple Tonfall applications
 	 * 
 	 * @author Andre Michelle
 	 */
@@ -31,8 +34,8 @@ package tonfall.display
 		{
 			addEventListener( Event.ADDED_TO_STAGE, addedToStage );
 			
-			// preallocate memory for processing
-			Memory.length = Driver.BLOCK_SIZE << 3;
+			// preallocate memory for processing single block
+			Memory.length = blockSize << 3;
 			
 			driver.engine = engine;
 
