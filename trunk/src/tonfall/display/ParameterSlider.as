@@ -12,6 +12,7 @@ package tonfall.display
 	 * Very simple static slider to control Parameter
 	 * 
 	 * @author Andre Michelle
+	 * @see Parameter
 	 */
 	public final class ParameterSlider extends Sprite
 	{

@@ -3,13 +3,16 @@ package tonfall.core
 	/**
 	 * BlockInfo describes all time information to process a single audio block
 	 * 
+	 * @see Processor
+	 * 
 	 * @author Andre Michelle
 	 */
 	public final class BlockInfo
 	{
+		// How many signals should be processed
 		private var _numSignals: int;
 
-		// Following values in musical time (bars)
+		// What is the musical time of the block in bars (one bar is 4 quarter notes where signature is 4/4)
 		private var _barFrom: Number;
 		private var _barTo: Number;
 		

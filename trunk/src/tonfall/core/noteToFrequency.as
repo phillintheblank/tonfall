@@ -1,9 +1,11 @@
 package tonfall.core
 {
 	/**
-	 * Standard note <> frequency mapping
+	 * Standard midi note <> frequency mapping
 	 * 
 	 * @author Andre Michelle
+	 * @param note The note value to be translated to frequency
+	 * @return The frequency in Hertz (Cycles per second)
 	 */
 	public function noteToFrequency( note: int = 60.0 ) : Number
 	{

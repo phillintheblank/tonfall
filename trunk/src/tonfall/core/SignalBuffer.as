@@ -8,21 +8,35 @@ package tonfall.core
 	public final class SignalBuffer
 	{
 		private var _current: Signal;
-		private var _index: int;
-		private var _length: int;
+		private var _currentIndex: int;
+		private var _size: int;
 		
 		private var _vector: Vector.<Signal>;
 		
-		public function SignalBuffer( length: int = 0 )
+		/**
+		 * @param size The size of the buffer to be created. If a negative value or zero is passed, the default blockSize is used.
+		 * 
+		 * @see Signal
+		 * @see blockSize
+		 */
+		public function SignalBuffer( size: int = 0 )
 		{
-			init( 0 >= length ? Driver.BLOCK_SIZE : length );
+			init( 0 >= size ? blockSize : size );
 		}
 
+		/**
+		 * @return The current signal within the block
+		 */
 		public function get current() : Signal
 		{
 			return _current;
 		}
 		
+		/**
+		 * Sets 'num' signals to zero (silent), beginning with internal current signal
+		 * 
+		 * @param num How many signals needs to be set to zero
+		 */
 		public function zero( num: int ): void
 		{
 			var signal: Signal = _current;
@@ -36,6 +50,12 @@ package tonfall.core
 			}
 		}
 		
+		/**
+		 * Multiply 'num' signals by gain, beginning with internal current signal
+		 * 
+		 * @param num How many signals to be multiplied
+		 * @param gain The factor to be multiplied
+		 */
 		public function multiply( num: int, gain: Number ): void
 		{
 			var signal: Signal = _current;
@@ -49,43 +69,64 @@ package tonfall.core
 			}
 		}
 		
+		/**
+		 * @param index The index where to find the signal (wraps index)
+		 * @return A signal inside the buffer
+		 * 
+		 * @see Signal
+		 */
 		public function getSignalAt( index: int ): Signal
 		{
 			if( index < 0 )
-				index += _length;
+				index += _size;
+			else
+			if( index >= _size )
+				index -= _size;
 			
 			return _vector[index];
 		}
 		
+		/**
+		 * @param delta The offset of signals counting from currentIndex (wraps index)
+		 * @return The Signal at this offset
+		 */
 		public function deltaPointer( delta: int ): Signal
 		{
-			var index: int = _index + delta;
+			var index: int = _currentIndex + delta;
 
 			if( index < 0 )
-				index += _length;
+				index += _size;
 			else
-			if( index >= _length )
-				index -= _length;
+			if( index >= _size )
+				index -= _size;
 
 			return _vector[ index ];
 		}
 
+		/**
+		 * Advance internal currentIndex
+		 * 
+		 * @param count The number of signals to advance (wraps index)
+		 */
 		public function advancePointer( count: int ): void
 		{
 			if( 0 == count )
 				return;
 			
-			_index += count;
+			_currentIndex += count;
 
-			if( _index < 0 )
-				_index += _length;
+			if( _currentIndex < 0 )
+				_currentIndex += _size;
 			else
-			if( _index >= _length )
-				_index -= _length;
+			if( _currentIndex >= _size )
+				_currentIndex -= _size;
 
-			_current = _vector[ _index ];
+			_current = _vector[ _currentIndex ];
 		}
 
+		/**
+		 * @return The vector of signals
+		 */
 		public function get vector() : Vector.<Signal>
 		{
 			return _vector;
@@ -107,8 +148,8 @@ package tonfall.core
 
 			_current = tail.next = head;
 
-			_index = 0;
-			_length = length;
+			_currentIndex = 0;
+			_size = length;
 		}
 	}
 }

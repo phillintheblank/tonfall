@@ -7,6 +7,9 @@ package tonfall.core
 	 * Feeds a target processor with events from a container
 	 * 
 	 * @author Andre Michelle
+	 * 
+	 * @see TimeEventContainer
+	 * @see TimeEvent
 	 */
 	public final class TimeEventContainerSequencer extends Processor
 	{
@@ -18,6 +21,11 @@ package tonfall.core
 			_container = container;
 		}
 		
+		/**
+		 * To be called by Engine.
+		 * 
+		 * @param info The information that describe the current block.
+		 */
 		override public function process( info: BlockInfo ): void
 		{
 			const events: Vector.<TimeEvent> = _container.interval( info.barFrom, info.barTo );
@@ -30,11 +38,19 @@ package tonfall.core
 			}
 		}
 
+		/**
+		 * Sets the processor that will receive the events.
+		 * 
+		 * @param value The processor where to send the events
+		 */
 		public function set timeEventTarget( value: Processor ): void
 		{
 			_timeEventTarget = value;
 		}
 
+		/**
+		 * @return The Processor that receives the events
+		 */
 		public function get timeEventTarget(): Processor
 		{
 			return _timeEventTarget;

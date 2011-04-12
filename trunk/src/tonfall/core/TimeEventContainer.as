@@ -34,6 +34,7 @@ package tonfall.core
 		/**
 		 * @param t0 The start position in bars where to filter events
 		 * @param t1 The end position in bars where to filter events
+		 * 
 		 * @return A new vector with all events in passed range
 		 */
 		public function interval( t0: Number, t1: Number ): Vector.<TimeEvent>

@@ -8,7 +8,12 @@ package tonfall.core
 	 * 
 	 * It also stores the current time position in bars and beats per minutes.
 	 * 
+	 * The processing chain needs to be setup manually.
+	 * 
 	 * @author Andre Michelle
+	 * 
+	 * @see Driver
+	 * @see Processor
 	 */
 	public final class Engine
 	{
@@ -43,11 +48,92 @@ package tonfall.core
 			_processors = new Vector.<Processor>();
 		}
 
-		internal function render( target: ByteArray, numSignals: int ) : void
+		/**
+		 * @return Current musical position in bars
+		 */
+		public function get barPosition() : Number
 		{
-			const to: Number = _barPosition + TimeConversion.numSamplesToBars( numSignals, _bpm );
+			return _barPosition;
+		}
 
-			blockInfo.reset( numSignals, _barPosition, to );
+		/**
+		 * Sets musical position in bars.
+		 * Not to be set while processing!
+		 * 
+		 * @param value The new position in bars
+		 */
+		public function set barPosition( value: Number ) : void
+		{
+			_barPosition = value;
+		}
+
+		/**
+		 * @return The current tempo in beats per minute (bpm)
+		 */
+		public function get bpm() : Number
+		{
+			return _bpm;
+		}
+
+		/**
+		 * Sets tempo in beats per minute (bpm)
+		 * Not to be set while processing!
+		 * 
+		 * @param value The new tempo in bpm
+		 */
+		public function set bpm( value: Number ) : void
+		{
+			_bpm = value;
+		}
+
+		/**
+		 * Direct access to the processing chain.
+		 * 
+		 * @return Linear processing list
+		 */
+		public function get processors() : Vector.<Processor>
+		{
+			return _processors;
+		}
+
+		/**
+		 * Assign last signal buffer.
+		 * The processed audio in there will be written into the target ByteArray.
+		 * 
+		 * @param value The SignalBuffer to be read
+		 */
+		public function set input( value: SignalBuffer ) : void
+		{
+			_input = value;
+		}
+
+		/**
+		 * This method allows you to get the local offset in signals inside a block
+		 * 
+		 * @param position A musical time within the current block
+		 * @return The number of signals till the passed musical position
+		 * 
+		 * @see SignalProcessor
+		 */
+		public function deltaBlockIndexAt( position: Number ) : int
+		{
+			const value: int = TimeConversion.barsToNumSamples( position - _barPosition, _bpm );
+
+			if( value < 0 || value >= blockSize )
+				throw new Error( 'Index out of Block. index: ' + value );
+			
+			return value;
+		}
+		
+		/**
+		 * @param target The ByteArray to be filled with audio
+		 * @param numSignals The number of signals to be processed
+		 */
+		internal function render( target: ByteArray ) : void
+		{
+			const to: Number = _barPosition + TimeConversion.numSamplesToBars( blockSize, _bpm );
+
+			blockInfo.reset( blockSize, _barPosition, to );
 
 			renderProcessors();
 			
@@ -55,7 +141,7 @@ package tonfall.core
 			
 			if( null != _input )
 			{
-				writeInput( target, numSignals );
+				writeInput( target );
 			}
 		}
 
@@ -70,59 +156,19 @@ package tonfall.core
 			}
 		}
 
-		private function writeInput( target: ByteArray, num: int ) : void
+		private function writeInput( target: ByteArray ) : void
 		{
 			var signal: Signal = _input.current;
+			
+			const n: int = blockSize;
 
-			for( var i: int = 0 ; i < num ; ++i )
+			for( var i: int = 0 ; i < n ; ++i )
 			{
 				target.writeFloat( signal.l );
 				target.writeFloat( signal.r );
 				
 				signal = signal.next;
 			}
-		}
-
-		public function get barPosition() : Number
-		{
-			return _barPosition;
-		}
-
-		public function set barPosition( value: Number ) : void
-		{
-			_barPosition = value;
-		}
-
-		public function get bpm() : Number
-		{
-			return _bpm;
-		}
-
-		public function set bpm( value: Number ) : void
-		{
-			_bpm = value;
-		}
-
-		public function get processors() : Vector.<Processor>
-		{
-			return _processors;
-		}
-
-		public function set input( value: SignalBuffer ) : void
-		{
-			_input = value;
-		}
-
-		public function deltaBlockIndexAt( position: Number ) : int
-		{
-			const value: int = TimeConversion.barsToNumSamples( position - _barPosition, _bpm );
-
-			if( value < 0 || value >= Driver.BLOCK_SIZE )
-			{
-				throw new Error( 'Index out of Block. index: ' + value );
-			}
-			
-			return value;
 		}
 	}
 }

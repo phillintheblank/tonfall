@@ -3,9 +3,12 @@ package tonfall.core
 	/**
 	 * Processor is a member in the engine's processing chain.
 	 * 
-	 * A Processor can generate audio or sequence events.
+	 * A Processor can either generate audio or sequence events or both.
+	 * 
+	 * Every processor accepts events.
 	 * 
 	 * @author Andre Michelle
+	 * @see Engine
 	 */
 	public /*abstract*/ class Processor
 	{
@@ -15,6 +18,14 @@ package tonfall.core
 		
 		public function Processor() {}
 		
+		/**
+		 * Processor accepts TimeEvent like TimeEventNotes or any implementation of it.
+		 * All TimeEvents needs to be processed within the next block and removed from internal list.
+		 * 
+		 * @param event The TimeEvent to be stored for processing
+		 * 
+		 * @see TimeEvent
+		 */
 		public function addTimeEvent( event: TimeEvent ): void
 		{
 			if( -1 < events.indexOf( event ) )
@@ -26,6 +37,13 @@ package tonfall.core
 			events.sort( sortOnPosition );
 		}
 
+		/**
+		 * To be overriden by implementation.
+		 * 
+		 * @param info Information about the current block
+		 * 
+		 * @see BlockInfo
+		 */
 		public function process( info: BlockInfo ): void
 		{
 			throw new Error( 'Method "process" is marked abstract.' );
