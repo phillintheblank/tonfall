@@ -3,7 +3,7 @@ package assets
 	import tonfall.format.wav.WAVDecoder;
 
 	/**
-	 * CasioRZ1Sample contains all samples of the Casio RZ1 drumcomputer
+	 * CasioRZ1 contains all samples of the Casio RZ1 drumcomputer
 	 * 
 	 * Info
 	 * http://en.wikipedia.org/wiki/Casio_RZ-1
@@ -13,7 +13,7 @@ package assets
 	 * 
 	 * @author Andre Michelle
 	 */
-	public final class CasioRZ1Sample
+	public final class CasioRZ1
 	{
 		[ Embed( source='../../assets/casio_rz1/KIRZ.WAV', mimeType='application/octet-stream' ) ]
 			private static const CLASS_BASSDRUM: Class;

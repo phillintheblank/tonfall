@@ -1,9 +1,8 @@
 package demo
 {
-	import test.metronome.MetronomeGenerator;
-	import test.metronome.MetronomeSequencer;
-
 	import tonfall.display.AbstractApplication;
+	import tonfall.prefab.metronome.MetronomeGenerator;
+	import tonfall.prefab.metronome.MetronomeSequencer;
 
 	/**
 	 * Demoes simple musical event processing

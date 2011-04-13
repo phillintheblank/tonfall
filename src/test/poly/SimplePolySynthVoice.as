@@ -7,7 +7,7 @@ package test.poly
 	import tonfall.core.TimeEventNote;
 	import tonfall.core.noteToFrequency;
 	import tonfall.core.samplingRate;
-	import tonfall.poly.IPolySynthVoice;
+	import tonfall.prefab.poly.IPolySynthVoice;
 	import tonfall.util.WaveFunction;
 
 	/**

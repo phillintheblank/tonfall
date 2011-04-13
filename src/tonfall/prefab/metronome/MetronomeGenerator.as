@@ -1,4 +1,4 @@
-package test.metronome
+package tonfall.prefab.metronome
 {
 	import tonfall.core.Signal;
 	import tonfall.core.SignalBuffer;

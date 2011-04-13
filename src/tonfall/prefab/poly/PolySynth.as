@@ -1,4 +1,4 @@
-package tonfall.poly
+package tonfall.prefab.poly
 {
 	import tonfall.core.Parameter;
 	import tonfall.core.Signal;
@@ -14,7 +14,7 @@ package tonfall.poly
 	 */
 	public final class PolySynth extends SignalProcessor
 	{
-		public const output: SignalBuffer = new SignalBuffer();
+		public const signalOutput: SignalBuffer = new SignalBuffer();
 		
 		public const paramVolume: Parameter = new Parameter( 'volume', 1.0 );
 		
@@ -55,9 +55,9 @@ package tonfall.poly
 		
 		override protected function processSignals( numSignals: int ) : void
 		{
-			output.zero( numSignals );
+			signalOutput.zero( numSignals );
 			
-			var current: Signal = output.current;
+			var current: Signal = signalOutput.current;
 
 			var i: int = activeVoices.length;
 
@@ -69,9 +69,9 @@ package tonfall.poly
 				}
 			}
 
-			output.multiply( numSignals, paramVolume.value );
+			signalOutput.multiply( numSignals, paramVolume.value );
 
-			output.advancePointer( numSignals );
+			signalOutput.advancePointer( numSignals );
 		}
 	}
 }

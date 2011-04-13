@@ -1,16 +1,14 @@
 package demo
 {
-	import test.effects.Delay;
-	import test.poly.SimplePolySynthVoiceFactory;
-
-	import tonfall.core.Engine;
-	import tonfall.core.TimeConversion;
-	import tonfall.display.AbstractApplication;
-	import tonfall.poly.PolySynth;
-
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import test.effects.Delay;
+	import test.poly.SimplePolySynthVoiceFactory;
+	import tonfall.core.Engine;
+	import tonfall.core.TimeConversion;
+	import tonfall.display.AbstractApplication;
+	import tonfall.prefab.poly.PolySynth;
 
 	/**
 	 * Simple implementation of the Tonematrix
@@ -41,11 +39,11 @@ package demo
 			engine.processors.push( generator );
 			engine.processors.push( delay );
 
-			delay.input = generator.output;
+			delay.signalInput = generator.signalOutput;
 
 			sequencer.receiver = generator;
 
-			engine.input = delay.output;
+			engine.input = delay.signalOutput;
 		}
 		
 		private function changePattern( u: int, v: int, value: Boolean ): void

@@ -13,9 +13,9 @@ package test.effects
 	 */
 	public final class Delay extends Processor
 	{
-		public const output: SignalBuffer = new SignalBuffer();
+		public const signalOutput: SignalBuffer = new SignalBuffer();
 		
-		private var _input: SignalBuffer;
+		private var _signalInput: SignalBuffer;
 		
 		private var _buffer: SignalBuffer;
 		private var _bufferIndex: int;
@@ -36,8 +36,8 @@ package test.effects
 		override public function process( info: BlockInfo ) : void
 		{
 			var dly: Signal = _buffer.current;
-			var inp: Signal = _input.current;
-			var out: Signal = output.current;
+			var inp: Signal = _signalInput.current;
+			var out: Signal = signalOutput.current;
 			
 			var readL: Number;
 			var readR: Number;
@@ -65,17 +65,17 @@ package test.effects
 			}
 			
 			_buffer.advancePointer( info.numSignals );
-			 output.advancePointer( info.numSignals );
+			 signalOutput.advancePointer( info.numSignals );
 		}
 
-		public function get input() : SignalBuffer
+		public function get signalInput() : SignalBuffer
 		{
-			return _input;
+			return _signalInput;
 		}
 
-		public function set input( value: SignalBuffer ) : void
+		public function set signalInput( value: SignalBuffer ) : void
 		{
-			_input = value;
+			_signalInput = value;
 		}
 
 		public function get wet() : Number

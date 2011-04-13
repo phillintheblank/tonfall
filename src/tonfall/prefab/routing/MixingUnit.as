@@ -1,4 +1,4 @@
-package tonfall.routing
+package tonfall.prefab.routing
 {
 	import tonfall.core.Signal;
 	import tonfall.core.SignalBuffer;
@@ -13,7 +13,7 @@ package tonfall.routing
 	 */
 	public final class MixingUnit extends SignalProcessor
 	{
-		public const output: SignalBuffer = new SignalBuffer();
+		public const signalOutput: SignalBuffer = new SignalBuffer();
 		
 		private var _numInputs: uint;
 		private var _inputs: Vector.<SignalBuffer>;
@@ -80,7 +80,7 @@ package tonfall.routing
 			
 			var first: Boolean = true;
 			
-			const out: Signal = output.current;
+			const out: Signal = signalOutput.current;
 			
 			const n: int = _inputs.length;
 			
