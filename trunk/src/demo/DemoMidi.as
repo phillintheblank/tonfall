@@ -1,14 +1,16 @@
 package demo
 {
-	import assets.BubbleBobble;
-	import assets.Schumann;
+	import assets.Midi;
+
+	import tonfall.core.TimeEventContainerSequencer;
+	import tonfall.display.AbstractApplication;
+	import tonfall.prefab.poly.PolySynth;
+
 	import flash.events.Event;
 	import flash.events.ProgressEvent;
 	import flash.net.URLRequest;
 	import flash.text.TextField;
-	import tonfall.core.TimeEventContainerSequencer;
-	import tonfall.display.AbstractApplication;
-	import tonfall.poly.PolySynth;
+	import flash.text.TextFormat;
 
 
 
@@ -22,8 +24,7 @@ package demo
 	{
 		private const sheet: SoundSheet = new SoundSheet();
 		
-		private const sequencer: TimeEventContainerSequencer = new TimeEventContainerSequencer( Schumann.MIDI.toTimeEventContainer( 1.0 / 128.0 ) );
-		//private const sequencer: TimeEventContainerSequencer = new TimeEventContainerSequencer( BubbleBobble.MIDI.toTimeEventContainer( 1.0 / 128.0 ) );
+		private const sequencer: TimeEventContainerSequencer = new TimeEventContainerSequencer( Midi.SCHUMANN.toTimeEventContainer( 1.0 / 128.0 ) );
 		private const generator: PolySynth = new PolySynth( new SoundSheetVoiceFactory( sheet ) );
 
 		private const textField: TextField = new TextField();
@@ -33,7 +34,15 @@ package demo
 
 		public function DemoMidi()
 		{
+			textField.defaultTextFormat = new TextFormat( 'Verdana', 11, 0xFFCC00 );
+			addChild( textField );
+			
 			loadSheet( '../load/piano.mp3' );
+//			loadSheet( '../load/strings.mp3' );
+//			loadSheet( '../load/rhodes.mp3' );
+//			loadSheet( '../load/guitar.mp3' );
+//			loadSheet( '../load/accordion.mp3' );
+//			loadSheet( '../load/vibraphone.mp3' );
 		}
 
 		private function loadSheet( url: String ): void
@@ -82,7 +91,7 @@ package demo
 			sequencer.timeEventTarget = generator;
 			engine.processors.push( sequencer );
 			engine.processors.push( generator );
-			engine.input = generator.output;
+			engine.input = generator.signalOutput;
 			
 			_inited = true;
 		}
@@ -96,8 +105,8 @@ import tonfall.core.TimeEvent;
 import tonfall.core.TimeEventNote;
 import tonfall.core.noteToFrequency;
 import tonfall.format.IAudioDecoder;
-import tonfall.poly.IPolySynthVoice;
-import tonfall.poly.IPolySynthVoiceFactory;
+import tonfall.prefab.poly.IPolySynthVoice;
+import tonfall.prefab.poly.IPolySynthVoiceFactory;
 import tonfall.util.ISoundSheet;
 
 import flash.media.Sound;

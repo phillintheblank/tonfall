@@ -1,8 +1,8 @@
 package test.poly
 {
 	import tonfall.core.TimeEventNote;
-	import tonfall.poly.IPolySynthVoice;
-	import tonfall.poly.IPolySynthVoiceFactory;
+	import tonfall.prefab.poly.IPolySynthVoice;
+	import tonfall.prefab.poly.IPolySynthVoiceFactory;
 
 	/**
 	 * Test implementation for a polyphonic synthesizer voice

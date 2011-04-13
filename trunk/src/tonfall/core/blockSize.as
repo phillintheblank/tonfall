@@ -7,5 +7,5 @@ package tonfall.core
 	 * 
 	 * @author Andre Michelle
 	 */
-	public const blockSize: int = 2048;
+	public const blockSize: int = 3072;
 }
