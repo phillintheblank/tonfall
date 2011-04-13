@@ -137,11 +137,13 @@ package tonfall.format.midi
 						{
 							if( null != table[ event.param0 ] )
 							{
+								trace( 'Warning: NoteOn while note is playing. (stopping last note...)', event );
+								
 								startEvent = table[ event.param0 ];
 								
 								container.push( createNote( startEvent.param0, startEvent.param1 / 0x7F, startEvent.position, event.position, humanize ) );
 							}
-							
+
 							table[ event.param0 ] = event;
 						}
 						else
@@ -187,7 +189,7 @@ package tonfall.format.midi
 		{
 			if( startPosition > endPosition )
 				throw new RangeError();
-			
+				
 			const event: TimeEventNote = new TimeEventNote();
 			
 			event.barPosition = startPosition + Math.random() * humanize;
