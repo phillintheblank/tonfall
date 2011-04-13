@@ -1,5 +1,6 @@
 package tonfall.display
 {
+	import tonfall.core.IParameterObserver;
 	import tonfall.core.Parameter;
 
 	import flash.display.Sprite;
@@ -15,6 +16,7 @@ package tonfall.display
 	 * @see Parameter
 	 */
 	public final class ParameterSlider extends Sprite
+		implements IParameterObserver
 	{
 		private static const TEXT_FORMAT : TextFormat = new TextFormat( 'Verdana', 9, 0, true );
 		
@@ -29,8 +31,14 @@ package tonfall.display
 		public function ParameterSlider( parameter: Parameter )
 		{
 			_parameter = parameter;
+			_parameter.addObserver( this );
 			
 			init();
+		}
+		
+		public function onParameterChanged( parameter: Parameter ): void
+		{
+			updateView();
 		}
 
 		private function init() : void
@@ -100,8 +108,6 @@ package tonfall.display
 				value = 1.0;
 			
 			_parameter.value = value;
-		
-			updateView();	
 		}
 		
 		private function updateView(): void

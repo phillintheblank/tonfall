@@ -5,12 +5,17 @@ package tonfall.util
 	 */
 	public final class Mapping
 	{
-		public function mapLinear( normalized:Number, min: Number, max: Number ): Number
+		public static function mapLinear( normalized:Number, min: Number, max: Number ): Number
 		{
 			return min + normalized * ( max - min );
 		}
+		
+		public static function mapLinearInv( value:Number, min: Number, max: Number ): Number
+		{
+			return ( value - min ) / ( max - min );
+		}
 
-		public function mapExp( normalized:Number, min: Number, max: Number ):Number
+		public static function mapExp( normalized:Number, min: Number, max: Number ):Number
 		{
 			return min * Math.exp( normalized * Math.log( max / min ) );
 		}

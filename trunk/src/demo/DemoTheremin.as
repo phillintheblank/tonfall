@@ -18,7 +18,6 @@ package demo
 	public final class DemoTheremin extends AbstractApplication
 	{
 		private const theremin: ThereminProcessor = new ThereminProcessor();
-		private const mapping: Mapping = new Mapping();
 
 		public function DemoTheremin()
 		{
@@ -41,7 +40,7 @@ package demo
 			// Map X to frequency log-style (20-22050Hz)
 			const normFreq: Number = mouseX / stage.stageWidth;
 			
-			theremin.setFrequency( mapping.mapExp( normFreq, 20.0, 22050.0 ) );
+			theremin.setFrequency( Mapping.mapExp( normFreq, 20.0, 22050.0 ) );
 		}
 	}
 }
