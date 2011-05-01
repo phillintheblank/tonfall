@@ -18,14 +18,9 @@ package test.matrix
 		
 		private var _paintValue: Boolean;
 
-		public function MatrixView( model : MatrixModel, cellSize: Number = 32 )
+		public function MatrixView( cellSize: Number = 32 )
 		{
-			_model = model;
-			_model.addObserver( this );
-			
 			_cellSize = cellSize;
-			_width = _cellSize * model.numCols;
-			_height = _cellSize * model.numRows;
 			
 			addEventListener( Event.ADDED_TO_STAGE, addedToStage );
 			addEventListener( Event.REMOVED_FROM_STAGE, removedFromStage );
@@ -33,6 +28,41 @@ package test.matrix
 			update();
 		}
 
+		public function get model() : MatrixModel
+		{
+			return _model;
+		}
+
+		public function set model( value : MatrixModel ) : void
+		{
+			if( _model != value )
+			{
+				if( null != _model )
+					_model.removeObserver( this );
+				
+				_model = value;
+				
+				if( null != _model )
+					_model.addObserver( this );
+					
+				update();
+			}
+		}
+
+		public function onMatrixModelChanged( model : MatrixModel ) : void
+		{
+			update();
+		}
+		
+		public function dispose(): void
+		{
+			if( null != _model )
+			{
+				_model.removeObserver( this );
+				_model = null;
+			}
+		}
+		
 		private function addedToStage( event : Event ) : void
 		{
 			stage.addEventListener( MouseEvent.MOUSE_DOWN, mouseDown );
@@ -45,6 +75,9 @@ package test.matrix
 
 		private function mouseDown( event : MouseEvent ) : void
 		{
+			if( null == _model )
+				return;
+			
 			const x: Number = mouseX;
 			const y: Number = mouseY;
 			
@@ -63,6 +96,9 @@ package test.matrix
 
 		private function mouseMove( event : MouseEvent ) : void
 		{
+			if( null == _model )
+				return;
+			
 			const xi: int = mouseX / _cellSize;
 			const yi: int = mouseY / _cellSize;
 			
@@ -78,20 +114,15 @@ package test.matrix
 			stage.removeEventListener( MouseEvent.MOUSE_UP, mouseUp );
 		}
 
-		public function onMatrixModelChanged( model : MatrixModel ) : void
-		{
-			update();
-		}
-		
-		public function dispose(): void
-		{
-			_model.removeObserver( this );
-			_model = null;
-		}
-
 		private function update() : void
 		{
 			graphics.clear();
+			
+			if( null == _model )
+				return;
+				
+			_width = _cellSize * model.numCols;
+			_height = _cellSize * model.numRows;
 			
 			const yn: int = _model.numRows;
 			const xn: int = _model.numCols;
