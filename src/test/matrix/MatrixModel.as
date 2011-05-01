@@ -87,10 +87,10 @@ package test.matrix
 		
 		private function init(): void
 		{
-			_data = new Vector.<Vector.<Boolean>>( _numCols, true );
+			_data = new Vector.<Vector.<Boolean>>( _numRows, true );
 			
 			for( var i: int = 0 ; i < _numRows ; ++i )
-				_data[i] = new Vector.<Boolean>( _numRows, true );
+				_data[i] = new Vector.<Boolean>( _numCols, true );
 			
 			_observers = new Vector.<IMatrixModelObserver>();			
 		}
