@@ -1,5 +1,6 @@
 package tonfall.format.pcm
 {
+	import tonfall.core.Signal;
 	import flash.utils.ByteArray;
 
 	/**
@@ -11,6 +12,14 @@ package tonfall.format.pcm
 		public function PCM16BitStereo44Khz( compressionType: Object = null )
 		{
 			super( compressionType, 44100.0, 2, 16 );
+		}
+		
+		public function readFrameInSignal( data : ByteArray, dataOffset : Number, signal : Signal, position : Number ) : void
+		{
+			data.position = dataOffset + ( position << 2 );
+			
+			signal.l = data.readShort() * 3.051850947600e-05;
+			signal.r = data.readShort() * 3.051850947600e-05;
 		}
 		
 		public function read32BitStereo44KHz( data: ByteArray, dataOffset: Number, target : ByteArray, length : Number, startPosition : Number ) : void

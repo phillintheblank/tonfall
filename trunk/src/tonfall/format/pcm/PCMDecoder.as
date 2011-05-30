@@ -1,5 +1,6 @@
 package tonfall.format.pcm
 {
+	import tonfall.core.Signal;
 	import tonfall.format.IAudioDecoder;
 
 	import flash.utils.ByteArray;
@@ -60,6 +61,14 @@ package tonfall.format.pcm
 			_strategy.read32BitStereo44KHz( _bytes, dataOffset, target, length, startPosition );
 			
 			return length;
+		}
+		
+		/**
+		 * Decodes a single frame into a Signal
+		 */
+		public function readFrame( signal: Signal, position: uint ): void
+		{
+			_strategy.readFrameInSignal( _bytes, dataOffset, signal, position );
 		}
 
 		public function get supported(): Boolean
