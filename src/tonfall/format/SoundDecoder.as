@@ -23,5 +23,10 @@ package tonfall.format
 		{
 			return super.extract( target, length, startPosition + _decodeOffset );
 		}
+
+		public function get numSamples() : Number
+		{
+			return length * 44.1;
+		}
 	}
 }

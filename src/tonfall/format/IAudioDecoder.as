@@ -7,5 +7,7 @@ package tonfall.format
 	public interface IAudioDecoder
 	{
 		function extract( target : ByteArray, length : Number, startPosition : Number = -1.0 ) : Number;
+		
+		function get numSamples(): Number;
 	}
 }
