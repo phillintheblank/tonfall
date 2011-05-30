@@ -4,6 +4,7 @@ package demo
 
 	import tonfall.core.TimeEventContainerSequencer;
 	import tonfall.display.AbstractApplication;
+	import tonfall.format.SoundDecoder;
 	import tonfall.prefab.poly.PolySynth;
 
 	import flash.events.Event;
@@ -11,8 +12,6 @@ package demo
 	import flash.net.URLRequest;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
-
-
 
 	/**
 	 * Demoes Midi
@@ -29,7 +28,7 @@ package demo
 
 		private const textField: TextField = new TextField();
 
-		private var _mp3: MP3;
+		private var _mp3: SoundDecoder;
 		private var _inited: Boolean;
 
 		public function DemoMidi()
@@ -57,7 +56,7 @@ package demo
 				_mp3 = null;
 			}
 
-			_mp3 = new MP3();
+			_mp3 = new SoundDecoder( SoundDecoder.MP3_LAME_OFFSET );
 			_mp3.addEventListener( Event.COMPLETE, mp3Complete );
 			_mp3.addEventListener( ProgressEvent.PROGRESS, mp3Progress );
 			_mp3.load( new URLRequest( url ) );
@@ -108,19 +107,6 @@ import tonfall.format.IAudioDecoder;
 import tonfall.prefab.poly.IPolySynthVoice;
 import tonfall.prefab.poly.IPolySynthVoiceFactory;
 import tonfall.util.ISoundSheet;
-
-import flash.media.Sound;
-import flash.utils.ByteArray;
-
-final class MP3 extends Sound
-	implements IAudioDecoder
-{
-	// Override to add the encoder delay (LAME 3.98.2 + flash.media.Sound Delay)
-	override public function extract( target: ByteArray, length: Number, startPosition: Number = -1 ): Number
-	{
-		return super.extract( target, length, startPosition + 2257.0 );
-	}
-}
 
 final class SoundSheet
 	implements ISoundSheet
