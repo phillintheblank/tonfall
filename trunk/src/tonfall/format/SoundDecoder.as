@@ -11,11 +11,13 @@ package tonfall.format
 	{
 		// Compensate encoder delay (LAME 3.98.2 + flash.media.Sound Delay)
 		public static const MP3_LAME_OFFSET : Number = 2257.0;
-
+		
+		private var _numSamples : Number;
 		private var _decodeOffset : Number;
 
-		public function SoundDecoder( decodeOffset: Number = 0.0 )
+		public function SoundDecoder( numSamples: Number = 0.0, decodeOffset: Number = 0.0 )
 		{
+			_numSamples = numSamples;
 			_decodeOffset = decodeOffset;
 		}
 
@@ -26,7 +28,10 @@ package tonfall.format
 
 		public function get numSamples() : Number
 		{
-			return length * 44.1;
+			if( 0.0 == _numSamples )
+				return length * 44.1;
+
+			return _numSamples;
 		}
 	}
 }
