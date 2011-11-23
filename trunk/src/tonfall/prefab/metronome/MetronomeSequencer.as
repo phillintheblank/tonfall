@@ -38,10 +38,10 @@ package tonfall.prefab.metronome
 					beat %= _upper;
 
 					event = new MetronomeEvent();
-					event.bar = position;
+					event.barPosition = position;
 					event.bar = bar;
 					event.beat = beat;
-
+					
 					_timeEventTarget.addTimeEvent( event );
 				}
 

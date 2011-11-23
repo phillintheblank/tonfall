@@ -26,6 +26,7 @@ package tonfall.prefab.metronome
 		
 		override protected function processTimeEvent( event: TimeEvent ) : void
 		{
+			trace( event, event.barPosition );
 			if( event is MetronomeEvent )
 			{
 				_phase = 0.0;
